@@ -1,0 +1,7 @@
+__bin/
+__obj/
+.vs/
+.vscode/
+.idea/
+
+
