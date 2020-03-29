@@ -11,6 +11,7 @@
 #include "Bmp.h"
 #include "Relogio.h"
 #include "Botao.h"
+#include "Image.h"
 #include "Pixel.h"
 #include "Util.h"
 
@@ -23,6 +24,7 @@
 Bmp *img;
 unsigned char *imgData = NULL;
 
+Image *image = NULL;
 Pixel **pixels = NULL;
 Relogio *r = NULL;
 Botao *bt = NULL; //se a aplicacao tiver varios botoes, sugiro implementar um manager de botoes.
@@ -31,18 +33,6 @@ Botao *bt = NULL; //se a aplicacao tiver varios botoes, sugiro implementar um ma
 int opcao = 50;
 int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
-
-void drawImage()
-{
-   if (img != NULL && imgData != NULL)
-   {
-      int size = img->getImageSize();
-      for (int i = 0; i < size; i++)
-      {
-         printf("data[%d]: %d", i, imgData[i]);
-      }
-   }
-}
 
 void DesenhaLinhaDegrade()
 {
@@ -69,9 +59,9 @@ void render()
 {
    text(20, 500, "Trabalho 1 - isso é um texto");
 
-   // drawImage();
-
    DrawMouseScreenCoords();
+
+   image->render();
 
    bt->Render();
 
@@ -127,19 +117,14 @@ int main(void)
 {
    initCanvas(&screenWidth, &screenHeight, "Trabalho 1 - Pressione 1, 2, 3");
 
+   // TODO: remove unuseful pointers
    img = new Bmp(PATH_TO_IMG);
    img->convertBGRtoRGB();
    imgData = img->getImage();
 
    pixels = Util::getImagePixels(imgData, img->getWidth(), img->getHeight());
 
-   for (int i = 0; i < img->getHeight(); i++)
-   {
-      for (int j = 0; j < img->getWidth(); j++)
-      {
-         Pixel p = pixels[i][j];
-      }
-   }
+   image = new Image(pixels, img->getWidth(), img->getHeight());
 
    r = new Relogio();
    bt = new Botao(200, 400, 140, 50, "Sou um botao");
