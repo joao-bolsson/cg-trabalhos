@@ -39,6 +39,11 @@ int Bmp::getHeight(void)
     return height;
 }
 
+int Bmp::getImageSize()
+{
+    return imagesize;
+}
+
 void Bmp::convertBGRtoRGB()
 {
     unsigned char tmp;

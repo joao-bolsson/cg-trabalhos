@@ -56,6 +56,7 @@ public:
     uchar *getImage();
     int getWidth(void);
     int getHeight(void);
+    int getImageSize();
     void convertBGRtoRGB(void);
 };
 

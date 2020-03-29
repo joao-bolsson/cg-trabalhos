@@ -159,7 +159,7 @@
 1426372440 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/include/GL/freeglut_ext.h
 	<stdarg.h>
 
-1585427311 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
+1585452107 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -168,11 +168,12 @@
 	<ctype.h>
 	"gl_canvas2d.h"
 	"Bmp.h"
-	"Bola.h"
 	"Relogio.h"
 	"Botao.h"
+	"Pixel.h"
+	"Util.h"
 
-1585426377 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Bmp.h
+1585438383 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Bmp.h
 	<stdio.h>
 	<stdlib.h>
 
@@ -190,4 +191,20 @@
 	<math.h>
 	<stdio.h>
 	<stdlib.h>
+
+1585441020 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Bmp.cpp
+	"Bmp.h"
+	<string.h>
+
+1585440519 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Pixel.cpp
+	"Pixel.h"
+
+1585440476 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Pixel.h
+
+1585452102 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Util.cpp
+	"Util.h"
+	<stdio.h>
+
+1585441502 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Util.h
+	"Pixel.h"
 

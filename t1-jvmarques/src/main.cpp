@@ -9,19 +9,21 @@
 #include "gl_canvas2d.h"
 
 #include "Bmp.h"
-#include "Bola.h"
 #include "Relogio.h"
 #include "Botao.h"
+#include "Pixel.h"
+#include "Util.h"
 
+#define PATH_TO_IMG "./t1-jvmarques/resources/img.bmp"
 #define SCREEN_X 900
 #define SCREEN_Y 300
 #define RECT_SIZE 10
 #define TEXT_COORD 2
 
-Bmp *img1;
-unsigned char *data;
+Bmp *img;
+unsigned char *imgData = NULL;
 
-Bola *b = NULL;
+Pixel **pixels = NULL;
 Relogio *r = NULL;
 Botao *bt = NULL; //se a aplicacao tiver varios botoes, sugiro implementar um manager de botoes.
 
@@ -30,15 +32,15 @@ int opcao = 50;
 int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
-void DesenhaSenoide()
+void drawImage()
 {
-   float x = 0, y;
-   color(0, 1, 0);
-   for (float i = 0; i < 68; i += 0.001)
+   if (img != NULL && imgData != NULL)
    {
-      y = sin(i) * 50;
-      point((int)x, (int)y + 100);
-      x += 0.01;
+      int size = img->getImageSize();
+      for (int i = 0; i < size; i++)
+      {
+         printf("data[%d]: %d", i, imgData[i]);
+      }
    }
 }
 
@@ -67,6 +69,8 @@ void render()
 {
    text(20, 500, "Trabalho 1 - isso é um texto");
 
+   // drawImage();
+
    DrawMouseScreenCoords();
 
    bt->Render();
@@ -76,14 +80,6 @@ void render()
    if (opcao == 49) //'1' -> relogio
    {
       r->anima();
-   }
-   if (opcao == '2') //50 -> bola
-   {
-      b->anima();
-   }
-   if (opcao == 51) //'3' -> senoide
-   {
-      DesenhaSenoide();
    }
 }
 
@@ -100,16 +96,6 @@ void keyboard(int key)
    {
    case 27:
       exit(0);
-      break;
-
-      //seta para a esquerda
-   case 200:
-      b->move(-10);
-      break;
-
-   //seta para a direita
-   case 202:
-      b->move(10);
       break;
    }
 }
@@ -141,11 +127,20 @@ int main(void)
 {
    initCanvas(&screenWidth, &screenHeight, "Trabalho 1 - Pressione 1, 2, 3");
 
-   img1 = new Bmp(".\\gl_1_canvas\\resources\\img.bmp");
-   img1->convertBGRtoRGB();
-   data = img1->getImage();
+   img = new Bmp(PATH_TO_IMG);
+   img->convertBGRtoRGB();
+   imgData = img->getImage();
 
-   b = new Bola();
+   pixels = Util::getImagePixels(imgData, img->getWidth(), img->getHeight());
+
+   for (int i = 0; i < img->getHeight(); i++)
+   {
+      for (int j = 0; j < img->getWidth(); j++)
+      {
+         Pixel p = pixels[i][j];
+      }
+   }
+
    r = new Relogio();
    bt = new Botao(200, 400, 140, 50, "Sou um botao");
 
