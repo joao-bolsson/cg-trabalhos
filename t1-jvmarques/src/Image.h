@@ -4,8 +4,7 @@
 #include "Pixel.h"
 
 // TODO: doc
-class Image
-{
+class Image {
 private:
     Pixel **pixels;
     int x, y, width, height;

@@ -2,8 +2,7 @@
 #define PIXEL_INCLUDED
 
 // TODO: doc
-class Pixel
-{
+class Pixel {
 private:
     int r, g, b;
 
