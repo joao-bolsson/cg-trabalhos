@@ -57,20 +57,8 @@ void DrawMouseScreenCoords()
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void render()
 {
-   text(20, 500, "Trabalho 1 - isso é um texto");
-
-   DrawMouseScreenCoords();
-
+   clear(0, 0, 0);
    image->render();
-
-   bt->Render();
-
-   DesenhaLinhaDegrade();
-
-   if (opcao == 49) //'1' -> relogio
-   {
-      r->anima();
-   }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
@@ -124,7 +112,7 @@ int main(void)
 
    pixels = Util::getImagePixels(imgData, img->getWidth(), img->getHeight());
 
-   image = new Image(pixels, img->getWidth(), img->getHeight());
+   image = new Image(pixels, 50, 50, img->getWidth(), img->getHeight());
 
    r = new Relogio();
    bt = new Botao(200, 400, 140, 50, "Sou um botao");

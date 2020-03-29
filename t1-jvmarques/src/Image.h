@@ -8,11 +8,14 @@ class Image
 {
 private:
     Pixel **pixels;
-    int width, height;
+    int x, y, width, height;
 
 public:
     Image();
     Image(Pixel **pixels, unsigned width, unsigned height);
+    Image(Pixel **pixels, int x, int y, unsigned width, unsigned height);
+    int getX();
+    int getY();
     int getWidth();
     int getHeight();
     void render();
