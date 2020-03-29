@@ -32,6 +32,8 @@
 		<Unit filename="src/Bmp.cpp" />
 		<Unit filename="src/Bmp.h" />
 		<Unit filename="src/Botao.h" />
+		<Unit filename="src/Image.cpp" />
+		<Unit filename="src/Image.h" />
 		<Unit filename="src/Pixel.cpp" />
 		<Unit filename="src/Pixel.h" />
 		<Unit filename="src/Relogio.cpp" />

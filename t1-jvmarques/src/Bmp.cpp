@@ -46,24 +46,17 @@ int Bmp::getImageSize()
 
 void Bmp::convertBGRtoRGB()
 {
-    printf("converting to RGB");
     unsigned char tmp;
-    int i = 0;
     if (data != NULL)
     {
         for (int y = 0; y < height; y++)
-            for (int x = 0; x < width * 3; x += 3)
+            for (int x = 0, w = 0; x < width * 3; x += 3, w++)
             {
                 int pos = y * bytesPerLine + x;
                 tmp = data[pos];
                 data[pos] = data[pos + 2];
                 data[pos + 2] = tmp;
-                if (i == 0)
-                {
-                    printf("p(%d, %d)\n", data[pos], data[pos + 2]);
-                }
             }
-        i = 1;
     }
 }
 
