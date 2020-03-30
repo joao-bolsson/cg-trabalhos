@@ -159,7 +159,7 @@
 1426372440 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/include/GL/freeglut_ext.h
 	<stdarg.h>
 
-1585528206 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
+1585529671 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>

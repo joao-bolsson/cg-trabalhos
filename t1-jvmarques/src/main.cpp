@@ -16,17 +16,14 @@
 #include "Util.h"
 
 #define PATH_TO_IMG "./t1-jvmarques/resources/img.bmp"
-#define SCREEN_X 900
-#define SCREEN_Y 300
-#define RECT_SIZE 10
-#define TEXT_COORD 2
+#define BTN_HEIGHT 40
 
 Bmp *img;
 unsigned char *imgData = NULL;
 
 // TODO: how iterate through this array without knowing its size
 AbstractButton **buttons = NULL;
-int numberOfBtns = 2;
+int numberOfBtns = 4;
 
 Image *image = NULL;
 Pixel **pixels = NULL;
@@ -86,8 +83,12 @@ int main(void) {
     image = new Image(pixels, 50, 50, img->getWidth(), img->getHeight());
 
     buttons = new AbstractButton *[2];
-    buttons[0] = new Button("Ampliar", screenWidth - 100, (screenHeight / 2) - 25, 100, 50);
-    buttons[1] = new Button("Reduzir", screenWidth - 100, (screenHeight / 2) + 25, 100, 50);
+    buttons[0] = new Button("Ampliar", screenWidth - 100, (screenHeight / 2) - (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
+    buttons[1] = new Button("Reduzir", screenWidth - 100, (screenHeight / 2) + (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
+
+    // buttons to rotate, left and right
+    buttons[2] = new Button("<-", (screenWidth / 2) - 15, screenHeight - BTN_HEIGHT, 30, BTN_HEIGHT);
+    buttons[3] = new Button("->", (screenWidth / 2) + 15, screenHeight - BTN_HEIGHT, 30, BTN_HEIGHT);
 
     runCanvas();
 }
