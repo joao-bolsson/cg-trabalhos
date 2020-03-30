@@ -35,7 +35,6 @@ int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . 
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
 void render() {
-    // clear(1, 1, 1);
     image->render();
 
     for (int i = 0; i < numberOfBtns; i++)
@@ -67,8 +66,28 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
     mouseY = y;
 
     if (state == 0) {
-        // TODO: verificar se o x, y está sobre algum botao, se está, chamar bt->doClick()
+        for (int i = 0; i < numberOfBtns; i++) {
+            if (buttons[i]->isPointOver(x, y)) {
+                buttons[i]->doClick();
+                break;
+            }
+        }
     }
+}
+
+void zoomIn() {
+    float currentScale = image->getScale();
+    image->scale(currentScale * 2);
+}
+
+void zoomOut() {
+    float currentScale = image->getScale();
+    image->scale(currentScale / 2);
+}
+
+void addListeners() {
+    buttons[0]->setAction(zoomIn);
+    buttons[1]->setAction(zoomOut);
 }
 
 int main(void) {
@@ -97,5 +116,6 @@ int main(void) {
     buttons[6] = new Checkbox("B", image->getX() + space * 2, image->getY() - CHECKBOX_SIZE);
     buttons[7] = new Checkbox("Y", image->getX() + space * 3, image->getY() - CHECKBOX_SIZE);
 
+    addListeners();
     runCanvas();
 }

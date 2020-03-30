@@ -7,7 +7,8 @@
 class Image {
 private:
     Pixel **pixels;
-    int x, y, width, height;
+    int x, y, originalWidth, originalHeight, width, height;
+    float pixelSize = 1;
 
 public:
     Image();
@@ -18,6 +19,9 @@ public:
     int getWidth();
     int getHeight();
     void render();
+    void scale(float factor);
+    float getScale();
+    Pixel getPixelQuad(int x, int y);
 };
 
 #endif
