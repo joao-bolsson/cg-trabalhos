@@ -1,6 +1,5 @@
 #include "Button.h"
 #include "gl_canvas2d.h"
-#include <stdio.h>
 
 void Button::doClick() {
     // TODO

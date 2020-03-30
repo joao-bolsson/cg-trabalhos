@@ -10,6 +10,7 @@
 
 #include "AbstractButton.h"
 #include "Button.h"
+#include "Checkbox.h"
 #include "Bmp.h"
 #include "Image.h"
 #include "Pixel.h"
@@ -23,7 +24,7 @@ unsigned char *imgData = NULL;
 
 // TODO: how iterate through this array without knowing its size
 AbstractButton **buttons = NULL;
-int numberOfBtns = 4;
+int numberOfBtns = 8;
 
 Image *image = NULL;
 Pixel **pixels = NULL;
@@ -34,12 +35,11 @@ int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . 
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
 void render() {
-    clear(0, 0, 0);
+    clear(1, 1, 1);
     image->render();
 
-    for (int i = 0; i < numberOfBtns; i++) {
+    for (int i = 0; i < numberOfBtns; i++)
         buttons[i]->render();
-    }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
@@ -82,13 +82,20 @@ int main(void) {
 
     image = new Image(pixels, 50, 50, img->getWidth(), img->getHeight());
 
-    buttons = new AbstractButton *[2];
+    buttons = new AbstractButton *[numberOfBtns];
     buttons[0] = new Button("Ampliar", screenWidth - 100, (screenHeight / 2) - (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
     buttons[1] = new Button("Reduzir", screenWidth - 100, (screenHeight / 2) + (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
 
     // buttons to rotate, left and right
     buttons[2] = new Button("<-", (screenWidth / 2) - 15, screenHeight - BTN_HEIGHT, 30, BTN_HEIGHT);
     buttons[3] = new Button("->", (screenWidth / 2) + 15, screenHeight - BTN_HEIGHT, 30, BTN_HEIGHT);
+
+    // r, g, b, y buttons
+    buttons[4] = new Checkbox("R", image->getX(), image->getY() - CHECKBOX_SIZE);
+    int space = CHECKBOX_SIZE + 15;
+    buttons[5] = new Checkbox("G", image->getX() + space, image->getY() - CHECKBOX_SIZE);
+    buttons[6] = new Checkbox("B", image->getX() + space * 2, image->getY() - CHECKBOX_SIZE);
+    buttons[7] = new Checkbox("Y", image->getX() + space * 3, image->getY() - CHECKBOX_SIZE);
 
     runCanvas();
 }
