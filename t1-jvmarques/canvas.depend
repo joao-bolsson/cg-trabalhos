@@ -159,14 +159,14 @@
 1426372440 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/include/GL/freeglut_ext.h
 	<stdarg.h>
 
-1585584259 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
+1585588999 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
-	"Canvas2D.h"
+	"gl_canvas2d.h"
 	"AbstractButton.h"
 	"Button.h"
 	"Checkbox.h"
@@ -217,22 +217,23 @@
 1585514555 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Image.h
 	"Pixel.h"
 
-1585576551 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.cpp
+1585585814 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.cpp
 	"AbstractButton.h"
 
-1585576551 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.h
+1585589533 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.h
+	<functional>
 
-1585576551 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Button.cpp
+1585585814 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Button.cpp
 	"Button.h"
 	"gl_canvas2d.h"
 
-1585576681 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Button.h
+1585589299 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Button.h
 	"AbstractButton.h"
 
-1585576551 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.h
+1585585814 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.h
 	"AbstractButton.h"
 
-1585576551 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.cpp
+1585585814 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.cpp
 	"Checkbox.h"
 	"gl_canvas2d.h"
 
@@ -244,7 +245,9 @@
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 
-1585584301 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Canvas2D.cpp
+1585584435 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Canvas2D.cpp
 	"Canvas2D.h"
 	<GL/glut.h>
+
+1585576551 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.
 

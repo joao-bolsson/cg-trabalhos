@@ -9,7 +9,6 @@ class Checkbox : public AbstractButton {
 public:
     Checkbox() : AbstractButton() {}
     Checkbox(char *label, int x, int y) : AbstractButton(label, x, y, CHECKBOX_SIZE, CHECKBOX_SIZE) {}
-    void doClick();
     void render();
 };
 

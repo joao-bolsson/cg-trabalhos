@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "Canvas2D.h"
+#include "gl_canvas2d.h"
 
 #include "AbstractButton.h"
 #include "Button.h"
@@ -18,8 +18,6 @@
 
 #define PATH_TO_IMG "./t1-jvmarques/resources/img.bmp"
 #define BTN_HEIGHT 40
-
-Canvas2D *canvas = NULL;
 
 Bmp *img;
 unsigned char *imgData = NULL;
@@ -74,9 +72,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 }
 
 int main(void) {
-    canvas = new Canvas2D();
-
-    canvas->initCanvas(&screenWidth, &screenHeight, "Trabalho 1 - Pressione 1, 2, 3");
+    initCanvas(&screenWidth, &screenHeight, "Trabalho 1 - Pressione 1, 2, 3");
 
     img = new Bmp(PATH_TO_IMG);
     img->convertBGRtoRGB();
@@ -101,5 +97,5 @@ int main(void) {
     buttons[6] = new Checkbox("B", image->getX() + space * 2, image->getY() - CHECKBOX_SIZE);
     buttons[7] = new Checkbox("Y", image->getX() + space * 3, image->getY() - CHECKBOX_SIZE);
 
-    canvas->runCanvas();
+    runCanvas();
 }

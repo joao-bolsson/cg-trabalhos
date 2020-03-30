@@ -12,6 +12,12 @@ AbstractButton::AbstractButton(char *label, int x, int y, unsigned width, unsign
     this->height = height;
 }
 
+void AbstractButton::doClick() {
+    if (action != NULL) {
+        action();
+    }
+}
+
 bool AbstractButton::isPointOver(int mx, int my) {
     if (mx >= x && mx <= (x + width) && my >= y && my <= (y + height)) {
         return true;
@@ -33,6 +39,10 @@ void AbstractButton::setWidth(int width) {
 
 void AbstractButton::setHeight(int height) {
     this->height = height;
+}
+
+void AbstractButton::setAction(function<void(void)> action) {
+    this->action = action;
 }
 
 int AbstractButton::getWidth() {

@@ -15,7 +15,6 @@ public:
         this->width = width;
         this->height = height;
     }
-    void doClick();
     void render();
 };
 
