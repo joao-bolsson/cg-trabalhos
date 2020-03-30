@@ -41,14 +41,24 @@ int Image::getY() {
     return y;
 }
 
-Pixel Image::getPixelQuad(int x, int y) {
-    int r = 0, g = 0, b = 0;
-
-    // TODO: render pixel x, y
+void Image::renderPixelQuad(int x, int y) {
     if (pixelSize < 1) {
-        // TODO: faz a interpolação
+        // interpolação dos pixels vizinhos
+        int r = 0, g = 0, b = 0;
+        for (int i = 0; i < pixelSize; i++) {
+            for (int j = 0; j < pixelSize; j++) {
+                Pixel p = pixels[x + i][y + j];
+                r = p.getRed();
+                g = p.getGreen();
+                b = p.getBlue();
+            }
+        }
+
+        Pixel p = Pixel(r / 4, g / 4, b / 4);
+        color(p.getRed(), p.getGreen(), p.getBlue());
+        point(this->x + x * pixelSize, this->y + y * pixelSize);
     } else if (pixelSize > 1) {
-        // duplica cada pixel no x e y
+        // replicação de cada pixel ao longos dos eixos x,y
         Pixel p = pixels[x][y];
         color(p.getRed(), p.getGreen(), p.getBlue());
 
@@ -61,33 +71,25 @@ Pixel Image::getPixelQuad(int x, int y) {
             }
         }
     } else {
+        // desenha o pixel
         Pixel p = pixels[x][y];
         color(p.getRed(), p.getGreen(), p.getBlue());
         point(this->x + x, this->y + y);
     }
-
-    return Pixel(r, g, b);
 }
 
 void Image::render() {
-    bool zoomIn = pixelSize > 1;
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
+    int step = 1;
+    if (pixelSize < 1) {
+        step = 1 / pixelSize;
+    }
 
-            getPixelQuad(x, y);
-
-            // Pixel p = pixels[y][x];
-            // color(p.getRed(), p.getGreen(), p.getBlue());
-            //
-            // if (pixelSize == 1) {
-            //     point(this->x + x, this->y + y);
-            // } else if (zoomIn) {
-            //     for (int i = 0; i < pixelSize; i++) {
-            //         for (int j = 0; j < pixelSize; j++) {
-            //             point(this->x + x + i, this->y + y + j);
-            //         }
-            //     }
-            // }
+    for (int y = 0; y < height; y += step) {
+        for (int x = 0; x < width; x += step) {
+            /**
+             * Render each pixel accordingly with the scale.
+             */
+            renderPixelQuad(x, y);
         }
     }
 }

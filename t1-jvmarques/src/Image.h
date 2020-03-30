@@ -21,7 +21,22 @@ public:
     void render();
     void scale(float factor);
     float getScale();
-    Pixel getPixelQuad(int x, int y);
+
+    /**
+     * The image is drawn based on its width and height, pixel by pixel. 
+     * This method draw the pixel at point (x, y) of the image, based on its scale.
+     * If scale is greater than 1 then each pixel is replicated along x and y axis accordingly with the 
+     * image scale and the dimensions.
+     * 
+     * If scale is lower than 1 then the interpolation method is used to decide the color of the quadrant.
+     * 
+     * If scale is 1 means that the image must be drawn with the original size pixel by pixel.
+     * 
+     * @param  x: X coordinate.
+     * @param  y: Y coordinate.
+     * @retval None
+     */
+    void renderPixelQuad(int x, int y);
 };
 
 #endif
