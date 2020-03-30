@@ -15,6 +15,7 @@ public:
     virtual void doClick() = 0;
     virtual void render() = 0;
 
+    bool isPointOver(int mx, int my);
     void setX(int x);
     void setY(int y);
     void setWidth(int width);

@@ -7,9 +7,16 @@ AbstractButton::AbstractButton() {
 AbstractButton::AbstractButton(char *label, int x, int y, unsigned width, unsigned height) {
     this->label = label;
     this->x = x;
-    this->y = 0;
+    this->y = y;
     this->width = width;
     this->height = height;
+}
+
+bool AbstractButton::isPointOver(int mx, int my) {
+    if (mx >= x && mx <= (x + width) && my >= y && my <= (y + height)) {
+        return true;
+    }
+    return false;
 }
 
 void AbstractButton::setX(int x) {

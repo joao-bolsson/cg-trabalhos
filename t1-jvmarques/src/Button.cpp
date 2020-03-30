@@ -1,9 +1,14 @@
 #include "Button.h"
+#include "gl_canvas2d.h"
+#include <stdio.h>
 
 void Button::doClick() {
     // TODO
 }
 
 void Button::render() {
-    // TODO
+    color(0, 1, 0);
+    rectFill(x, y, x + width, y + height);
+    color(0, 0, 0);
+    text(x + 5, y + height / 2, label);
 }

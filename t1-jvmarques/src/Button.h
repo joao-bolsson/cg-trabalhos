@@ -11,7 +11,7 @@ public:
     Button(char *label, int x, int y, unsigned width, unsigned height) : AbstractButton(label, x, y, width, height) {
         this->label = label;
         this->x = x;
-        this->y = 0;
+        this->y = y;
         this->width = width;
         this->height = height;
     }
