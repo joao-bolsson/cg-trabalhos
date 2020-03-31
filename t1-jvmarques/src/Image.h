@@ -11,6 +11,7 @@ private:
     float pixelSize = 1;
 
     float redChannel = 0, greenChannel = 0, blueChannel = 0;
+    bool luminance = false;
 
 public:
     Image();
@@ -42,11 +43,12 @@ public:
 
     void showChannel(float r, float g, float b);
 
-    void turnRedChannel(bool flag);
-    void turnGreenChannel(bool flag);
-    void turnBlueChannel(bool flag);
+    void turnRedChannel();
+    void turnGreenChannel();
+    void turnBlueChannel();
 
     void setColor(Pixel p);
+    void turnLuminance();
 };
 
 #endif

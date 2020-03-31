@@ -23,3 +23,15 @@ int Pixel::getGreen() {
 int Pixel::getBlue() {
     return b;
 }
+
+void Pixel::setRed(int r) {
+    this->r = r;
+}
+
+void Pixel::setGreen(int g) {
+    this->g = g;
+}
+
+void Pixel::setBlue(int b) {
+    this->b = b;
+}

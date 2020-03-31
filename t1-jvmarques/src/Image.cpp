@@ -41,22 +41,36 @@ int Image::getY() {
     return y;
 }
 
-void Image::turnRedChannel(bool flag) {
+void Image::turnRedChannel() {
     redChannel = redChannel == 0 ? 1 : 0;
 }
 
-void Image::turnGreenChannel(bool flag) {
+void Image::turnGreenChannel() {
     greenChannel = greenChannel == 0 ? 1 : 0;
 }
 
-void Image::turnBlueChannel(bool flag) {
+void Image::turnBlueChannel() {
     blueChannel = blueChannel == 0 ? 1 : 0;
 }
 
-void Image::setColor(Pixel p) {
-    color(p.getRed() * redChannel / 255,
-          p.getGreen() * greenChannel / 255,
-          p.getBlue() * blueChannel / 255);
+void Image::setColor(Pixel pixel) {
+
+    Pixel p = Pixel(pixel.getRed() * redChannel,
+                    pixel.getGreen() * greenChannel,
+                    pixel.getBlue() * blueChannel);
+
+    if (luminance) {
+        float y = 0.299 * p.getRed() + 0.587 * p.getGreen() + 0.114 * p.getBlue();
+        color(y / 255, y / 255, y / 255);
+    } else {
+        color(p.getRed() / 255,
+              p.getGreen() / 255,
+              p.getBlue() / 255);
+    }
+}
+
+void Image::turnLuminance() {
+    luminance = !luminance;
 }
 
 void Image::renderPixelQuad(int x, int y) {

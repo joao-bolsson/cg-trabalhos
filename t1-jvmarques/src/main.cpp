@@ -86,15 +86,19 @@ void zoomOut() {
 }
 
 void showImgRed() {
-    image->turnRedChannel(true);
+    image->turnRedChannel();
 }
 
 void showImgGreen() {
-    image->turnGreenChannel(true);
+    image->turnGreenChannel();
 }
 
 void showImgBlue() {
-    image->turnBlueChannel(true);
+    image->turnBlueChannel();
+}
+
+void turnImgLuminance() {
+    image->turnLuminance();
 }
 
 void addListeners() {
@@ -104,6 +108,7 @@ void addListeners() {
     buttons[4]->setAction(showImgRed);
     buttons[5]->setAction(showImgGreen);
     buttons[6]->setAction(showImgBlue);
+    buttons[7]->setAction(turnImgLuminance);
 }
 
 int main(void) {
