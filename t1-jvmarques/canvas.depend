@@ -159,7 +159,7 @@
 1426372440 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/include/GL/freeglut_ext.h
 	<stdarg.h>
 
-1585602842 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
+1585663979 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -198,10 +198,10 @@
 	"Bmp.h"
 	<string.h>
 
-1585455777 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Pixel.cpp
+1585663979 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Pixel.cpp
 	"Pixel.h"
 
-1585514562 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Pixel.h
+1585660242 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Pixel.h
 
 1585497690 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Util.cpp
 	"Util.h"
@@ -210,17 +210,17 @@
 1585441502 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Util.h
 	"Pixel.h"
 
-1585604624 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Image.cpp
+1585665050 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Image.cpp
 	"Image.h"
 	"gl_canvas2d.h"
 
-1585603380 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Image.h
+1585665100 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Image.h
 	"Pixel.h"
 
-1585591634 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.cpp
+1585661459 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.cpp
 	"AbstractButton.h"
 
-1585589533 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.h
+1585663979 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/AbstractButton.h
 	<functional>
 
 1585585814 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Button.cpp
@@ -230,10 +230,10 @@
 1585591474 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Button.h
 	"AbstractButton.h"
 
-1585585814 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.h
+1585663979 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.h
 	"AbstractButton.h"
 
-1585585814 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.cpp
+1585663979 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Checkbox.cpp
 	"Checkbox.h"
 	"gl_canvas2d.h"
 

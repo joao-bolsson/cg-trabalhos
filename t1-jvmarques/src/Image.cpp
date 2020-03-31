@@ -41,6 +41,24 @@ int Image::getY() {
     return y;
 }
 
+void Image::turnRedChannel(bool flag) {
+    redChannel = redChannel == 0 ? 1 : 0;
+}
+
+void Image::turnGreenChannel(bool flag) {
+    greenChannel = greenChannel == 0 ? 1 : 0;
+}
+
+void Image::turnBlueChannel(bool flag) {
+    blueChannel = blueChannel == 0 ? 1 : 0;
+}
+
+void Image::setColor(Pixel p) {
+    color(p.getRed() * redChannel / 255,
+          p.getGreen() * greenChannel / 255,
+          p.getBlue() * blueChannel / 255);
+}
+
 void Image::renderPixelQuad(int x, int y) {
     if (pixelSize < 1) {
         // interpolação dos pixels vizinhos
@@ -55,12 +73,12 @@ void Image::renderPixelQuad(int x, int y) {
         }
 
         Pixel p = Pixel(r / 4, g / 4, b / 4);
-        color(p.getRed(), p.getGreen(), p.getBlue());
+        setColor(p);
         point(this->x + x * pixelSize, this->y + y * pixelSize);
     } else if (pixelSize > 1) {
         // replicação de cada pixel ao longos dos eixos x,y
         Pixel p = pixels[x][y];
-        color(p.getRed(), p.getGreen(), p.getBlue());
+        setColor(p);
 
         int coordX = this->x + x;
         int coordY = this->y + y;
@@ -73,7 +91,7 @@ void Image::renderPixelQuad(int x, int y) {
     } else {
         // desenha o pixel
         Pixel p = pixels[x][y];
-        color(p.getRed(), p.getGreen(), p.getBlue());
+        setColor(p);
         point(this->x + x, this->y + y);
     }
 }

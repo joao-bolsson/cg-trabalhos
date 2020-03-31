@@ -10,6 +10,8 @@ private:
     int x, y, originalWidth, originalHeight, width, height;
     float pixelSize = 1;
 
+    float redChannel = 0, greenChannel = 0, blueChannel = 0;
+
 public:
     Image();
     Image(Pixel **pixels, unsigned width, unsigned height);
@@ -37,6 +39,14 @@ public:
      * @retval None
      */
     void renderPixelQuad(int x, int y);
+
+    void showChannel(float r, float g, float b);
+
+    void turnRedChannel(bool flag);
+    void turnGreenChannel(bool flag);
+    void turnBlueChannel(bool flag);
+
+    void setColor(Pixel p);
 };
 
 #endif

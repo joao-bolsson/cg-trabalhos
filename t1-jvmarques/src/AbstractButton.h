@@ -17,7 +17,7 @@ public:
     AbstractButton(char *label, int x, int y, unsigned width, unsigned height);
 
     // method to be implemented
-    void doClick();
+    virtual void doClick();
     virtual void render() = 0;
 
     bool isPointOver(int mx, int my);
