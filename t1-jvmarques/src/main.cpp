@@ -14,6 +14,7 @@
 #include "Bmp.h"
 #include "Image.h"
 #include "Pixel.h"
+#include "Histogram.h"
 #include "Util.h"
 
 #define PATH_TO_IMG "./t1-jvmarques/resources/img.bmp"
@@ -28,6 +29,7 @@ int numberOfBtns = 8;
 
 Image *image = NULL;
 Pixel **pixels = NULL;
+Histogram *histogram = NULL;
 
 //variavel global para selecao do que sera exibido na canvas.
 int opcao = 50;
@@ -36,6 +38,7 @@ int mouseX, mouseY;                        //variaveis globais do mouse para pod
 
 void render() {
     image->render();
+    histogram->render();
 
     for (int i = 0; i < numberOfBtns; i++)
         buttons[i]->render();
@@ -136,6 +139,8 @@ int main(void) {
     buttons[5] = new Checkbox("G", image->getX() + space, image->getY() - CHECKBOX_SIZE);
     buttons[6] = new Checkbox("B", image->getX() + space * 2, image->getY() - CHECKBOX_SIZE);
     buttons[7] = new Checkbox("Y", image->getX() + space * 3, image->getY() - CHECKBOX_SIZE);
+
+    histogram = new Histogram(image, image->getX() + image->getWidth() + 50, image->getY(), 300, 300);
 
     addListeners();
     runCanvas();

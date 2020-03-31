@@ -42,6 +42,10 @@ int Image::getY() {
     return y;
 }
 
+Pixel **Image::getPixels() {
+    return pixels;
+}
+
 void Image::turnRedChannel() {
     redChannel = redChannel == 0 ? 1 : 0;
 }
@@ -121,7 +125,7 @@ void Image::render() {
             /**
              * Render each pixel accordingly with the scale.
              */
-            renderPixelQuad(x, y);
+            renderPixelQuad(y, x);
         }
     }
 }

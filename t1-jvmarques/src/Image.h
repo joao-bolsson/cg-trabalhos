@@ -21,6 +21,7 @@ public:
     int getY();
     int getWidth();
     int getHeight();
+    Pixel **getPixels();
     void render();
     void scale(float factor);
     float getScale();
