@@ -29,6 +29,7 @@ Image::Image(Pixel **pixels, int x, int y, unsigned width, unsigned height) {
 int Image::getWidth() {
     return width;
 }
+
 int Image::getHeight() {
     return height;
 }
@@ -54,18 +55,15 @@ void Image::turnBlueChannel() {
 }
 
 void Image::setColor(Pixel pixel) {
-
     Pixel p = Pixel(pixel.getRed() * redChannel,
                     pixel.getGreen() * greenChannel,
                     pixel.getBlue() * blueChannel);
 
     if (luminance) {
         float y = 0.299 * p.getRed() + 0.587 * p.getGreen() + 0.114 * p.getBlue();
-        color(y / 255, y / 255, y / 255);
+        color(y, y, y);
     } else {
-        color(p.getRed() / 255,
-              p.getGreen() / 255,
-              p.getBlue() / 255);
+        color(p.getRed(), p.getGreen(), p.getBlue());
     }
 }
 
@@ -77,16 +75,18 @@ void Image::renderPixelQuad(int x, int y) {
     if (pixelSize < 1) {
         // interpolação dos pixels vizinhos
         int r = 0, g = 0, b = 0;
+        int num = 0;
         for (int i = 0; i < pixelSize; i++) {
             for (int j = 0; j < pixelSize; j++) {
                 Pixel p = pixels[x + i][y + j];
                 r = p.getRed();
                 g = p.getGreen();
                 b = p.getBlue();
+                num++;
             }
         }
 
-        Pixel p = Pixel(r / 4, g / 4, b / 4);
+        Pixel p = Pixel(r / num, g / num, b / num);
         setColor(p);
         point(this->x + x * pixelSize, this->y + y * pixelSize);
     } else if (pixelSize > 1) {

@@ -6,32 +6,32 @@ Pixel::Pixel() {
     this->b = 0;
 }
 
-Pixel::Pixel(int r, int g, int b) {
+Pixel::Pixel(float r, float g, float b) {
     this->r = r;
     this->g = g;
     this->b = b;
 }
 
-int Pixel::getRed() {
+float Pixel::getRed() {
     return r;
 }
 
-int Pixel::getGreen() {
+float Pixel::getGreen() {
     return g;
 }
 
-int Pixel::getBlue() {
+float Pixel::getBlue() {
     return b;
 }
 
-void Pixel::setRed(int r) {
+void Pixel::setRed(float r) {
     this->r = r;
 }
 
-void Pixel::setGreen(int g) {
+void Pixel::setGreen(float g) {
     this->g = g;
 }
 
-void Pixel::setBlue(int b) {
+void Pixel::setBlue(float b) {
     this->b = b;
 }

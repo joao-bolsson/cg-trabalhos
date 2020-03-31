@@ -4,18 +4,18 @@
 // TODO: doc
 class Pixel {
 private:
-    int r, g, b;
+    float r, g, b;
 
 public:
     Pixel();
-    Pixel(int r, int g, int b);
-    int getRed();
-    int getGreen();
-    int getBlue();
+    Pixel(float r, float g, float b);
+    float getRed();
+    float getGreen();
+    float getBlue();
 
-    void setRed(int r);
-    void setGreen(int g);
-    void setBlue(int b);
+    void setRed(float r);
+    void setGreen(float g);
+    void setBlue(float b);
 };
 
 #endif
