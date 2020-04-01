@@ -264,10 +264,11 @@
 1585674338 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Point.cpp
 	"Point.h"
 
-1585753952 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Histogram.h
+1585771304 /home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Histogram.h
 	"Image.h"
 
-1585764131 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Histogram.cpp
+1585768127 source:/home/joao/Desktop/cg - 2020/trabalhos/t1-jvmarques/src/Histogram.cpp
 	"Histogram.h"
 	"gl_canvas2d.h"
+	"Point.h"
 
