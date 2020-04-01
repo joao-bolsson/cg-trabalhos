@@ -16,7 +16,7 @@ Pixel **Util::getImagePixels(unsigned char *imgData, unsigned width, unsigned he
             int g = imgData[pos + 1];
             int b = imgData[pos + 2];
 
-            pixels[y][w] = Pixel(r / 255, g / 255, b / 255);
+            pixels[y][w] = Pixel(r / 255.0, g / 255.0, b / 255.0);
         }
     }
 

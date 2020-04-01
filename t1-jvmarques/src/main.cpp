@@ -17,7 +17,7 @@
 #include "Histogram.h"
 #include "Util.h"
 
-#define PATH_TO_IMG "./t1-jvmarques/resources/img.bmp"
+#define PATH_TO_IMG "./t1-jvmarques/resources/normal_1.bmp"
 #define BTN_HEIGHT 40
 
 Bmp *img;
