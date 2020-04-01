@@ -82,7 +82,7 @@ void Image::renderPixelQuad(int x, int y) {
         int num = 0;
         for (int i = 0; i < pixelSize; i++) {
             for (int j = 0; j < pixelSize; j++) {
-                Pixel p = pixels[x + i][y + j];
+                Pixel p = pixels[y + i][x + j];
                 r = p.getRed();
                 g = p.getGreen();
                 b = p.getBlue();
@@ -95,7 +95,7 @@ void Image::renderPixelQuad(int x, int y) {
         point(this->x + x * pixelSize, this->y + y * pixelSize);
     } else if (pixelSize > 1) {
         // replicação de cada pixel ao longos dos eixos x,y
-        Pixel p = pixels[x][y];
+        Pixel p = pixels[y][x];
         setColor(p);
 
         int coordX = this->x + x;
@@ -108,7 +108,7 @@ void Image::renderPixelQuad(int x, int y) {
         }
     } else {
         // desenha o pixel
-        Pixel p = pixels[x][y];
+        Pixel p = pixels[y][x];
         setColor(p);
         point(this->x + x, this->y + y);
     }
@@ -125,7 +125,7 @@ void Image::render() {
             /**
              * Render each pixel accordingly with the scale.
              */
-            renderPixelQuad(y, x);
+            renderPixelQuad(x, y);
         }
     }
 }

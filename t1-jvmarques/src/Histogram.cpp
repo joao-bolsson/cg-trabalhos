@@ -12,8 +12,8 @@ Histogram::Histogram(Image *img, int x, int y, unsigned width, unsigned height) 
 void Histogram::render() {
     // draw axis
     color(0, 0, 0);
-    line(x, y + height, x + width, y + height); // x axis
-    rect(x, y, x, y + height);                  // y axis
+    line(x, y, x + width, y);  // x axis
+    rect(x, y, x, y + height); // y axis
 
     // Pixel **pixels = img->getPixels();
     // for (int y = 0; y < height; y++) {

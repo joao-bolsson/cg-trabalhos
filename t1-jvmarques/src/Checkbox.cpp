@@ -9,7 +9,7 @@ void Checkbox::render() {
         rect(x, y, x + width, y + height);
     }
     color(0, 0, 0);
-    text(x + width, y + height, label);
+    text(x + width, y, label);
 }
 
 void Checkbox::doClick() {

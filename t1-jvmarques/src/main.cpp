@@ -126,8 +126,8 @@ int main(void) {
     image = new Image(pixels, 50, 50, img->getWidth(), img->getHeight());
 
     buttons = new AbstractButton *[numberOfBtns];
-    buttons[0] = new Button("Ampliar", screenWidth - 100, (screenHeight / 2) - (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
-    buttons[1] = new Button("Reduzir", screenWidth - 100, (screenHeight / 2) + (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
+    buttons[0] = new Button("Ampliar", screenWidth - 100, (screenHeight / 2) + (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
+    buttons[1] = new Button("Reduzir", screenWidth - 100, (screenHeight / 2) - (BTN_HEIGHT / 2), 100, BTN_HEIGHT);
 
     // buttons to rotate, left and right
     buttons[2] = new Button("<-", (screenWidth / 2) - 15, screenHeight - BTN_HEIGHT, 30, BTN_HEIGHT);
