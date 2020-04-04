@@ -35,15 +35,11 @@ public:
      * 
      * If scale is lower than 1 then the interpolation method is used to decide the color of the quadrant.
      * 
-     * If scale is 1 means that the image must be drawn with the original size pixel by pixel.
+     * If scale is 1 then the image will be drawn with the original size pixel by pixel.
      * 
-     * @param  x: X coordinate.
-     * @param  y: Y coordinate.
-     * @retval None
+     * If scale is greater than 1 then each pixel will be extended to the neighboors positions.
      */
-    void renderPixelQuad(int x, int y);
-    void renderPixelQuad2(int lineIndex, int colIndex, int x, int y);
-    void renderPixelQuad3(int lineIndex, int colIndex, int x, int y, bool swapAxis);
+    void renderPixelQuad(int lineIndex, int colIndex, int x, int y, bool swapAxis);
 
     void rotateLeft();
     void rotateRight();

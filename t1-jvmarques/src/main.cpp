@@ -17,13 +17,12 @@
 #include "Histogram.h"
 #include "Util.h"
 
-#define PATH_TO_IMG "./t1-jvmarques/resources/normal_1.bmp"
+#define PATH_TO_IMG "./t1-jvmarques/resources/img.bmp"
 #define BTN_HEIGHT 40
 
 Bmp *img;
 unsigned char *imgData = NULL;
 
-// TODO: how iterate through this array without knowing its size
 AbstractButton **buttons = NULL;
 int numberOfBtns = 8;
 
@@ -32,7 +31,6 @@ Pixel **pixels = NULL;
 Histogram *histogram = NULL;
 
 //variavel global para selecao do que sera exibido na canvas.
-int opcao = 50;
 int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
@@ -44,13 +42,7 @@ void render() {
         buttons[i]->render();
 }
 
-//funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key) {
-    printf("\nTecla: %d", key);
-    if (key < 200) {
-        opcao = key;
-    }
-
     switch (key) {
     case 27:
         exit(0);
@@ -58,12 +50,10 @@ void keyboard(int key) {
     }
 }
 
-//funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key) {
-    printf("\nLiberou: %d", key);
+    // empty
 }
 
-//funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y) {
     mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
     mouseY = y;
@@ -108,10 +98,15 @@ void rotateRight() {
     image->rotateRight();
 }
 
+void rotateLeft() {
+    image->rotateLeft();
+}
+
 void addListeners() {
     buttons[0]->setAction(zoomIn);
     buttons[1]->setAction(zoomOut);
 
+    buttons[2]->setAction(rotateLeft);
     buttons[3]->setAction(rotateRight);
 
     buttons[4]->setAction(showImgRed);

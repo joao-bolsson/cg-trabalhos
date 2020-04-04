@@ -1,4 +1,3 @@
-// TODO: doc
 #include "Image.h"
 #include "gl_canvas2d.h"
 
@@ -75,46 +74,7 @@ void Image::turnLuminance() {
     luminance = !luminance;
 }
 
-void Image::renderPixelQuad(int x, int y) {
-    if (pixelSize < 1) {
-        // interpolação dos pixels vizinhos
-        int r = 0, g = 0, b = 0;
-        int num = 0;
-        for (int i = 0; i < pixelSize; i++) {
-            for (int j = 0; j < pixelSize; j++) {
-                Pixel p = pixels[y + i][x + j];
-                r = p.getRed();
-                g = p.getGreen();
-                b = p.getBlue();
-                num++;
-            }
-        }
-
-        Pixel p = Pixel(r / num, g / num, b / num);
-        setColor(p);
-        point(this->x + x * pixelSize, this->y + y * pixelSize);
-    } else if (pixelSize > 1) {
-        // replicação de cada pixel ao longos dos eixos x,y
-        Pixel p = pixels[y][x];
-        setColor(p);
-
-        int coordX = this->x + x;
-        int coordY = this->y + y;
-
-        for (int i = 0; i < pixelSize; i++) {
-            for (int j = 0; j < pixelSize; j++) {
-                point(coordX * pixelSize + i, coordY * pixelSize + j);
-            }
-        }
-    } else {
-        // desenha o pixel
-        Pixel p = pixels[y][x];
-        setColor(p);
-        point(this->x + x, this->y + y);
-    }
-}
-
-void Image::renderPixelQuad2(int lineIndex, int colIndex, int x, int y) {
+void Image::renderPixelQuad(int lineIndex, int colIndex, int x, int y, bool swapAxis) {
     if (pixelSize < 1) {
         // interpolação dos pixels vizinhos
         int r = 0, g = 0, b = 0;
@@ -142,53 +102,10 @@ void Image::renderPixelQuad2(int lineIndex, int colIndex, int x, int y) {
 
         for (int i = 0; i < pixelSize; i++) {
             for (int j = 0; j < pixelSize; j++) {
-                point(coordX * pixelSize + i, coordY * pixelSize + j);
-            }
-        }
-    } else {
-        // desenha o pixel
-        Pixel p = pixels[lineIndex][colIndex];
-        setColor(p);
-        point(this->x + x, this->y + y);
-    }
-}
-
-void Image::renderPixelQuad3(int lineIndex, int colIndex, int x, int y, bool swapAxis) {
-    if (pixelSize < 1) {
-        // interpolação dos pixels vizinhos
-        int r = 0, g = 0, b = 0;
-        int num = 0;
-        for (int i = 0; i < pixelSize; i++) {
-            for (int j = 0; j < pixelSize; j++) {
-                Pixel p = pixels[lineIndex + i][colIndex + j];
-                r = p.getRed();
-                g = p.getGreen();
-                b = p.getBlue();
-                num++;
-            }
-        }
-
-        Pixel p = Pixel(r / num, g / num, b / num);
-        setColor(p);
-        if (swapAxis) {
-            point(this->x + x * pixelSize, this->y + y * pixelSize);
-        } else {
-            point(this->y + y * pixelSize, this->x + x * pixelSize);
-        }
-    } else if (pixelSize > 1) {
-        // replicação de cada pixel ao longos dos eixos x,y
-        Pixel p = pixels[lineIndex][colIndex];
-        setColor(p);
-
-        int coordX = this->x + x;
-        int coordY = this->y + y;
-
-        for (int i = 0; i < pixelSize; i++) {
-            for (int j = 0; j < pixelSize; j++) {
-                if (swapAxis) {
-                    point(coordX * pixelSize + i, coordY * pixelSize + j);
-                } else {
+                if (swapAxis && 1 < 0) {
                     point(coordY * pixelSize + j, coordX * pixelSize + i);
+                } else {
+                    point(coordX * pixelSize + i, coordY * pixelSize + j);
                 }
             }
         }
@@ -213,7 +130,11 @@ void Image::rotateRight() {
 }
 
 void Image::rotateLeft() {
-    // TODO
+    if (countRotateRight - 1 < 0) {
+        countRotateRight = (countRotateRight - 1) + 4;
+    } else {
+        countRotateRight--;
+    }
 }
 
 void Image::render() {
@@ -222,102 +143,31 @@ void Image::render() {
         step = 1 / pixelSize;
     }
 
-    // desenha normal
-    // int coordY = 0;
-    // for (int l = 0; l < height; l += step) {
-    //     int coordX = 0;
-    //     for (int c = 0; c < width; c++) {
-    //         Pixel p = pixels[l][c];
-    //         setColor(p);
-
-    //         point(this->x + coordX, this->y + coordY);
-    //         coordX++;
-    //     }
-    //     coordY++;
-    // }
-
-    // desenha rotacionado 1x a direita
-    // int coordY = 0;
-    // for (int l = 0; l < height; l += step) {
-    //     int coordX = 0;
-    //     for (int c = 0; c < width; c++) {
-    //         Pixel p = pixels[l][c];
-    //         setColor(p);
-
-    //         point(this->y + coordY, this->x + coordX);
-    //         coordX++;
-    //     }
-    //     coordY++;
-    // }
-
-    // desenha de cabeça pra baixo
-    // int coordY = 0;
-    // for (int l = height - 1; l >= 0; l -= step) {
-    //     int coordX = 0;
-    //     for (int c = 0; c < width; c++) {
-    //         Pixel p = pixels[l][c];
-    //         setColor(p);
-
-    //         point(this->x + coordX, this->y + coordY);
-    //         coordX++;
-    //     }
-    //     coordY++;
-    // }
-
-    // desenha rotacionado 1x pra esquerda
-    // int coordY = 0;
-    // for (int l = height - 1; l >= 0; l -= step) {
-    //     int coordX = 0;
-    //     for (int c = 0; c < width; c++) {
-    //         Pixel p = pixels[l][c];
-    //         setColor(p);
-
-    //         point(this->y + coordY, this->x + coordX);
-    //         coordX++;
-    //     }
-    //     coordY++;
-    // }
-
     if (countRotateRight == 3) {
         for (int l = height - 1, coordY = 0; l >= 0; l -= step, coordY += step) {
             for (int c = 0, coordX = 0; c < width; c += step, coordX += step) {
-                renderPixelQuad3(l, c, coordX, coordY, true);
+                renderPixelQuad(l, c, coordX, coordY, true);
             }
         }
     } else if (countRotateRight == 1) {
         for (int l = 0, coordY = 0; l < height; l += step, coordY += step) {
-            for (int c = 0, coordX = 0; c < width; c += step, coordX += step) {
-                renderPixelQuad3(l, c, coordX, coordY, true);
+            for (int c = width, coordX = 0; c >= 0; c -= step, coordX += step) {
+                renderPixelQuad(l, c, coordX, coordY, true);
             }
         }
     } else if (countRotateRight == 2) {
         for (int l = height - 1, coordY = 0; l >= 0; l -= step, coordY += step) {
-            for (int c = 0, coordX = 0; c < width; c += step, coordX += step) {
-                renderPixelQuad3(l, c, coordX, coordY, false);
+            for (int c = width, coordX = 0; c >= 0; c -= step, coordX += step) {
+                renderPixelQuad(l, c, coordX, coordY, false);
             }
         }
     } else {
         for (int l = 0, coordY = 0; l < height; l += step, coordY += step) {
             for (int c = 0, coordX = 0; c < width; c += step, coordX += step) {
-                renderPixelQuad3(l, c, coordX, coordY, false);
+                renderPixelQuad(l, c, coordX, coordY, false);
             }
         }
     }
-
-    // if (countRotateRight == 1) {
-    //     // desenha coluna como linha
-    //     for (int col = 0, y = height - 1; col < width && y >= 0; col += step, y -= step) {
-    //         for (int line = height - 1, x = 0; line >= 0 && x < width; line -= step, x += step) {
-    //             renderPixelQuad2(line, col, x, y);
-    //         }
-    //     }
-    // } else {
-    //     for (int y = 0; y < height; y += step) {
-    //         for (int x = 0; x < width; x += step) {
-    //             renderPixelQuad2(y, x, x, y);
-    //         }
-    //     }
-    // }
 }
 
 void Image::scale(float factor) {
