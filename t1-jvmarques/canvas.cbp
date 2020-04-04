@@ -39,6 +39,8 @@
 		<Unit filename="src/Canvas2D.h" />
 		<Unit filename="src/Checkbox.cpp" />
 		<Unit filename="src/Checkbox.h" />
+		<Unit filename="src/Histogram.cpp" />
+		<Unit filename="src/Histogram.h" />
 		<Unit filename="src/Image.cpp" />
 		<Unit filename="src/Image.h" />
 		<Unit filename="src/Line.cpp" />

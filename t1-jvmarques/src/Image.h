@@ -12,6 +12,7 @@ private:
 
     float redChannel = 0, greenChannel = 0, blueChannel = 0;
     bool luminance = false;
+    int countRotateRight = 0;
 
 public:
     Image();
@@ -41,6 +42,11 @@ public:
      * @retval None
      */
     void renderPixelQuad(int x, int y);
+    void renderPixelQuad2(int lineIndex, int colIndex, int x, int y);
+    void renderPixelQuad3(int lineIndex, int colIndex, int x, int y, bool swapAxis);
+
+    void rotateLeft();
+    void rotateRight();
 
     void showChannel(float r, float g, float b);
 

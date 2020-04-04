@@ -104,9 +104,15 @@ void turnImgLuminance() {
     image->turnLuminance();
 }
 
+void rotateRight() {
+    image->rotateRight();
+}
+
 void addListeners() {
     buttons[0]->setAction(zoomIn);
     buttons[1]->setAction(zoomOut);
+
+    buttons[3]->setAction(rotateRight);
 
     buttons[4]->setAction(showImgRed);
     buttons[5]->setAction(showImgGreen);
