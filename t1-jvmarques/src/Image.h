@@ -43,8 +43,6 @@ public:
     void rotateLeft();
     void rotateRight();
 
-    void showChannel(float r, float g, float b);
-
     void turnRedChannel();
     void turnGreenChannel();
     void turnBlueChannel();

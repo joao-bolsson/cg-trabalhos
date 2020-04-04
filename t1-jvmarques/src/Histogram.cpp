@@ -1,6 +1,5 @@
 #include "Histogram.h"
 #include "gl_canvas2d.h"
-#include "Point.h"
 
 Histogram::Histogram(Image *img, int x, int y, unsigned width, unsigned height) {
     this->x = x;
@@ -44,7 +43,6 @@ void Histogram::plotChannel(int *channel, unsigned size) {
         int coordY = channel[i] * height / numMaxPixels;
 
         rect(this->x + coordX, this->y, this->x + coordX, this->y + coordY);
-        // point(this->x + coordX, this->y + coordY);
     }
 }
 
