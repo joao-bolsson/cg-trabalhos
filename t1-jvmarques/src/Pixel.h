@@ -1,7 +1,6 @@
 #ifndef PIXEL_INCLUDED
 #define PIXEL_INCLUDED
 
-// TODO: doc
 class Pixel {
 private:
     float r, g, b;

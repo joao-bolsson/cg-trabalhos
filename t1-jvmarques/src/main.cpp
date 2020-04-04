@@ -113,10 +113,14 @@ void addListeners() {
     buttons[5]->setAction(showImgGreen);
     buttons[6]->setAction(showImgBlue);
     buttons[7]->setAction(turnImgLuminance);
+
+    for (int i = 4; i <= 6; i++) {
+        buttons[i]->doClick();
+    }
 }
 
-int main(void) {
-    initCanvas(&screenWidth, &screenHeight, "Trabalho 1 - Pressione 1, 2, 3");
+int main() {
+    initCanvas(&screenWidth, &screenHeight, "Trabalho 1");
 
     img = new Bmp(PATH_TO_IMG);
     img->convertBGRtoRGB();

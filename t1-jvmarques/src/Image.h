@@ -3,7 +3,6 @@
 
 #include "Pixel.h"
 
-// TODO: doc
 class Image {
 private:
     Pixel **pixels;
