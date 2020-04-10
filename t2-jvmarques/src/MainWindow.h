@@ -1,8 +1,6 @@
 #ifndef __MAINWINDOW__H__
 #define __MAINWINDOW__H__
 
-#include "Canvas.h"
-
 class MainWindow {
 
 private:
@@ -13,6 +11,7 @@ public:
     MainWindow(int width, int height, char *title);
     ~MainWindow();
 
+    void renderComponents();
     void init();
     void show();
 };

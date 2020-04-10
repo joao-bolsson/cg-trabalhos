@@ -8,6 +8,10 @@ Canvas::Canvas() {
 Canvas::~Canvas() {
 }
 
+void Canvas::setWindow(MainWindow *window) {
+    this->window = window;
+}
+
 void Canvas::point(int x, int y) {
     glBegin(GL_POINTS);
     glVertex2d(x, y);
@@ -169,7 +173,9 @@ void Canvas::inicializa() {
 }
 
 void Canvas::render() {
-    // TODO
+    if (window != NULL) {
+        window->renderComponents();
+    }
 }
 
 void Canvas::display() {

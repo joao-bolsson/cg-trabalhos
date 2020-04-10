@@ -31,8 +31,16 @@
 		<Unit filename="include/GL/glut.h" />
 		<Unit filename="src/Canvas.cpp" />
 		<Unit filename="src/Canvas.h" />
+		<Unit filename="src/Line.cpp" />
+		<Unit filename="src/Line.h" />
 		<Unit filename="src/MainWindow.cpp" />
 		<Unit filename="src/MainWindow.h" />
+		<Unit filename="src/Point.cpp" />
+		<Unit filename="src/Point.h" />
+		<Unit filename="src/Rectangle.cpp" />
+		<Unit filename="src/Rectangle.h" />
+		<Unit filename="src/Shape.cpp" />
+		<Unit filename="src/Shape.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />

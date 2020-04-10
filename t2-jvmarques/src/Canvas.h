@@ -1,6 +1,7 @@
 #ifndef __CANVAS__H__
 #define __CANVAS__H__
 
+#include "MainWindow.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -15,9 +16,14 @@
 
 class Canvas {
 
+private:
+    MainWindow *window;
+
 public:
     Canvas();
     ~Canvas();
+
+    void setWindow(MainWindow *window);
 
     void point(int x, int y);
     void line(int x1, int y1, int x2, int y2);
