@@ -103,20 +103,12 @@ void Canvas::color(float r, float g, float b) {
 }
 
 void Canvas::mouse(int bt, int st, int wheel, int direction, int x, int y) {
-    /*
-    mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
+    mouseX = x;
     mouseY = y;
+}
 
-    if (state == 0) {
-        for (int i = 0; i < numberOfBtns; i++) {
-            if (buttons[i]->isPointOver(x, y)) {
-                buttons[i]->doClick();
-                break;
-            }
-        }
-    }
-    */
-    // TODO
+Point Canvas::getMousePoint() {
+    return Point(mouseX, mouseY);
 }
 
 void Canvas::keyboard(int key) {

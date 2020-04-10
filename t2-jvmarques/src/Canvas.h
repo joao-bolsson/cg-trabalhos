@@ -2,6 +2,7 @@
 #define __CANVAS__H__
 
 #include "MainWindow.h"
+#include "Point.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -12,18 +13,21 @@
 
 #define PI_2 6.28318530717958
 
-#define Y_CANVAS_CRESCE_PARA_CIMA 0
+#define Y_CANVAS_CRESCE_PARA_CIMA 1
 
 class Canvas {
 
 private:
     MainWindow *window;
+    int mouseX = -1, mouseY = -1;
 
 public:
     Canvas();
     ~Canvas();
 
     void setWindow(MainWindow *window);
+
+    Point getMousePoint();
 
     void point(int x, int y);
     void line(int x1, int y1, int x2, int y2);
