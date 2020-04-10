@@ -29,8 +29,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/GL/glut.h" />
-		<Unit filename="src/gl_canvas2d.cpp" />
-		<Unit filename="src/gl_canvas2d.h" />
+		<Unit filename="src/Canvas.cpp" />
+		<Unit filename="src/Canvas.h" />
+		<Unit filename="src/MainWindow.cpp" />
+		<Unit filename="src/MainWindow.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
