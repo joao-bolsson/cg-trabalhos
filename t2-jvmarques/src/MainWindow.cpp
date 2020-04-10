@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Line.h"
 #include "Rectangle.h"
+#include "Curve.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -68,6 +69,70 @@ void btnLine() {
     clearSelection();
 }
 
+/**
+ * @brief Method call to clear the canvas.
+ */
+void btnClear() {
+    printf("[debug] Button to clear the screen pressed\n");
+    stopDrawing();
+    shapes.clear();
+    clearSelection();
+}
+
+/**
+ * @brief Method called to start drawing a rectangle. 
+ */
+void btnRectangle() {
+    printf("[debug] Button to draw rectangle pressed\n");
+    drawRectangle = true;
+    drawLine = false;
+    drawCurve = false;
+    clearSelection();
+}
+
+/**
+ * @param d If true - rotate to the left, false - right.
+ * @param shape
+ */
+void rotate(bool d, Shape *shape) {
+    Point pivo = shape->getPivo();
+
+    // leva para a origem
+    shape->translate(-pivo.getX(), -pivo.getY());
+
+    // rotaciona
+    shape->rotate(d);
+
+    // leva de volta
+    shape->translate(pivo.getX(), pivo.getY());
+
+    shapeCopy = shape->copy();
+}
+
+void btnRotateLeft() {
+    printf("[debug] Button to rotate left pressed\n");
+    drawLine = false;
+    drawRectangle = false;
+    drawCurve = false;
+    rotate(true, selectedShape);
+}
+
+void btnRotateRight() {
+    printf("[debug] Button to rotate right pressed\n");
+    drawLine = false;
+    drawRectangle = false;
+    drawCurve = false;
+    rotate(false, selectedShape);
+}
+
+void btnCurve() {
+    printf("[debug] Button to draw a curve pressed\n");
+    clearSelection();
+    drawLine = false;
+    drawRectangle = false;
+    drawCurve = true;
+}
+
 MainWindow::~MainWindow() {
     delete canvas;
 }
@@ -82,8 +147,33 @@ void display() {
 
 void keyb(unsigned char key, int, int) {
     canvas->keyboard(key);
-    if (key == KEY_4_LINE) {
+
+    switch (key) {
+    case KEY_4_LINE:
         btnLine();
+        return;
+
+    case KEY_4_RECTANGLE:
+        btnRectangle();
+        return;
+
+    case KEY_4_CURVE:
+        btnCurve();
+        return;
+
+    case KEY_4_CLEAR:
+        btnClear();
+        return;
+
+    case KEY_4_ROTATE_LEFT:
+        btnRotateLeft();
+        return;
+
+    case KEY_4_ROTATE_RIGHT:
+        btnRotateRight();
+        return;
+
+    default:
         return;
     }
 }
@@ -95,8 +185,19 @@ void keybUp(unsigned char key, int, int) {
 void mousePressEvent(int x, int y) {
     Point point = Point(x, y);
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
-    if (drawLine || drawRectangle) {
+    if (drawLine || drawRectangle || drawCurve) {
         points.push_back(point);
+
+        if (drawCurve && points.size() == 4) {
+            Curve *curve = new Curve();
+
+            for (unsigned int i = 0; i < points.size(); i++) {
+                curve->addPoint(new Point(points[i].getX(), points[i].getY()));
+            }
+
+            shapes.push_back(curve);
+            stopDrawing();
+        }
     } else {
         selectedShape = new Shape();
         mousePointPressed = point;
@@ -167,7 +268,38 @@ void mouseMoveEvent(int mX, int mY) {
             shapeCopy = cp;
         }
 
-        if (Line *line = dynamic_cast<Line *>(selectedShape)) {
+        if (Curve *curve = dynamic_cast<Curve *>(selectedShape)) {
+            Curve *shapeCp = dynamic_cast<Curve *>(shapeCopy);
+
+            int width = mousePointPressed.getX() - mousePoint.getX();
+            int height = mousePointPressed.getY() - mousePoint.getY();
+
+            // verifica se nao ta editando um ponto de control
+
+            if (indexPoint == -2) {
+                // verifica apenas se nao tiver editando um ponto de controle
+                indexPoint = curve->isSelectedPointCtrl(mousePointPressed);
+            }
+
+            if (indexPoint != -1) {
+                // move ponto de controle
+                if (selectedPointCopy.getX() == -1 && selectedPointCopy.getY() == -1) {
+                    Point *p = curve->getControlPts()[indexPoint];
+
+                    selectedPointCopy = Point(p->getX(), p->getY());
+                }
+
+                curve->changePoint(indexPoint, selectedPointCopy.getX() - width, selectedPointCopy.getY() - height);
+            } else {
+                if (Curve *curveCopy = dynamic_cast<Curve *>(shapeCp)) {
+                    vector<Point *> ptsCp = curveCopy->getControlPts();
+                    for (unsigned int i = 0; i < ptsCp.size(); i++) {
+                        Point *p = ptsCp[i];
+                        curve->changePoint(i, p->getX() - width, p->getY() - height);
+                    }
+                }
+            }
+        } else if (Line *line = dynamic_cast<Line *>(selectedShape)) {
             Line *shapeCp = dynamic_cast<Line *>(shapeCopy);
 
             Point p1 = shapeCp->getP1();
@@ -226,6 +358,14 @@ void MainWindow::renderComponents() {
     demo->draw(canvas);
     demo->drawSelectionBox(canvas);
     selectedShape->drawSelectionBox(canvas);
+
+    if (drawCurve) {
+        // desenha os pontos de controle
+        for (unsigned int i = 0; i < points.size(); i++) {
+            canvas->color(1, 0, 0);
+            canvas->circleFill(points[i].getX(), points[i].getY(), 5, 10);
+        }
+    }
 }
 
 void MainWindow::init() {
