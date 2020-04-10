@@ -197,7 +197,7 @@ void Canvas::initCanvas(int *w, int *h, const char *title) {
 
     inicializa();
 
-    printf("GL Version: %s", glGetString(GL_VERSION));
+    printf("GL Version: %s\n", glGetString(GL_VERSION));
 }
 
 void Canvas::runCanvas() {

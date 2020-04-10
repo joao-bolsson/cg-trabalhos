@@ -11,7 +11,7 @@
 
 using namespace std;
 
-bool drawLine = false, drawRectangle = false, drawCurve = false;
+bool drawLine = false, drawRectangle = false, drawCurve = false, drawSelected = false;
 bool mouseMoved = false;
 vector<Shape *> shapes;
 
@@ -37,6 +37,7 @@ MainWindow::MainWindow(int width, int height, char *title) {
 
 void stopDrawing() {
     points.clear();
+    drawSelected = false;
     drawLine = false;
     drawRectangle = false;
     mouseMoved = false;
@@ -99,10 +100,13 @@ void mousePressEvent(int x, int y) {
     } else {
         selectedShape = new Shape();
         mousePointPressed = point;
+        drawSelected = false;
 
         for (unsigned int i = 0; i < shapes.size(); i++) {
             if (shapes[i]->isSelected(mousePointPressed)) {
                 selectedShape = shapes[i];
+                drawSelected = true;
+                break;
             }
         }
     }
@@ -131,6 +135,7 @@ void mouseReleaseEvent(int x, int y) {
             stopDrawing();
         }
     }
+    drawSelected = false;
 }
 
 void mouseMoveEvent(int mX, int mY) {
@@ -151,7 +156,7 @@ void mouseMoveEvent(int mX, int mY) {
         } else if (drawRectangle) {
             demo = new RectangleC(p1, mousePoint);
         }
-    } else {
+    } else if (drawSelected) {
         // move figura selecionada
 
         // shapeCopy é feita com base na shape selecionada onde o mouse foi clicado
