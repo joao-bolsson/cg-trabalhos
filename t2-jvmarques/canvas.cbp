@@ -31,6 +31,9 @@
 		<Unit filename="include/GL/glut.h" />
 		<Unit filename="src/Canvas.cpp" />
 		<Unit filename="src/Canvas.h" />
+		<Unit filename="src/Constants.h" />
+		<Unit filename="src/Curve.cpp" />
+		<Unit filename="src/Curve.h" />
 		<Unit filename="src/Line.cpp" />
 		<Unit filename="src/Line.h" />
 		<Unit filename="src/MainWindow.cpp" />

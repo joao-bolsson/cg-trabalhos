@@ -133,6 +133,20 @@ void btnCurve() {
     drawCurve = true;
 }
 
+void btnDelete() {
+    if (selectedShape->getId() != SHAPE) {
+        printf("[debug] Button to delete the selected shape was pressed\n");
+        for (unsigned int i = 0; i < shapes.size(); i++) {
+            if (shapes[i] == selectedShape) {
+                shapes.erase(shapes.begin() + i);
+                stopDrawing();
+                clearSelection();
+                return;
+            }
+        }
+    }
+}
+
 MainWindow::~MainWindow() {
     delete canvas;
 }
@@ -171,6 +185,10 @@ void keyb(unsigned char key, int, int) {
 
     case KEY_4_ROTATE_RIGHT:
         btnRotateRight();
+        return;
+
+    case KEY_4_DELETE:
+        btnDelete();
         return;
 
     default:

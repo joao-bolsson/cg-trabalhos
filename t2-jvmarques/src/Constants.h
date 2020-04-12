@@ -6,5 +6,6 @@
 #define KEY_4_ROTATE_RIGHT 'r'
 #define KEY_4_ROTATE_LEFT 'l'
 #define KEY_4_CLEAR 'c'
+#define KEY_4_DELETE 'd'
 
 #endif
