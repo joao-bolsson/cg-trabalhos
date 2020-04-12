@@ -32,6 +32,9 @@ int indexPoint = -2;
 
 Canvas *canvas;
 
+string filePath = "./t2-jvmarques/resources/teste.jv";
+fstream file;
+
 MainWindow::MainWindow(int width, int height, char *title) {
     canvas = new Canvas();
 }
@@ -147,6 +150,157 @@ void btnDelete() {
     }
 }
 
+void btnOpen() {
+    printf("[debug] Button to open the file was pressed\n");
+    btnClear();
+
+    file.open(filePath, ios::in | ios::binary);
+
+    if (!file) {
+        printf("[error] File couldn't be opened or it's empty\n");
+        return;
+    }
+
+    unsigned int size;
+    file.read(reinterpret_cast<char *>(&size), sizeof(size));
+
+    for (unsigned int i = 0; i < size; i++) {
+        char id;
+        file.read(reinterpret_cast<char *>(&id), sizeof(id));
+
+        Shape *shape;
+        switch (id) {
+        case LINE: {
+            int p[4];
+            file.read(reinterpret_cast<char *>(p), 4 * sizeof(int));
+
+            shape = new Line(Point(p[0], p[1]), Point(p[2], p[3]));
+            break;
+        }
+        case RECTANGLE: {
+            int p[8];
+            file.read(reinterpret_cast<char *>(p), 8 * sizeof(int));
+
+            RectangleC *rect = new RectangleC(Point(p[0], p[1]), Point(p[2], p[3]));
+            rect->setP3(Point(p[4], p[5]));
+            rect->setP4(Point(p[6], p[7]));
+
+            shape = rect;
+            break;
+        }
+        case CURVE: {
+            // numero de pontos de controle da curva
+            unsigned int sizeCtrl;
+            file.read(reinterpret_cast<char *>(&sizeCtrl), sizeof(sizeCtrl));
+
+            // a cada dois int eh um point
+            int pAux[sizeCtrl * 2];
+
+            file.read(reinterpret_cast<char *>(pAux), sizeCtrl * 2 * sizeof(int));
+
+            Curve *curve = new Curve();
+
+            for (unsigned int j = 0; j < (sizeCtrl * 2); j++) {
+                int x = pAux[j];
+                int y = pAux[++j];
+
+                curve->addPoint(new Point(x, y));
+            }
+
+            shape = curve;
+            break;
+        }
+        }
+        shapes.push_back(shape);
+    }
+
+    file.close();
+}
+
+void btnSave() {
+    printf("[debug] Button to save the file was pressed\n");
+    auto size = (unsigned int)shapes.size();
+    file.open(filePath, ios::out | ios::binary);
+
+    if (!file) {
+        printf("[error] File couldn't be opened\n");
+        return;
+    }
+
+    // grava o número de shapes
+    file.write(reinterpret_cast<char *>(&size), sizeof(size));
+
+    for (unsigned int i = 0; i < shapes.size(); i++) {
+        Shape *shape = shapes[i];
+
+        // grava o id da shape
+        char id = shape->getId();
+        file.write(reinterpret_cast<char *>(&id), sizeof(id));
+
+        switch (id) {
+        case LINE: {
+            Line *line = dynamic_cast<Line *>(shape);
+
+            int p[4];
+
+            p[0] = line->getP1().getX();
+            p[1] = line->getP1().getY();
+            p[2] = line->getP2().getX();
+            p[3] = line->getP1().getX();
+
+            file.write(reinterpret_cast<char *>(p), 4 * sizeof(int));
+            break;
+        }
+        case RECTANGLE: {
+            RectangleC *rect = dynamic_cast<RectangleC *>(shape);
+
+            // escreve os 4 pontos do retangulo
+
+            int p[8];
+            p[0] = rect->getP1().getX();
+            p[1] = rect->getP1().getY();
+
+            p[2] = rect->getP2().getX();
+            p[3] = rect->getP2().getY();
+
+            p[4] = rect->getP3().getX();
+            p[5] = rect->getP3().getY();
+
+            p[6] = rect->getP4().getX();
+            p[7] = rect->getP4().getY();
+
+            file.write(reinterpret_cast<char *>(p), 8 * sizeof(int));
+            break;
+        }
+        case CURVE: {
+            Curve *curve = dynamic_cast<Curve *>(shape);
+
+            vector<Point *> ctrlPoints = curve->getControlPts();
+            // numero de pontos de controle
+            unsigned int sizeCtrl = ctrlPoints.size();
+
+            file.write(reinterpret_cast<char *>(&sizeCtrl), sizeof(sizeCtrl));
+
+            int pAux[sizeCtrl * 2];
+            int indexP = 0;
+            // insere pontos de controle
+            for (unsigned int j = 0; j < ctrlPoints.size(); j++) {
+                Point *p = ctrlPoints[j];
+
+                pAux[indexP] = p->getX();
+                pAux[++indexP] = p->getY();
+                indexP++;
+            }
+            file.write(reinterpret_cast<char *>(pAux), sizeCtrl * 2 * sizeof(int));
+            break;
+        }
+        }
+    }
+
+    file.flush();
+    file.close();
+}
+
 MainWindow::~MainWindow() {
     delete canvas;
 }
@@ -189,6 +343,14 @@ void keyb(unsigned char key, int, int) {
 
     case KEY_4_DELETE:
         btnDelete();
+        return;
+
+    case KEY_4_OPEN:
+        btnOpen();
+        return;
+
+    case KEY_4_SAVE:
+        btnSave();
         return;
 
     default:
