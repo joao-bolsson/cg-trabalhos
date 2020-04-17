@@ -246,7 +246,7 @@ void btnSave() {
             p[0] = line->getP1().getX();
             p[1] = line->getP1().getY();
             p[2] = line->getP2().getX();
-            p[3] = line->getP1().getX();
+            p[3] = line->getP2().getY();
 
             file.write(reinterpret_cast<char *>(p), 4 * sizeof(int));
             break;
