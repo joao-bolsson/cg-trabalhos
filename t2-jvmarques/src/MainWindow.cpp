@@ -66,10 +66,14 @@ void clearSelection() {
  * @brief Method called to start drawing a line. 
  */
 void btnLine() {
-    printf("[debug] Button to draw line pressed\n");
-    drawLine = true;
-    drawRectangle = false;
-    clearSelection();
+    if (!drawLine && !drawRectangle && !drawCurve) {
+        printf("[info] Button to draw line pressed\n");
+        drawLine = true;
+        drawRectangle = false;
+        clearSelection();
+    } else {
+        printf("[warn] There is another shape being drawn.\n");
+    }
 }
 
 /**
@@ -86,11 +90,15 @@ void btnClear() {
  * @brief Method called to start drawing a rectangle. 
  */
 void btnRectangle() {
-    printf("[debug] Button to draw rectangle pressed\n");
-    drawRectangle = true;
-    drawLine = false;
-    drawCurve = false;
-    clearSelection();
+    if (!drawLine && !drawRectangle && !drawCurve) {
+        printf("[info] Button to draw rectangle pressed\n");
+        drawRectangle = true;
+        drawLine = false;
+        drawCurve = false;
+        clearSelection();
+    } else {
+        printf("[warn] There is another shape being drawn.\n");
+    }
 }
 
 /**
@@ -129,11 +137,15 @@ void btnRotateRight() {
 }
 
 void btnCurve() {
-    printf("[debug] Button to draw a curve pressed\n");
-    clearSelection();
-    drawLine = false;
-    drawRectangle = false;
-    drawCurve = true;
+    if (!drawLine && !drawRectangle && !drawCurve) {
+        printf("[debug] Button to draw a curve pressed\n");
+        clearSelection();
+        drawLine = false;
+        drawRectangle = false;
+        drawCurve = true;
+    } else {
+        printf("[warn] There is another shape being drawn.\n");
+    }
 }
 
 void btnDelete() {
