@@ -2,6 +2,7 @@
 #define __CURVE_H
 
 #include "Shape.h"
+#include <vector>
 
 using namespace std;
 

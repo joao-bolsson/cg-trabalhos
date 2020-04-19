@@ -3,7 +3,6 @@
 
 #include "Canvas.h"
 #include "Point.h"
-#include <vector>
 
 const char SHAPE = 0;
 const char LINE = 1;

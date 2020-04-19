@@ -58,12 +58,9 @@ void RectangleC::rotate(bool d) {
         factor = 1;
     }
 
-    vector<Point> shapePoints;
-    shapePoints.push_back(p2);
-    shapePoints.push_back(p3);
-    shapePoints.push_back(p4);
+    Point shapePoints[3] = {p2, p3, p4};
 
-    for (unsigned int i = 0; i < shapePoints.size(); i++) {
+    for (unsigned int i = 0; i < 3; i++) {
         Point p = shapePoints[i];
 
         double x = p.getX() * cos(ROTATE) - factor * p.getY() * sin(ROTATE);
