@@ -3,6 +3,9 @@
 Line::Line(Point p1, Point p2) {
     this->p1 = p1;
     this->p2 = p2;
+
+    this->v2 = p2;
+
     pivo = p1;
     id = LINE;
 }
@@ -54,18 +57,26 @@ bool Line::isSelected(Point x) {
 void Line::translate(int x, int y) {
     // nao translada o pivo
     p2 = Point(p2.getX() + x, p2.getY() + y);
+    v2 = Point(v2.getX() + x, v2.getY() + y);
 }
 
 void Line::rotate(bool d) {
-    int factor = -1;
     if (d) {
+        rotateCounter--;
+    } else {
+        rotateCounter++;
+    }
+
+    unsigned int count = abs(rotateCounter);
+    Point p = v2;
+
+    int factor = -1;
+    if (rotateCounter < 0) {
         factor = 1;
     }
 
-    Point p = p2;
-
-    double x = p.getX() * cos(ROTATE) - factor * p.getY() * sin(ROTATE);
-    double y = factor * p.getX() * sin(ROTATE) + p.getY() * cos(ROTATE);
+    double x = p.getX() * cos(ROTATE * count) - factor * p.getY() * sin(ROTATE * count);
+    double y = factor * p.getX() * sin(ROTATE * count) + p.getY() * cos(ROTATE * count);
 
     p2 = Point(x, y);
 }

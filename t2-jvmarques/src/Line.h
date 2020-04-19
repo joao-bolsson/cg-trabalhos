@@ -8,6 +8,16 @@ class Line : public Shape {
 protected:
     Point p1, p2;
 
+    /**
+     * Stores the original value for the point 2.
+     */
+    Point v2;
+
+    /**
+     * Value greater than zero means rotate to right, and lower means rotate to left.
+     */
+    int rotateCounter = 0;
+
 public:
     /**
      * Default construct.
