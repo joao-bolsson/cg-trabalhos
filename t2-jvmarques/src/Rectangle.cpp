@@ -8,15 +8,23 @@ RectangleC::RectangleC(Point p1, Point p2) : Line(p1, p2) {
 
     p3 = Point(p1.getX() - width, p1.getY());
     p4 = Point(p1.getX(), p1.getY() - height);
+
+    v3 = p3;
+    v4 = p4;
+
     id = RECTANGLE;
 }
 
 void RectangleC::setP3(Point p3) {
     this->p3 = p3;
+    v3 = p3;
+    rotateCounter = 0;
 }
 
 void RectangleC::setP4(Point p4) {
     this->p4 = p4;
+    v4 = p4;
+    rotateCounter = 0;
 }
 
 Point RectangleC::getP3() {
@@ -50,21 +58,33 @@ void RectangleC::translate(int x, int y) {
     p2 = Point(p2.getX() + x, p2.getY() + y);
     p3 = Point(p3.getX() + x, p3.getY() + y);
     p4 = Point(p4.getX() + x, p4.getY() + y);
+
+    v2 = Point(v2.getX() + x, v2.getY() + y);
+    v3 = Point(v3.getX() + x, v3.getY() + y);
+    v4 = Point(v4.getX() + x, v4.getY() + y);
 }
 
 void RectangleC::rotate(bool d) {
-    int factor = -1;
     if (d) {
-        factor = 1;
+        rotateCounter--;
+    } else {
+        rotateCounter++;
     }
 
-    Point shapePoints[3] = {p2, p3, p4};
+    unsigned int count = abs(rotateCounter);
+
+    Point shapePoints[3] = {v2, v3, v4};
+
+    int factor = -1;
+    if (rotateCounter < 0) {
+        factor = 1;
+    }
 
     for (unsigned int i = 0; i < 3; i++) {
         Point p = shapePoints[i];
 
-        double x = p.getX() * cos(ROTATE) - factor * p.getY() * sin(ROTATE);
-        double y = factor * p.getX() * sin(ROTATE) + p.getY() * cos(ROTATE);
+        double x = p.getX() * cos(ROTATE * count) - factor * p.getY() * sin(ROTATE * count);
+        double y = factor * p.getX() * sin(ROTATE * count) + p.getY() * cos(ROTATE * count);
 
         shapePoints[i] = Point(x, y);
     }

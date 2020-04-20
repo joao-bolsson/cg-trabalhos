@@ -25,6 +25,8 @@ void Line::setP1(Point p1) {
 
 void Line::setP2(Point p2) {
     this->p2 = p2;
+    this->v2 = p2;
+    rotateCounter = 0;
 }
 
 void Line::draw(Canvas *canvas) {

@@ -8,6 +8,11 @@ class RectangleC : public Line {
 private:
     Point p3, p4;
 
+    /**
+     * Stores the original value for the point 3 and 4.
+     */
+    Point v3, v4;
+
 public:
     /**
      * Default construct.
