@@ -62,7 +62,7 @@ void clearSelection() {
  * @brief Method call to clear the canvas.
  */
 void btnClear() {
-    printf("[debug] Button to clear the screen pressed\n");
+    printf("[info] Button to clear the screen pressed\n");
     stopDrawing();
     shapes.clear();
     clearSelection();
@@ -88,20 +88,20 @@ void rotate(bool d, Shape *shape) {
 }
 
 void btnRotateLeft() {
-    printf("[debug] Button to rotate left pressed\n");
+    printf("[info] Button to rotate left pressed\n");
     drawCurve = false;
     rotate(true, selectedShape);
 }
 
 void btnRotateRight() {
-    printf("[debug] Button to rotate right pressed\n");
+    printf("[info] Button to rotate right pressed\n");
     drawCurve = false;
     rotate(false, selectedShape);
 }
 
 void btnCurve() {
     if (!drawCurve) {
-        printf("[debug] Button to draw a curve pressed\n");
+        printf("[info] Button to draw a curve pressed\n");
         clearSelection();
         drawCurve = true;
     } else {
@@ -111,7 +111,7 @@ void btnCurve() {
 
 void btnDelete() {
     if (selectedShape->getId() != SHAPE) {
-        printf("[debug] Button to delete the selected shape was pressed\n");
+        printf("[info] Button to delete the selected shape was pressed\n");
         for (unsigned int i = 0; i < shapes.size(); i++) {
             if (shapes[i] == selectedShape) {
                 shapes.erase(shapes.begin() + i);
@@ -124,7 +124,7 @@ void btnDelete() {
 }
 
 void btnOpen() {
-    printf("[debug] Button to open the file was pressed\n");
+    printf("[info] Button to open the file was pressed\n");
     btnClear();
 
     file.open(filePath, ios::in | ios::binary);
@@ -166,7 +166,7 @@ void btnOpen() {
 }
 
 void btnSave() {
-    printf("[debug] Button to save the file was pressed\n");
+    printf("[info] Button to save the file was pressed\n");
     auto size = (unsigned int)shapes.size();
     file.open(filePath, ios::out | ios::binary);
 
@@ -208,6 +208,14 @@ void btnSave() {
 
     file.flush();
     file.close();
+}
+
+void btnShowControlGraph() {
+    printf("[info] BUtton to show control graph was pressed\n");
+    for (auto shape : shapes) {
+        Curve *curve = dynamic_cast<Curve *>(shape);
+        curve->showControlGraph(!curve->isShowingControlGraph());
+    }
 }
 
 MainWindow::~MainWindow() {
@@ -252,6 +260,10 @@ void keyb(unsigned char key, int, int) {
 
     case KEY_4_SAVE:
         btnSave();
+        return;
+
+    case KEY_4_GRAPH:
+        btnShowControlGraph();
         return;
 
     default:

@@ -43,6 +43,16 @@ void Curve::draw(Canvas *canvas) {
         double p2 = (pow(1 - t, 3) * controlPoints[0]->getY()) + (3 * t * pow(1 - t, 2) * controlPoints[1]->getY()) + (3 * pow(t, 2) * (1 - t) * controlPoints[2]->getY()) + (pow(t, 3) * controlPoints[3]->getY());
         canvas->point(p1, p2);
     }
+
+    if (showingGraphControl) {
+        for (int i = 0; i < controlPoints.size() - 1; i++) {
+            Point *p1 = controlPoints[i];
+            Point *p2 = controlPoints[i + 1];
+
+            canvas->line(p1->getX(), p1->getY(), p2->getX(), p2->getY());
+            canvas->circleFill(p1->getX(), p1->getY(), r, div);
+        }
+    }
 }
 
 void Curve::drawSelectionBox(Canvas *canvas) {
@@ -138,4 +148,12 @@ int Curve::isSelectedPointCtrl(Point point) {
         }
     }
     return -1;
+}
+
+void Curve::showControlGraph(bool show) {
+    showingGraphControl = show;
+}
+
+bool Curve::isShowingControlGraph() {
+    return showingGraphControl;
 }

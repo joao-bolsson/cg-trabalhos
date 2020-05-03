@@ -10,6 +10,7 @@ class Curve : public Shape {
 
 private:
     vector<Point *> controlPoints;
+    bool showingGraphControl = false;
 
 public:
     /**
@@ -53,6 +54,16 @@ public:
      * @return if p is  a control point - index of control point, else : -1.
      */
     int isSelectedPointCtrl(Point point);
+
+    /**
+     * Shows or not the control graph.
+     */
+    void showControlGraph(bool show);
+
+    /**
+     * Returns if the curve is showing its control graphic. 
+     */
+    bool isShowingControlGraph();
 };
 
 #endif
