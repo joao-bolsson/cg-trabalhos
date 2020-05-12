@@ -56,6 +56,7 @@ void Curve::draw(Canvas *canvas) {
 }
 
 void Curve::drawSelectionBox(Canvas *canvas) {
+    canvas->color(1, 0, 0);
     // desenha os pontos de controle
     for (unsigned int i = 0; i < controlPoints.size(); i++) {
         Point *p = controlPoints[i];

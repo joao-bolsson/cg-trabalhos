@@ -4,15 +4,20 @@
 #include "Shape.h"
 #include "Point.h"
 #include "Curve.h"
+#include "AbstractButton.h"
+#include "Button.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
+
+#define BTN_HEIGHT 40
 
 using namespace std;
 
 bool drawCurve = false, drawSelected = false;
 bool mouseMoved = false;
 vector<Shape *> shapes;
+vector<AbstractButton *> buttons;
 
 // pressed point on canvas
 vector<Point> points;
@@ -34,6 +39,8 @@ string filePath = "./t2-jvmarques/resources/teste.jv";
 fstream file;
 
 MainWindow::MainWindow(int width, int height, char *title) {
+    this->width = width;
+    this->height = height;
     canvas = new Canvas();
 }
 
@@ -69,7 +76,7 @@ void btnClear() {
 }
 
 /**
- * @param d If true - rotate to the left, false - right.
+ * @param d If true - rotate to the right, false - left.
  * @param shape
  */
 void rotate(bool d, Shape *shape) {
@@ -90,13 +97,13 @@ void rotate(bool d, Shape *shape) {
 void btnRotateLeft() {
     printf("[info] Button to rotate left pressed\n");
     drawCurve = false;
-    rotate(true, selectedShape);
+    rotate(false, selectedShape);
 }
 
 void btnRotateRight() {
     printf("[info] Button to rotate right pressed\n");
     drawCurve = false;
-    rotate(false, selectedShape);
+    rotate(true, selectedShape);
 }
 
 void btnCurve() {
@@ -277,6 +284,14 @@ void keybUp(unsigned char key, int, int) {
 
 void mousePressEvent(int x, int y) {
     Point point = Point(x, y);
+
+    for (auto btn : buttons) {
+        if (btn->isPointOver(x, y)) {
+            btn->doClick();
+            return;
+        }
+    }
+
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
     if (drawCurve) {
         points.push_back(point);
@@ -400,8 +415,12 @@ void specialUp(int key, int, int) {
 }
 
 void MainWindow::renderComponents() {
-    for (unsigned int i = 0; i < shapes.size(); i++) {
-        shapes[i]->draw(canvas);
+    for (auto shape : shapes) {
+        shape->draw(canvas);
+    }
+
+    for (auto button : buttons) {
+        button->render(canvas);
     }
 
     demo->draw(canvas);
@@ -410,9 +429,9 @@ void MainWindow::renderComponents() {
 
     if (drawCurve) {
         // desenha os pontos de controle
-        for (unsigned int i = 0; i < points.size(); i++) {
+        for (auto point : points) {
             canvas->color(1, 0, 0);
-            canvas->circleFill(points[i].getX(), points[i].getY(), 5, 10);
+            canvas->circleFill(point.getX(), point.getY(), 5, 10);
         }
     }
 }
@@ -433,6 +452,16 @@ void MainWindow::init() {
 }
 
 void MainWindow::show() {
+    // buttons to rotate, left and right
+    Button *buttonRotateLeft = new Button("<-", (width / 2) - 15, height - BTN_HEIGHT, 30, BTN_HEIGHT);
+    Button *buttonRotateRight = new Button("->", (width / 2) + 15, height - BTN_HEIGHT, 30, BTN_HEIGHT);
+
+    buttonRotateLeft->setAction(btnRotateLeft);
+    buttonRotateRight->setAction(btnRotateRight);
+
+    buttons.push_back(buttonRotateLeft);
+    buttons.push_back(buttonRotateRight);
+
     canvas->setWindow(this);
     canvas->initCanvas(&width, &height, title);
     init();
