@@ -453,14 +453,29 @@ void MainWindow::init() {
 
 void MainWindow::show() {
     // buttons to rotate, left and right
-    Button *buttonRotateLeft = new Button("<-", (width / 2) - 15, height - BTN_HEIGHT, 30, BTN_HEIGHT);
-    Button *buttonRotateRight = new Button("->", (width / 2) + 15, height - BTN_HEIGHT, 30, BTN_HEIGHT);
+
+    int btnY = height - BTN_HEIGHT;
+
+    Button *buttonRotateLeft = new Button("<-", (width / 2) - 15, btnY, 30, BTN_HEIGHT);
+    Button *buttonRotateRight = new Button("->", (width / 2) + 15, btnY, 30, BTN_HEIGHT);
+    Button *buttonClear = new Button("Clear", (width / 2) + 60, btnY, 60, BTN_HEIGHT);
+    Button *buttonDelete = new Button("Delete Selected", (width / 2) + 140, btnY, 160, BTN_HEIGHT);
+    Button *buttonOpen = new Button("Open", 0, btnY, 60, BTN_HEIGHT);
+    Button *buttonSave = new Button("Save", 70, btnY, 60, BTN_HEIGHT);
 
     buttonRotateLeft->setAction(btnRotateLeft);
     buttonRotateRight->setAction(btnRotateRight);
+    buttonClear->setAction(btnClear);
+    buttonDelete->setAction(btnDelete);
+    buttonOpen->setAction(btnOpen);
+    buttonSave->setAction(btnSave);
 
     buttons.push_back(buttonRotateLeft);
     buttons.push_back(buttonRotateRight);
+    buttons.push_back(buttonClear);
+    buttons.push_back(buttonDelete);
+    buttons.push_back(buttonOpen);
+    buttons.push_back(buttonSave);
 
     canvas->setWindow(this);
     canvas->initCanvas(&width, &height, title);
