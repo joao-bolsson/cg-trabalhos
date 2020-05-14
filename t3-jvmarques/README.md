@@ -17,4 +17,5 @@ O programa já vem com um arquivo padrão para leitura/escrita de curvas. Conté
 
 ### Checkbox
 
-**Draw Curve**: Quando selecionado permite o usuário plotas os pontos de controle de uma curva na canvas.
+**Draw Curve**: Quando selecionado, permite o usuário plotas os pontos de controle de uma curva na canvas.  
+**Draw Graph**: Quando selecionado, desenha o grafo de controle de todas as curvas na canvas.

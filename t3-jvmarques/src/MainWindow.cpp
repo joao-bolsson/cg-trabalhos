@@ -236,9 +236,11 @@ void reshape(int w, int h) {
 
     for (auto button : buttons) {
         button->setY(h - BTN_HEIGHT);
-    }
 
-    checkDrawCurve->setY(h - BTN_HEIGHT / 2);
+        if (Checkbox *check = dynamic_cast<Checkbox *>(button)) {
+            check->setY(h - BTN_HEIGHT / 2);
+        }
+    }
 }
 
 void display() {
@@ -471,7 +473,7 @@ void MainWindow::show() {
     Button *buttonOpen = new Button("Open", 0, btnY, 60, BTN_HEIGHT);
     Button *buttonSave = new Button("Save", 70, btnY, 60, BTN_HEIGHT);
 
-    checkDrawCurve->setY(height - 2 * BTN_HEIGHT);
+    Checkbox *checkShowGraph = new Checkbox("Show Graph", 250, btnY);
 
     buttonRotateLeft->setAction(btnRotateLeft);
     buttonRotateRight->setAction(btnRotateRight);
@@ -480,6 +482,7 @@ void MainWindow::show() {
     buttonOpen->setAction(btnOpen);
     buttonSave->setAction(btnSave);
     checkDrawCurve->setAction(btnCurve);
+    checkShowGraph->setAction(btnShowControlGraph);
 
     buttons.push_back(buttonRotateLeft);
     buttons.push_back(buttonRotateRight);
@@ -488,6 +491,7 @@ void MainWindow::show() {
     buttons.push_back(buttonOpen);
     buttons.push_back(buttonSave);
     buttons.push_back(checkDrawCurve);
+    buttons.push_back(checkShowGraph);
 
     canvas->setWindow(this);
     canvas->initCanvas(&width, &height, title);
