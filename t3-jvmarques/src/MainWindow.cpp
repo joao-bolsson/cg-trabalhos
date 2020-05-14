@@ -6,6 +6,7 @@
 #include "Curve.h"
 #include "AbstractButton.h"
 #include "Button.h"
+#include "Checkbox.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -18,6 +19,7 @@ bool drawCurve = false, drawSelected = false;
 bool mouseMoved = false;
 vector<Shape *> shapes;
 vector<AbstractButton *> buttons;
+Checkbox *checkDrawCurve = new Checkbox("Draw Curve", 130, 0);
 
 // pressed point on canvas
 vector<Point> points;
@@ -35,7 +37,7 @@ int indexPoint = -2;
 
 Canvas *canvas;
 
-string filePath = "./t2-jvmarques/resources/teste.jv";
+string filePath = "./t3-jvmarques/resources/teste.jv";
 fstream file;
 
 MainWindow::MainWindow(int width, int height, char *title) {
@@ -112,7 +114,7 @@ void btnCurve() {
         clearSelection();
         drawCurve = true;
     } else {
-        printf("[warn] There is another shape being drawn.\n");
+        stopDrawing();
     }
 }
 
@@ -231,6 +233,12 @@ MainWindow::~MainWindow() {
 
 void reshape(int w, int h) {
     canvas->reshape(w, h);
+
+    for (auto button : buttons) {
+        button->setY(h - BTN_HEIGHT);
+    }
+
+    checkDrawCurve->setY(h - BTN_HEIGHT / 2);
 }
 
 void display() {
@@ -419,6 +427,8 @@ void MainWindow::renderComponents() {
         shape->draw(canvas);
     }
 
+    checkDrawCurve->setSelected(drawCurve);
+
     for (auto button : buttons) {
         button->render(canvas);
     }
@@ -452,8 +462,6 @@ void MainWindow::init() {
 }
 
 void MainWindow::show() {
-    // buttons to rotate, left and right
-
     int btnY = height - BTN_HEIGHT;
 
     Button *buttonRotateLeft = new Button("<-", (width / 2) - 15, btnY, 30, BTN_HEIGHT);
@@ -463,12 +471,15 @@ void MainWindow::show() {
     Button *buttonOpen = new Button("Open", 0, btnY, 60, BTN_HEIGHT);
     Button *buttonSave = new Button("Save", 70, btnY, 60, BTN_HEIGHT);
 
+    checkDrawCurve->setY(height - 2 * BTN_HEIGHT);
+
     buttonRotateLeft->setAction(btnRotateLeft);
     buttonRotateRight->setAction(btnRotateRight);
     buttonClear->setAction(btnClear);
     buttonDelete->setAction(btnDelete);
     buttonOpen->setAction(btnOpen);
     buttonSave->setAction(btnSave);
+    checkDrawCurve->setAction(btnCurve);
 
     buttons.push_back(buttonRotateLeft);
     buttons.push_back(buttonRotateRight);
@@ -476,6 +487,7 @@ void MainWindow::show() {
     buttons.push_back(buttonDelete);
     buttons.push_back(buttonOpen);
     buttons.push_back(buttonSave);
+    buttons.push_back(checkDrawCurve);
 
     canvas->setWindow(this);
     canvas->initCanvas(&width, &height, title);
