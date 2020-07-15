@@ -29,6 +29,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/GL/glut.h" />
+		<Unit filename="src/Cube.cpp" />
+		<Unit filename="src/Cube.h" />
+		<Unit filename="src/Point.cpp" />
+		<Unit filename="src/Point.h" />
+		<Unit filename="src/Sphere.cpp" />
+		<Unit filename="src/Sphere.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

@@ -7,16 +7,19 @@
 #include <ctype.h>
 
 #include "gl_canvas2d.h"
+#include "Cube.h"
 
 //variavel global para selecao do que sera exibido na canvas.
 int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
+Cube *c;
+
 // CÓDIGO TESTE APENAS PARA TRAB FINAL
 float ang = 0;
 void motor() {
     color(0, 1, 0);
-    float translacao = 200; //posicao onde mostrar na tela.
+    float translacao = 100; //posicao onde mostrar na tela.
 
     //virabrequim - coordenadas polares
     float raioVirabrequim = 50;
@@ -40,7 +43,8 @@ void motor() {
 }
 
 void render() {
-    motor();
+    c->render();
+    // motor();
 }
 
 void keyboard(int key) {
@@ -61,6 +65,8 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 }
 
 int main() {
+    c = new Cube(100, -50, -50, -50);
+
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
 }
