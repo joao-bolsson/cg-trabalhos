@@ -4,17 +4,19 @@
 Cube::Cube(int size, float x, float y, float z) {
     this->l = size;
 
+    float factor = l / 2;
+
     // z+ para dentro da tela
 
-    front[0][0] = Point(x, y, z);         // 1
-    front[0][1] = Point(x + l, y, z);     // 2
-    front[1][0] = Point(x, y + l, z);     // 3
-    front[1][1] = Point(x + l, y + l, z); // 4
+    front[0][0] = Point(x - factor, y - factor, z - factor); // 1
+    front[0][1] = Point(x + factor, y - factor, z - factor); // 2
+    front[1][0] = Point(x - factor, y + factor, z - factor); // 3
+    front[1][1] = Point(x + factor, y + factor, z - factor); // 4
 
-    back[0][0] = Point(x, y, z - l);         // 5
-    back[0][1] = Point(x + l, y, z - l);     // 6
-    back[1][0] = Point(x, y + l, z - l);     // 7
-    back[1][1] = Point(x + l, y + l, z - l); // 8
+    back[0][0] = Point(x - factor, y - factor, z + factor); // 5
+    back[0][1] = Point(x + factor, y - factor, z + factor); // 6
+    back[1][0] = Point(x - factor, y + factor, z + factor); // 7
+    back[1][1] = Point(x + factor, y + factor, z + factor); // 8
 
     int i = 1;
     for (int x = 0; x < 2; x++) {

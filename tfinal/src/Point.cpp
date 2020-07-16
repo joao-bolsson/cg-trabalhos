@@ -48,6 +48,7 @@ void Point::translate(float x, float y, float z) {
 }
 
 void Point::rotateX(float ang) {
+    // TODO: nao usar o valor de y modificado, criar variavel temp
     this->y = cos(ang) * this->y - sin(ang) * this->z;
     this->z = sin(ang) * this->y + cos(ang) * this->z;
 }
@@ -71,6 +72,8 @@ void Point::project(float d) {
 void Point::transform(int d, float angX, float angY, int translateX, int translateY) {
     rotateY(angY);
     rotateX(angX);
+
+    this->z += 150;
 
     project(d);
 

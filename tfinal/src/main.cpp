@@ -113,7 +113,8 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 }
 
 int main() {
-    c = new Cube(100, -50, -50, -50);
+    // z+ para dentro da tela
+    c = new Cube(100, 0, 0, 0); // centrado na origem
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
