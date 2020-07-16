@@ -1,8 +1,6 @@
 #include "Cube.h"
 #include "gl_canvas2d.h"
 
-#define D -20
-
 Cube::Cube(int size, float x, float y, float z) {
     this->l = size;
 
@@ -34,19 +32,50 @@ Cube::Cube(int size, float x, float y, float z) {
 }
 
 void Cube::transform() {
-    float t = 0;
     //Processa cada vertice da superficie individualmente.
     for (int x = 0; x < 2; x++) {
         for (int z = 0; z < 2; z++) {
             frontTransf[x][z] = front[x][z].copy();
-            frontTransf[x][z].transform(D, t, t, 300, 300);
+            frontTransf[x][z].transform(distance, angX, angY, 300, 300);
 
             //// QUADRADO DE TRÁS
 
             backTransf[x][z] = back[x][z].copy();
-            backTransf[x][z].transform(D, t, t, 300, 300);
+            backTransf[x][z].transform(distance, angX, angY, 300, 300);
         }
     }
+}
+
+void Cube::setDistance(int d) {
+    this->distance = d;
+}
+
+void Cube::setAngX(float ang) {
+    this->angX = ang;
+}
+
+void Cube::setAngY(float ang) {
+    this->angY = ang;
+}
+
+void Cube::setAngZ(float ang) {
+    this->angZ = ang;
+}
+
+float Cube::getAngX() {
+    return angX;
+}
+
+float Cube::getAngY() {
+    return angY;
+}
+
+float Cube::getAngZ() {
+    return angZ;
+}
+
+int Cube::getDistance() {
+    return distance;
 }
 
 void Cube::render() {

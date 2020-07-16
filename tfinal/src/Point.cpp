@@ -65,6 +65,7 @@ void Point::rotateZ(float ang) {
 void Point::project(float d) {
     this->x = this->x * d / this->z;
     this->y = this->y * d / this->z;
+    this->z = 0;
 }
 
 void Point::transform(int d, float angX, float angY, int translateX, int translateY) {

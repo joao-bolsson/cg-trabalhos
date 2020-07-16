@@ -13,13 +13,25 @@ private:
     Point frontTransf[2][2];
     Point backTransf[2][2];
 
-    float ang = 0;
+    float angX = 0;
+    float angY = 0;
+    float angZ = 0;
+    // nao deve ser uma propriedade do cubo e sim da canvas toda
+    int distance = 70;
 
 public:
     Cube(int size, float x, float y, float z);
 
     void render();
     void transform();
+    void setDistance(int d);
+    int getDistance();
+    void setAngX(float ang);
+    float getAngX();
+    void setAngY(float ang);
+    float getAngY();
+    void setAngZ(float ang);
+    float getAngZ();
 };
 
 #endif
