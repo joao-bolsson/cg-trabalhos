@@ -31,6 +31,8 @@ Cube::Cube(int size, float x, float y, float z) {
             printf("ponto %d (%.1f, %.1f, %.1f)\n", i++, p.getX(), p.getY(), p.getZ());
         }
     }
+
+    transform();
 }
 
 void Cube::transform() {
@@ -50,18 +52,22 @@ void Cube::transform() {
 
 void Cube::setDistance(int d) {
     this->distance = d;
+    transform();
 }
 
 void Cube::setAngX(float ang) {
     this->angX = ang;
+    transform();
 }
 
 void Cube::setAngY(float ang) {
     this->angY = ang;
+    transform();
 }
 
 void Cube::setAngZ(float ang) {
     this->angZ = ang;
+    transform();
 }
 
 float Cube::getAngX() {
@@ -82,8 +88,6 @@ int Cube::getDistance() {
 
 void Cube::render() {
     color(1, 0, 0);
-
-    transform();
 
     line(frontTransf[0][0].getX(), frontTransf[0][0].getY(), frontTransf[0][1].getX(), frontTransf[0][1].getY()); // 1-2
     line(frontTransf[0][0].getX(), frontTransf[0][0].getY(), frontTransf[1][0].getX(), frontTransf[1][0].getY()); // 1-3

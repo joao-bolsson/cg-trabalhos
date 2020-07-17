@@ -9,7 +9,7 @@
 #include "gl_canvas2d.h"
 #include "Cube.h"
 
-#define ANGLE_FACTOR 0.01
+#define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
 
 #define KEY_ROTATE_X_UP 'i'
