@@ -16,7 +16,7 @@ private:
     float angX = 0;
     float angY = 0;
     float angZ = 0;
-    // nao deve ser uma propriedade do cubo e sim da canvas toda
+
     int distance = 70;
 
 public:
