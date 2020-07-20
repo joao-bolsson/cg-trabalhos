@@ -8,6 +8,7 @@
 
 #include "gl_canvas2d.h"
 #include "Cube.h"
+#include "Cylinder.h"
 
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
@@ -27,6 +28,7 @@ int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . 
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
 Cube *c;
+Cylinder *cylinder;
 
 // CÓDIGO TESTE APENAS PARA TRAB FINAL
 float ang = 0;
@@ -56,7 +58,8 @@ void motor() {
 }
 
 void render() {
-    c->render();
+    cylinder->render();
+    // c->render();
     // motor();
 }
 
@@ -72,10 +75,12 @@ void keyboardUp(int key) {
     switch (key) {
     case KEY_ROTATE_X_UP:
         c->setAngX(c->getAngX() + ANGLE_FACTOR);
+        cylinder->setAngX(cylinder->getAngX() + ANGLE_FACTOR);
         break;
 
     case KEY_ROTATE_X_DOWN:
         c->setAngX(c->getAngX() - ANGLE_FACTOR);
+        cylinder->setAngX(cylinder->getAngX() - ANGLE_FACTOR);
         break;
 
     case KEY_ROTATE_Y_UP:
@@ -115,6 +120,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 int main() {
     // z+ para dentro da tela
     c = new Cube(100, 0, 0, 0); // centrado na origem
+    cylinder = new Cylinder(100, Point(0, 0, 0));
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
