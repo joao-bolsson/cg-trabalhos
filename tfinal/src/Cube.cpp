@@ -18,20 +18,6 @@ Cube::Cube(int size, float x, float y, float z) {
     back[1][0] = Point(x - factor, y + factor, z + factor); // 7
     back[1][1] = Point(x + factor, y + factor, z + factor); // 8
 
-    int i = 1;
-    for (int x = 0; x < 2; x++) {
-        for (int y = 0; y < 2; y++) {
-            Point p = front[x][y];
-            printf("ponto %d (%.1f, %.1f, %.1f)\n", i++, p.getX(), p.getY(), p.getZ());
-        }
-    }
-    for (int x = 0; x < 2; x++) {
-        for (int y = 0; y < 2; y++) {
-            Point p = back[x][y];
-            printf("ponto %d (%.1f, %.1f, %.1f)\n", i++, p.getX(), p.getY(), p.getZ());
-        }
-    }
-
     transform();
 }
 

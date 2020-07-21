@@ -72,35 +72,55 @@ void keyboard(int key) {
 }
 
 void keyboardUp(int key) {
+    float angX = 0, angY = 0, angZ = 0;
+
     switch (key) {
     case KEY_ROTATE_X_UP:
         c->setAngX(c->getAngX() + ANGLE_FACTOR);
-        cylinder->setAngX(cylinder->getAngX() + ANGLE_FACTOR);
+        angX = cylinder->getAngX() + ANGLE_FACTOR;
+        angY = cylinder->getAngY();
+        angZ = cylinder->getAngZ();
+        cylinder->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_X_DOWN:
         c->setAngX(c->getAngX() - ANGLE_FACTOR);
-        cylinder->setAngX(cylinder->getAngX() - ANGLE_FACTOR);
+        angX = cylinder->getAngX() - ANGLE_FACTOR;
+        angY = cylinder->getAngY();
+        angZ = cylinder->getAngZ();
+        cylinder->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_Y_UP:
         c->setAngY(c->getAngY() + ANGLE_FACTOR);
-        cylinder->setAngY(cylinder->getAngY() + ANGLE_FACTOR);
+        angX = cylinder->getAngX();
+        angY = cylinder->getAngY() + ANGLE_FACTOR;
+        angZ = cylinder->getAngZ();
+        cylinder->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_Y_DOWN:
         c->setAngY(c->getAngY() - ANGLE_FACTOR);
-        cylinder->setAngY(cylinder->getAngY() - ANGLE_FACTOR);
+        angX = cylinder->getAngX();
+        angY = cylinder->getAngY() - ANGLE_FACTOR;
+        angZ = cylinder->getAngZ();
+        cylinder->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_Z_UP:
         c->setAngZ(c->getAngZ() + ANGLE_FACTOR);
-        cylinder->setAngZ(cylinder->getAngZ() + ANGLE_FACTOR);
+        angX = cylinder->getAngX();
+        angY = cylinder->getAngY();
+        angZ = cylinder->getAngZ() + ANGLE_FACTOR;
+        cylinder->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_Z_DOWN:
         c->setAngZ(c->getAngZ() - ANGLE_FACTOR);
-        cylinder->setAngZ(cylinder->getAngZ() - ANGLE_FACTOR);
+        angX = cylinder->getAngX();
+        angY = cylinder->getAngY();
+        angZ = cylinder->getAngZ() - ANGLE_FACTOR;
+        cylinder->rotate(angX, angY, angZ);
         break;
 
     case KEY_INCREASE_D:
@@ -127,6 +147,7 @@ int main() {
     // z+ para dentro da tela
     c = new Cube(100, 0, 0, 0); // centrado na origem
     cylinder = new Cylinder(100, 100, Point(0, 0, 0));
+    cylinder->translate(Point(300, 300, 0));
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();

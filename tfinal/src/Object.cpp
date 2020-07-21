@@ -23,7 +23,23 @@ void Object::transform() {
         vector<Point> transfLine; // transformed line
         for (auto point : line) {
             Point p = point.copy();
-            p.transform(distance, angX, angY, translatePoint.getX(), translatePoint.getY());
+
+            // move to origin
+            p.translate(-center.getX(), -center.getY(), -center.getZ());
+
+            p.rotateZ(angZ);
+            p.rotateY(angY);
+            p.rotateX(angX);
+
+            p.translate(0, 0, 150);
+
+            p.project(distance);
+
+            // return back to the original center
+            p.translate(center.getX(), center.getY(), center.getZ());
+
+            // optional: centralizing in another point on screen
+            p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 
             transfLine.push_back(p);
         }

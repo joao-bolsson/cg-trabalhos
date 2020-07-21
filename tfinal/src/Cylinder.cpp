@@ -4,7 +4,7 @@
 
 #define PI 3.14159265359
 
-Cylinder::Cylinder(int r, int height, Point center) {
+Cylinder::Cylinder(int r, int height, Point center) : Object(center) {
     float step = 0.35; // 20 graus
 
     float yBegin = center.getY() - height / 2;
@@ -20,61 +20,10 @@ Cylinder::Cylinder(int r, int height, Point center) {
 
             line.push_back(p);
         }
-        ori.push_back(line);
+        points.push_back(line);
     }
 
     transform();
-}
-
-void Cylinder::setDistance(int d) {
-    this->distance = d;
-    transform();
-}
-
-int Cylinder::getDistance() {
-    return distance;
-}
-
-void Cylinder::setAngX(float ang) {
-    this->angX = ang;
-    transform();
-}
-
-float Cylinder::getAngX() {
-    return angX;
-}
-
-void Cylinder::setAngY(float ang) {
-    this->angY = ang;
-    transform();
-}
-
-float Cylinder::getAngY() {
-    return angY;
-}
-
-void Cylinder::setAngZ(float ang) {
-    this->angZ = ang;
-    transform();
-}
-
-float Cylinder::getAngZ() {
-    return angZ;
-}
-
-void Cylinder::transform() {
-    transformed.clear();
-
-    for (auto line : ori) {
-        vector<Point> transfLine; // transformed line
-        for (auto point : line) {
-            Point p = point.copy();
-            p.transform(distance, angX, angY, 300, 300);
-
-            transfLine.push_back(p);
-        }
-        transformed.push_back(transfLine);
-    }
 }
 
 void Cylinder::render() {
