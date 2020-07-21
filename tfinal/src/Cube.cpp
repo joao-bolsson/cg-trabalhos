@@ -1,95 +1,64 @@
 #include "Cube.h"
 #include "gl_canvas2d.h"
 
-Cube::Cube(int size, float x, float y, float z) {
+Cube::Cube(int size, Point center) : Object(center) {
     this->l = size;
+
+    float x = center.getX();
+    float y = center.getY();
+    float z = center.getZ();
 
     float factor = l / 2;
 
+    vector<Point> front;
+    vector<Point> back;
+
     // z+ para dentro da tela
 
-    front[0][0] = Point(x - factor, y - factor, z - factor); // 1
-    front[0][1] = Point(x + factor, y - factor, z - factor); // 2
-    front[1][0] = Point(x - factor, y + factor, z - factor); // 3
-    front[1][1] = Point(x + factor, y + factor, z - factor); // 4
+    front.push_back(Point(x - factor, y - factor, z - factor)); // 1
+    front.push_back(Point(x + factor, y - factor, z - factor)); // 2
+    front.push_back(Point(x + factor, y + factor, z - factor)); // 4
+    front.push_back(Point(x - factor, y + factor, z - factor)); // 3
 
-    back[0][0] = Point(x - factor, y - factor, z + factor); // 5
-    back[0][1] = Point(x + factor, y - factor, z + factor); // 6
-    back[1][0] = Point(x - factor, y + factor, z + factor); // 7
-    back[1][1] = Point(x + factor, y + factor, z + factor); // 8
+    back.push_back(Point(x - factor, y - factor, z + factor)); // 5
+    back.push_back(Point(x + factor, y - factor, z + factor)); // 6
+    back.push_back(Point(x + factor, y + factor, z + factor)); // 8
+    back.push_back(Point(x - factor, y + factor, z + factor)); // 7
+
+    points.push_back(front);
+    points.push_back(back);
 
     transform();
-}
-
-void Cube::transform() {
-    //Processa cada vertice da superficie individualmente.
-    for (int x = 0; x < 2; x++) {
-        for (int z = 0; z < 2; z++) {
-            frontTransf[x][z] = front[x][z].copy();
-            frontTransf[x][z].transform(distance, angX, angY, 300, 300);
-
-            //// QUADRADO DE TRÁS
-
-            backTransf[x][z] = back[x][z].copy();
-            backTransf[x][z].transform(distance, angX, angY, 300, 300);
-        }
-    }
-}
-
-void Cube::setDistance(int d) {
-    this->distance = d;
-    transform();
-}
-
-void Cube::setAngX(float ang) {
-    this->angX = ang;
-    transform();
-}
-
-void Cube::setAngY(float ang) {
-    this->angY = ang;
-    transform();
-}
-
-void Cube::setAngZ(float ang) {
-    this->angZ = ang;
-    transform();
-}
-
-float Cube::getAngX() {
-    return angX;
-}
-
-float Cube::getAngY() {
-    return angY;
-}
-
-float Cube::getAngZ() {
-    return angZ;
-}
-
-int Cube::getDistance() {
-    return distance;
 }
 
 void Cube::render() {
     color(1, 0, 0);
 
-    line(frontTransf[0][0].getX(), frontTransf[0][0].getY(), frontTransf[0][1].getX(), frontTransf[0][1].getY()); // 1-2
-    line(frontTransf[0][0].getX(), frontTransf[0][0].getY(), frontTransf[1][0].getX(), frontTransf[1][0].getY()); // 1-3
-    line(frontTransf[0][0].getX(), frontTransf[0][0].getY(), backTransf[0][0].getX(), backTransf[0][0].getY());   // 1-5
+    for (unsigned int c = 0; c < transformed.size(); c++) {
+        if (c > 0) {
+            color(0, 0, 1);
+        }
+        auto pts = transformed[c];
+        for (unsigned int i = 0; i < pts.size() - 1; i++) {
+            Point p1 = pts[i];
+            Point p2 = pts[i + 1];
 
-    line(frontTransf[0][1].getX(), frontTransf[0][1].getY(), frontTransf[1][1].getX(), frontTransf[1][1].getY()); // 2-4
-    line(frontTransf[0][1].getX(), frontTransf[0][1].getY(), backTransf[0][1].getX(), backTransf[0][1].getY());   // 2-6
+            line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 
-    line(frontTransf[1][0].getX(), frontTransf[1][0].getY(), frontTransf[1][1].getX(), frontTransf[1][1].getY()); // 3-4
-    line(frontTransf[1][0].getX(), frontTransf[1][0].getY(), backTransf[1][0].getX(), backTransf[1][0].getY());   // 3-7
+            if (c < transformed.size() - 1) {
+                Point p2 = transformed[c + 1][i];
+                line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+            }
+        }
+        // connect the last with the first
+        Point first = pts[0];
+        Point last = pts[pts.size() - 1];
+        line(first.getX(), first.getY(), last.getX(), last.getY());
 
-    line(frontTransf[1][1].getX(), frontTransf[1][1].getY(), backTransf[1][1].getX(), backTransf[1][1].getY()); // 4-8
-
-    color(0, 0, 1);
-    line(backTransf[0][0].getX(), backTransf[0][0].getY(), backTransf[0][1].getX(), backTransf[0][1].getY()); // 5-6
-    line(backTransf[0][0].getX(), backTransf[0][0].getY(), backTransf[1][0].getX(), backTransf[1][0].getY()); // 5-7
-    line(backTransf[0][1].getX(), backTransf[0][1].getY(), backTransf[1][1].getX(), backTransf[1][1].getY()); // 6-8
-    line(backTransf[1][0].getX(), backTransf[1][0].getY(), backTransf[1][1].getX(), backTransf[1][1].getY()); // 7-8
+        if (c < transformed.size() - 1) {
+            Point last1 = pts[pts.size() - 1];
+            Point last2 = transformed[c + 1][pts.size() - 1];
+            line(last1.getX(), last1.getY(), last2.getX(), last2.getY());
+        }
+    }
 }

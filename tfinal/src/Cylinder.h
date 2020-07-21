@@ -3,7 +3,6 @@
 
 #include "Object.h"
 
-using namespace std;
 class Cylinder : public Object {
 
 public:

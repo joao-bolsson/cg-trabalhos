@@ -7,6 +7,7 @@
 #include <ctype.h>
 
 #include "gl_canvas2d.h"
+#include "Object.h"
 #include "Cube.h"
 #include "Cylinder.h"
 
@@ -27,8 +28,7 @@
 int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
-Cube *c;
-Cylinder *cylinder;
+vector<Object *> objects;
 
 // CÓDIGO TESTE APENAS PARA TRAB FINAL
 float ang = 0;
@@ -58,8 +58,9 @@ void motor() {
 }
 
 void render() {
-    cylinder->render();
-    // c->render();
+    for (auto o : objects) {
+        o->render();
+    }
     // motor();
 }
 
@@ -76,61 +77,69 @@ void keyboardUp(int key) {
 
     switch (key) {
     case KEY_ROTATE_X_UP:
-        c->setAngX(c->getAngX() + ANGLE_FACTOR);
-        angX = cylinder->getAngX() + ANGLE_FACTOR;
-        angY = cylinder->getAngY();
-        angZ = cylinder->getAngZ();
-        cylinder->rotate(angX, angY, angZ);
+        for (auto o : objects) {
+            angX = o->getAngX() + ANGLE_FACTOR;
+            angY = o->getAngY();
+            angZ = o->getAngZ();
+            o->rotate(angX, angY, angZ);
+        }
         break;
 
     case KEY_ROTATE_X_DOWN:
-        c->setAngX(c->getAngX() - ANGLE_FACTOR);
-        angX = cylinder->getAngX() - ANGLE_FACTOR;
-        angY = cylinder->getAngY();
-        angZ = cylinder->getAngZ();
-        cylinder->rotate(angX, angY, angZ);
+        for (auto o : objects) {
+            angX = o->getAngX() - ANGLE_FACTOR;
+            angY = o->getAngY();
+            angZ = o->getAngZ();
+            o->rotate(angX, angY, angZ);
+        }
         break;
 
     case KEY_ROTATE_Y_UP:
-        c->setAngY(c->getAngY() + ANGLE_FACTOR);
-        angX = cylinder->getAngX();
-        angY = cylinder->getAngY() + ANGLE_FACTOR;
-        angZ = cylinder->getAngZ();
-        cylinder->rotate(angX, angY, angZ);
+        for (auto o : objects) {
+            angX = o->getAngX();
+            angY = o->getAngY() + ANGLE_FACTOR;
+            angZ = o->getAngZ();
+            o->rotate(angX, angY, angZ);
+        }
         break;
 
     case KEY_ROTATE_Y_DOWN:
-        c->setAngY(c->getAngY() - ANGLE_FACTOR);
-        angX = cylinder->getAngX();
-        angY = cylinder->getAngY() - ANGLE_FACTOR;
-        angZ = cylinder->getAngZ();
-        cylinder->rotate(angX, angY, angZ);
+        for (auto o : objects) {
+            angX = o->getAngX();
+            angY = o->getAngY() - ANGLE_FACTOR;
+            angZ = o->getAngZ();
+            o->rotate(angX, angY, angZ);
+        }
         break;
 
     case KEY_ROTATE_Z_UP:
-        c->setAngZ(c->getAngZ() + ANGLE_FACTOR);
-        angX = cylinder->getAngX();
-        angY = cylinder->getAngY();
-        angZ = cylinder->getAngZ() + ANGLE_FACTOR;
-        cylinder->rotate(angX, angY, angZ);
+        for (auto o : objects) {
+            angX = o->getAngX();
+            angY = o->getAngY();
+            angZ = o->getAngZ() + ANGLE_FACTOR;
+            o->rotate(angX, angY, angZ);
+        }
         break;
 
     case KEY_ROTATE_Z_DOWN:
-        c->setAngZ(c->getAngZ() - ANGLE_FACTOR);
-        angX = cylinder->getAngX();
-        angY = cylinder->getAngY();
-        angZ = cylinder->getAngZ() - ANGLE_FACTOR;
-        cylinder->rotate(angX, angY, angZ);
+        for (auto o : objects) {
+            angX = o->getAngX();
+            angY = o->getAngY();
+            angZ = o->getAngZ() - ANGLE_FACTOR;
+            o->rotate(angX, angY, angZ);
+        }
         break;
 
     case KEY_INCREASE_D:
-        c->setDistance(c->getDistance() + DISTANCE_FACTOR);
-        cylinder->setDistance(cylinder->getDistance() + DISTANCE_FACTOR);
+        for (auto o : objects) {
+            o->setDistance(o->getDistance() + DISTANCE_FACTOR);
+        }
         break;
 
     case KEY_DECREASE_D:
-        c->setDistance(c->getDistance() - DISTANCE_FACTOR);
-        cylinder->setDistance(cylinder->getDistance() - DISTANCE_FACTOR);
+        for (auto o : objects) {
+            o->setDistance(o->getDistance() - DISTANCE_FACTOR);
+        }
         break;
 
     default:
@@ -145,9 +154,14 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 
 int main() {
     // z+ para dentro da tela
-    c = new Cube(100, 0, 0, 0); // centrado na origem
-    cylinder = new Cylinder(100, 100, Point(0, 0, 0));
+    Cube *c = new Cube(100, Point(0, 0, 0)); // centrado na origem
+    c->translate(Point(300, 300, 0));
+
+    Cylinder *cylinder = new Cylinder(100, 100, Point(0, 0, 0));
     cylinder->translate(Point(300, 300, 0));
+
+    objects.push_back(c);
+    objects.push_back(cylinder);
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
