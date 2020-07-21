@@ -25,11 +25,17 @@ public:
     void render();
     void transform();
 
+    void setDistance(int d);
+    int getDistance();
+
     void setAngY(float ang);
     float getAngY();
 
     void setAngX(float ang);
     float getAngX();
+
+    void setAngZ(float ang);
+    float getAngZ();
 };
 
 #endif

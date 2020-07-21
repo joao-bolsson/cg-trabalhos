@@ -85,26 +85,32 @@ void keyboardUp(int key) {
 
     case KEY_ROTATE_Y_UP:
         c->setAngY(c->getAngY() + ANGLE_FACTOR);
+        cylinder->setAngY(cylinder->getAngY() + ANGLE_FACTOR);
         break;
 
     case KEY_ROTATE_Y_DOWN:
         c->setAngY(c->getAngY() - ANGLE_FACTOR);
+        cylinder->setAngY(cylinder->getAngY() - ANGLE_FACTOR);
         break;
 
     case KEY_ROTATE_Z_UP:
         c->setAngZ(c->getAngZ() + ANGLE_FACTOR);
+        cylinder->setAngZ(cylinder->getAngZ() + ANGLE_FACTOR);
         break;
 
     case KEY_ROTATE_Z_DOWN:
         c->setAngZ(c->getAngZ() - ANGLE_FACTOR);
+        cylinder->setAngZ(cylinder->getAngZ() - ANGLE_FACTOR);
         break;
 
     case KEY_INCREASE_D:
         c->setDistance(c->getDistance() + DISTANCE_FACTOR);
+        cylinder->setDistance(cylinder->getDistance() + DISTANCE_FACTOR);
         break;
 
     case KEY_DECREASE_D:
         c->setDistance(c->getDistance() - DISTANCE_FACTOR);
+        cylinder->setDistance(cylinder->getDistance() - DISTANCE_FACTOR);
         break;
 
     default:
