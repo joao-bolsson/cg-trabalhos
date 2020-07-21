@@ -45,7 +45,6 @@ float Cylinder::getAngX() {
 }
 
 void Cylinder::setAngY(float ang) {
-    printf("angy: %.1f\n", ang);
     this->angY = ang;
     transform();
 }

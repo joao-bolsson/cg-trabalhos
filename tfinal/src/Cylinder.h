@@ -4,9 +4,6 @@
 #include "Point.h"
 #include <vector>
 
-#define LINES 1
-#define COLUMNS 18
-
 using namespace std;
 class Cylinder {
 private:
