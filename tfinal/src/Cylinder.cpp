@@ -4,25 +4,26 @@
 
 #define PI 3.14159265359
 
-Cylinder::Cylinder(int r, Point center) {
+Cylinder::Cylinder(int r, int height, Point center) {
     float step = 0.35; // 20 graus
 
-    vector<Point> line;
-    vector<Point> lineTransf;
-    for (float teta = 0; teta <= 2 * PI; teta += step) {
-        float x, y, z;
-        x = r * sin(teta);
-        y = center.getY();
-        z = r * cos(teta);
+    float yBegin = center.getY() - height / 2;
 
-        Point p = Point(x, y, z);
+    for (int h = 0; h <= height; h += 10) {
+        vector<Point> line;
+        for (float teta = 0; teta <= 2 * PI; teta += step) {
+            float x = r * sin(teta);
+            float y = yBegin + h;
+            float z = r * cos(teta);
 
-        line.push_back(p);
-        lineTransf.push_back(p.copy());
+            Point p = Point(x, y, z);
+
+            line.push_back(p);
+        }
+        ori.push_back(line);
     }
 
-    ori.push_back(line);
-    transformed.push_back(lineTransf);
+    transform();
 }
 
 void Cylinder::setAngX(float ang) {
@@ -44,38 +45,34 @@ float Cylinder::getAngY() {
 }
 
 void Cylinder::transform() {
-    for (unsigned int l = 0; l < ori.size(); l++) {
-        vector<Point> lines = ori[l];
+    transformed.clear();
 
-        vector<Point> other;
-        for (unsigned int c = 0; c < lines.size(); c++) {
-            Point p = lines[c].copy();
-
+    for (auto line : ori) {
+        vector<Point> transfLine; // transformed line
+        for (auto point : line) {
+            Point p = point.copy();
             p.transform(distance, angX, angY, 300, 300);
 
-            other.push_back(p);
+            transfLine.push_back(p);
         }
-
-        transformed[l] = other;
+        transformed.push_back(transfLine);
     }
-
-    vector<Point> transf = transformed[0];
 }
 
 void Cylinder::render() {
     color(1, 0, 0);
 
     for (unsigned int l = 0; l < transformed.size(); l++) {
-        vector<Point> lines = transformed[l];
-        for (unsigned int c = 0; c < lines.size() - 1; c++) {
-            Point p1 = lines[c];
-            Point p2 = lines[c + 1];
+        vector<Point> points = transformed[l];
+        for (unsigned int c = 0; c < points.size() - 1; c++) {
+            Point p1 = points[c];
+            Point p2 = points[c + 1];
 
             line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
         }
         // connect the last with the first
-        Point first = lines[0];
-        Point last = lines[lines.size() - 1];
+        Point first = points[0];
+        Point last = points[points.size() - 1];
         line(first.getX(), first.getY(), last.getX(), last.getY());
     }
 }

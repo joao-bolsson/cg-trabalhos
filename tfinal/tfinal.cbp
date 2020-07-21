@@ -31,6 +31,8 @@
 		<Unit filename="include/GL/glut.h" />
 		<Unit filename="src/Cube.cpp" />
 		<Unit filename="src/Cube.h" />
+		<Unit filename="src/Cylinder.cpp" />
+		<Unit filename="src/Cylinder.h" />
 		<Unit filename="src/Point.cpp" />
 		<Unit filename="src/Point.h" />
 		<Unit filename="src/Sphere.cpp" />

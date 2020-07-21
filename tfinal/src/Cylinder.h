@@ -20,7 +20,7 @@ private:
     int distance = 70;
 
 public:
-    Cylinder(int r, Point center);
+    Cylinder(int r, int height, Point center);
 
     void render();
     void transform();

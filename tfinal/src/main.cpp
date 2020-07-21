@@ -120,7 +120,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 int main() {
     // z+ para dentro da tela
     c = new Cube(100, 0, 0, 0); // centrado na origem
-    cylinder = new Cylinder(100, Point(0, 0, 0));
+    cylinder = new Cylinder(100, 100, Point(0, 0, 0));
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
