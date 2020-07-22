@@ -1,45 +1,12 @@
 #include "Pistao.h"
 
-Pistao::Pistao(Point center, Point ptVira, Point ptViraCenter, int radius, int length, float bielaLength) : Object(center) {
-    this->bielaLength = bielaLength;
-    this->ptVira = ptVira;
-    this->ptViraCenter = ptViraCenter;
-
-    float cateto = sqrt(abs(bielaLength * bielaLength - ptVira.getX() * ptVira.getX()));
-    float xPistao = ptViraCenter.getX(); // centro do virabrequim + tranlação
-    float yPistao = cateto + ptVira.getY();
-
-    ptConnection = Point(xPistao, yPistao, ptViraCenter.getZ());
-
-    // controi o cilindro
-    float step = 0.35; // 20 graus
-
-    float height = length;
-
-    float yBegin = ptConnection.getY();
-
-    for (int h = 0; h <= height; h += 10) {
-        vector<Point> line;
-        for (float teta = 0; teta <= 2 * PI; teta += step) {
-            float x = radius * sin(teta);
-            float y = yBegin + h;
-            float z = radius * cos(teta);
-
-            Point p = Point(x, y, z);
-
-            line.push_back(p);
-        }
-        points.push_back(line);
-    }
-
-    transform();
+Pistao::Pistao(Point center) : Object(center) {
 }
 
 void Pistao::render() {
-    color(1, 0, 0);
-    circle(ptConnection.getX() + translatePoint.getX(), ptConnection.getY() + translatePoint.getY(), 3, 10);
-
+    color(0, 1, 1);
     if (1 > 0) {
+        circle(pBiela.getX(), pBiela.getY(), 3, 10);
         return;
     }
     ///////////// mesmo codigo de cylinder::render
@@ -83,31 +50,9 @@ void Pistao::render() {
 }
 
 void Pistao::transform() {
-    float cateto = sqrt(abs(bielaLength * bielaLength - ptVira.getX() * ptVira.getX()));
-    float xPistao = ptViraCenter.getX(); // centro do virabrequim + tranlação
-    float yPistao = cateto + ptVira.getY();
+    // TODO
+}
 
-    ptConnection = Point(xPistao, yPistao, ptViraCenter.getZ());
-
-    Point p = ptConnection.copy();
-
-    // move to origin
-    p.translate(-center.getX(), -center.getY(), -center.getZ());
-
-    p.rotateZ(angZ);
-    p.rotateY(angY);
-    p.rotateX(angX);
-
-    p.translate(0, 0, 150);
-
-    p.project(distance);
-
-    // return back to the original center
-    p.translate(center.getX(), center.getY(), center.getZ());
-
-    // optional: centralizing in another point on screen
-    // p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-
-    ptConTransformed = p;
-    // Object::transform();
+void Pistao::connect(Point ptConnection) {
+    pBiela = ptConnection;
 }

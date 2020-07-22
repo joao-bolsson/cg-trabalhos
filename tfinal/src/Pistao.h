@@ -5,20 +5,10 @@
 
 class Pistao : public Object {
 private:
-    Point ptVira;           // ponto do virabrequim conexão com a biela
-    Point ptViraCenter;     // centro do virabrequim
-    Point ptConnection;     // ponto do pistao -> biela
-    Point ptConTransformed; // ponto do pistao -> biela (transformado)
-    int radius;
-    int length;
-    float bielaLength;
+    Point pBiela; // ponto conexão pistao -> biela
 
 public:
-    Pistao(Point center, Point ptVira,
-           Point ptViraCenter,
-           int radius,
-           int length,
-           float bielaLength);
+    Pistao(Point center);
 
     void render();
     void transform();

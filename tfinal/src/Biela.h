@@ -5,10 +5,12 @@
 
 class Biela : public Object {
 private:
-    Point pVirabrequim;
+    Point pVirabrequim; // ponto conexão virabrequim -> biela
+    Point pPistao;      // ponto conexão pistao -> biela
+    int length;
 
 public:
-    Biela(Point center);
+    Biela(int length, Point center);
 
     void render();
     void transform();
@@ -21,6 +23,9 @@ public:
      */
     void connect(Point ptConnection, float ang);
 
+    /**
+     * Point to conect the pistao. 
+     */
     Point getConnectionPistao();
 };
 
