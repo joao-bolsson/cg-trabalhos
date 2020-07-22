@@ -35,10 +35,14 @@
 		<Unit filename="src/Cylinder.h" />
 		<Unit filename="src/Object.cpp" />
 		<Unit filename="src/Object.h" />
+		<Unit filename="src/Pistao.cpp" />
+		<Unit filename="src/Pistao.h" />
 		<Unit filename="src/Point.cpp" />
 		<Unit filename="src/Point.h" />
 		<Unit filename="src/Sphere.cpp" />
 		<Unit filename="src/Sphere.h" />
+		<Unit filename="src/Virabrequim.cpp" />
+		<Unit filename="src/Virabrequim.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

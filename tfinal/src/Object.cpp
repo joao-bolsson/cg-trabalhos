@@ -17,6 +17,11 @@ void Object::rotate(float angX, float angY, float angZ) {
 }
 
 void Object::transform() {
+    centerTransformed = center.copy();
+    centerTransformed.translate(0, 0, 150);
+    centerTransformed.project(distance);
+    centerTransformed.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
     transformed.clear();
 
     for (auto line : points) {

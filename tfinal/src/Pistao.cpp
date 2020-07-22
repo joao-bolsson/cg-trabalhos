@@ -1,30 +1,22 @@
-#include "Virabrequim.h"
+#include "Pistao.h"
 
-/** 
- * TODO: construir todos os objetos na origem e depois transladar?
- * 
- * @param  radius: Radius.
- * @param  length: Length.
- * @param  center: Ponto onde vai ser construído.
- */
-Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) {
-    this->radius = radius;
-    this->length = length;
-    // calcula ponto para conexão com a biela
-    float xPt = length * cos(angX) + center.getY();
-    float yPt = length * sin(angX) + center.getY();
-    float zPt = center.getZ();
+Pistao::Pistao(Point center, Point ptVira, Point ptViraCenter, int radius, int length, float bielaLength) : Object(center) {
+    this->bielaLength = bielaLength;
+    this->ptVira = ptVira;
+    this->ptViraCenter = ptViraCenter;
 
-    ptConnection = Point(xPt, yPt, zPt);
+    float cateto = sqrt(abs(bielaLength * bielaLength - ptVira.getX() * ptVira.getX()));
+    float xPistao = ptViraCenter.getX(); // centro do virabrequim + tranlação
+    float yPistao = cateto + ptVira.getY();
 
-    // constroi o cilindro
-    // TODO: faz do center até o ptConnection
+    ptConnection = Point(xPistao, yPistao, ptViraCenter.getZ());
 
+    // controi o cilindro
     float step = 0.35; // 20 graus
 
     float height = length;
 
-    float yBegin = center.getY();
+    float yBegin = ptConnection.getY();
 
     for (int h = 0; h <= height; h += 10) {
         vector<Point> line;
@@ -43,20 +35,13 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
     transform();
 }
 
-void Virabrequim::render() {
-    if (1 > 0) {
-        color(1, 0, 0);
-        // TODO: precisar transformar o center?
-        float xVirabrequim = ptConTransformed.getX(); // ja esta transformado: rotacionado e transladado
-        float yVirabrequim = ptConTransformed.getY();
-        // ponto central FIXO transladado
-        circle(centerTransformed.getX(), centerTransformed.getY(), 3, 10);
+void Pistao::render() {
+    color(1, 0, 0);
+    circle(ptConnection.getX() + translatePoint.getX(), ptConnection.getY() + translatePoint.getY(), 3, 10);
 
-        line(xVirabrequim, yVirabrequim, centerTransformed.getX(), centerTransformed.getY());
-        circle(xVirabrequim, yVirabrequim, 3, 10);
+    if (1 > 0) {
         return;
     }
-
     ///////////// mesmo codigo de cylinder::render
     for (unsigned int l = 0; l < transformed.size(); l++) {
         color(1, 0, 0);
@@ -97,12 +82,12 @@ void Virabrequim::render() {
     //////////////////
 }
 
-void Virabrequim::transform() {
-    float xPt = length * cos(angX) + center.getX();
-    float yPt = length * sin(angX) + center.getY();
-    float zPt = center.getZ();
+void Pistao::transform() {
+    float cateto = sqrt(abs(bielaLength * bielaLength - ptVira.getX() * ptVira.getX()));
+    float xPistao = ptViraCenter.getX(); // centro do virabrequim + tranlação
+    float yPistao = cateto + ptVira.getY();
 
-    ptConnection = Point(xPt, yPt, zPt);
+    ptConnection = Point(xPistao, yPistao, ptViraCenter.getZ());
 
     Point p = ptConnection.copy();
 
@@ -121,17 +106,8 @@ void Virabrequim::transform() {
     p.translate(center.getX(), center.getY(), center.getZ());
 
     // optional: centralizing in another point on screen
-    p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+    // p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 
     ptConTransformed = p;
-
-    Object::transform();
-}
-
-Point Virabrequim::getPtConnection() {
-    return ptConnection;
-}
-
-Point Virabrequim::getPtConnectionTransf() {
-    return ptConTransformed;
+    // Object::transform();
 }

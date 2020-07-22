@@ -15,6 +15,9 @@ public:
 
     void transform();
     void render();
+
+    Point getPtConnection();
+    Point getPtConnectionTransf();
 };
 
 #endif

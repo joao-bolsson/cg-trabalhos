@@ -15,6 +15,7 @@ protected:
     Point translatePoint = Point(0, 0, 0);
     int distance = 70;
     Point center;
+    Point centerTransformed;
 
     vector<vector<Point>> points;
     vector<vector<Point>> transformed;

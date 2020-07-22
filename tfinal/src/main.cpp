@@ -11,6 +11,7 @@
 #include "Cube.h"
 #include "Cylinder.h"
 #include "Virabrequim.h"
+#include "Pistao.h"
 
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
@@ -31,6 +32,9 @@ int mouseX, mouseY;                        //variaveis globais do mouse para pod
 
 bool rotateZ = false;
 bool showMotorDemo = false;
+
+Virabrequim *vira;
+Pistao *pistao;
 
 vector<Object *> objects;
 
@@ -172,16 +176,11 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 
 int main() {
     // z+ para dentro da tela
-    Cube *c = new Cube(100, Point(0, 0, 0)); // centrado na origem
-    c->translate(Point(300, 300, 0));
+    Point center = Point(0, 0, 0);
 
-    Cylinder *cylinder = new Cylinder(100, 100, Point(0, 0, 0));
-    cylinder->translate(Point(300, 300, 0));
-
-    Virabrequim *vira = new Virabrequim(10, 70, Point(0, 0, 0));
+    vira = new Virabrequim(10, 70, center);
     vira->translate(Point(300, 300, 0));
-    // objects.push_back(c);
-    // objects.push_back(cylinder);
+
     objects.push_back(vira);
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
