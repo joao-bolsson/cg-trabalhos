@@ -5,7 +5,8 @@
 
 class Biela : public Object {
 private:
-    /* data */
+    Point pVirabrequim;
+
 public:
     Biela(Point center);
 
@@ -15,7 +16,7 @@ public:
     /**
      * Connect this object with the given point and inclinates it in x axis.
      *    
-     * @param  ptConnection: Point to connect with.
+     * @param  ptConnection: Point to connect with the virabrequim.
      * @param  ang: Inclination angle.
      */
     void connect(Point ptConnection, float ang);

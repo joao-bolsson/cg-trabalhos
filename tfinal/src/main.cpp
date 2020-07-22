@@ -12,6 +12,7 @@
 #include "Cylinder.h"
 #include "Virabrequim.h"
 #include "Pistao.h"
+#include "Biela.h"
 
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
@@ -35,6 +36,7 @@ bool showMotorDemo = false;
 
 Virabrequim *vira;
 Pistao *pistao;
+Biela *biela;
 
 vector<Object *> objects;
 
@@ -70,10 +72,16 @@ void render() {
         motor();
         return;
     }
+
     for (auto o : objects) {
         if (rotateZ) {
             o->rotate(o->getAngX(), o->getAngY(), o->getAngZ() + ANGLE_FACTOR);
         }
+    }
+
+    biela->connect(vira->getPtConnectionTransf(), 0);
+
+    for (auto o : objects) {
         o->render();
     }
 }
@@ -181,7 +189,11 @@ int main() {
     vira = new Virabrequim(10, 70, center);
     vira->translate(Point(300, 300, 0));
 
+    biela = new Biela(center);
+    biela->translate(Point(300, 300, 0));
+
     objects.push_back(vira);
+    objects.push_back(biela);
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
