@@ -1,8 +1,12 @@
 #ifndef OBJECT_H_INCLUDED
 #define OBJECT_H_INCLUDED
 
+#define PI 3.14159265359
+
 #include "Point.h"
+#include "gl_canvas2d.h"
 #include <vector>
+#include <math.h>
 
 using namespace std;
 class Object {
@@ -21,7 +25,7 @@ public:
     virtual void render() = 0;
     void translate(Point p);
     void rotate(float angX, float angY, float angZ);
-    void transform();
+    virtual void transform();
 
     void setDistance(int d);
     int getDistance();

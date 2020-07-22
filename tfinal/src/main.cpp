@@ -10,6 +10,7 @@
 #include "Object.h"
 #include "Cube.h"
 #include "Cylinder.h"
+#include "Virabrequim.h"
 
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
@@ -27,6 +28,9 @@
 //variavel global para selecao do que sera exibido na canvas.
 int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
+
+bool rotateZ = false;
+bool showMotorDemo = false;
 
 vector<Object *> objects;
 
@@ -54,14 +58,20 @@ void motor() {
     //biela
     line(xVirabrequim + translacao, yVirabrequim + translacao, xPistao + translacao, yPistao + translacao);
 
-    ang += 0.03;
+    ang += ANGLE_FACTOR;
 }
 
 void render() {
+    if (showMotorDemo) {
+        motor();
+        return;
+    }
     for (auto o : objects) {
+        if (rotateZ) {
+            o->rotate(o->getAngX(), o->getAngY(), o->getAngZ() + ANGLE_FACTOR);
+        }
         o->render();
     }
-    // motor();
 }
 
 void keyboard(int key) {
@@ -76,6 +86,14 @@ void keyboardUp(int key) {
     float angX = 0, angY = 0, angZ = 0;
 
     switch (key) {
+    case ' ':
+        rotateZ = !rotateZ;
+        break;
+
+    case '1':
+        showMotorDemo = !showMotorDemo;
+        break;
+
     case KEY_ROTATE_X_UP:
         for (auto o : objects) {
             angX = o->getAngX() + ANGLE_FACTOR;
@@ -160,8 +178,11 @@ int main() {
     Cylinder *cylinder = new Cylinder(100, 100, Point(0, 0, 0));
     cylinder->translate(Point(300, 300, 0));
 
-    objects.push_back(c);
-    objects.push_back(cylinder);
+    Virabrequim *vira = new Virabrequim(10, 70, Point(0, 0, 0));
+    vira->translate(Point(300, 300, 0));
+    // objects.push_back(c);
+    // objects.push_back(cylinder);
+    objects.push_back(vira);
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();

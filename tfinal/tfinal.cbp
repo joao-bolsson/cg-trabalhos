@@ -33,6 +33,8 @@
 		<Unit filename="src/Cube.h" />
 		<Unit filename="src/Cylinder.cpp" />
 		<Unit filename="src/Cylinder.h" />
+		<Unit filename="src/Object.cpp" />
+		<Unit filename="src/Object.h" />
 		<Unit filename="src/Point.cpp" />
 		<Unit filename="src/Point.h" />
 		<Unit filename="src/Sphere.cpp" />
