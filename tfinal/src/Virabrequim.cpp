@@ -98,9 +98,10 @@ void Virabrequim::render() {
 }
 
 void Virabrequim::transform() {
-    float xPt = length * cos(angX) + center.getX();
-    float yPt = length * sin(angX) + center.getY();
-    float zPt = center.getZ();
+    float ang = 0; // angulo inicial do virabrequim com o eixo x
+    float xPt = length * cos(ang) + center.getX();
+    float yPt = length * sin(ang) + center.getY();
+    float zPt = length * tan(ang) + center.getZ();
 
     ptConnection = Point(xPt, yPt, zPt);
 

@@ -24,7 +24,7 @@ void Biela::connect(Point ptConnection, float ang) {
 
     p.rotateZ(angZ);
     p.rotateY(angY);
-    p.rotateX(ang);
+    p.rotateX(angX);
 
     p.translate(0, 0, 150);
 

@@ -24,8 +24,6 @@ public:
     void rotateX(float ang);
     void rotateY(float ang);
     void rotateZ(float ang);
-
-    void transform(int d, float angX, float angY, int translateX, int translateY);
 };
 
 #endif
