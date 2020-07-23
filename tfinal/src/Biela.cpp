@@ -14,6 +14,9 @@ void Biela::transform() {
 }
 
 void Biela::connect(Point ptConnection, float ang) {
+    //// dois pontos para checar se a biela deforma ou nao
+    Point pViraTest, pPistaoTest;
+
     // recebe o ponto de conexão com o virabrequim e transforma
     Point p = ptConnection.copy();
 
@@ -23,6 +26,9 @@ void Biela::connect(Point ptConnection, float ang) {
     p.rotateZ(angZ);
     p.rotateY(angY);
     p.rotateX(angX);
+
+    pViraTest = p.copy();
+    pViraTest.translate(center.getX(), center.getY(), center.getZ());
 
     p.translate(0, 0, 150);
 
@@ -36,7 +42,7 @@ void Biela::connect(Point ptConnection, float ang) {
 
     pVirabrequim = p;
 
-    // calcula o ponto de conexão com o pistao
+    // calcula o ponto de conexão com o pistao  /// esta fazendo a mesma coisa q o pViraTest
     Point pConTemp = ptConnection.copy();
     pConTemp.translate(-center.getX(), -center.getY(), -center.getZ());
 
@@ -64,9 +70,10 @@ void Biela::connect(Point ptConnection, float ang) {
 
     pPistaoTransf = pTemp;
 
+    // pPistaoTransf
     // TODO: não pode deformar
-    // float d1 = sqrt(pow(pPistao.getX() - pVirabrequim.getX(), 2) + pow(pPistao.getY() - pVirabrequim.getY(), 2));
-    // printf("distance: %.1f\n", d1);
+    float d1 = sqrt(pow(pPistao.getX() - pViraTest.getX(), 2) + pow(pPistao.getY() - pViraTest.getY(), 2) + pow(pPistao.getZ() - pViraTest.getZ(), 2));
+    printf("distance: %.1f\n", d1);
 }
 
 Point Biela::getConnectionPistao() {
