@@ -23,8 +23,8 @@ void Biela::connect(Point ptConnection, float ang) {
     p.translate(-center.getX(), -center.getY(), -center.getZ());
 
     p.rotateZ(angZ);
-    p.rotateY(ang);
-    p.rotateX(angX);
+    p.rotateY(angY);
+    p.rotateX(ang);
 
     p.translate(0, 0, 150);
 
@@ -38,17 +38,29 @@ void Biela::connect(Point ptConnection, float ang) {
 
     pVirabrequim = p;
 
+    // precisa mudar
+    Point pConTemp = ptConnection.copy();
+    pConTemp.translate(-center.getX(), -center.getY(), -center.getZ());
+
+    pConTemp.rotateZ(angZ);
+    pConTemp.rotateY(angY);
+    pConTemp.rotateX(angX);
+
+    pConTemp.translate(center.getX(), center.getY(), center.getZ());
+
     float length = 80; //hipotenusa representa o comprimento da biela
-    float xVirabrequim = ptConnection.getX();
-    float yVirabrequim = ptConnection.getY();
+    float xVirabrequim = pConTemp.getX();
+    float yVirabrequim = pConTemp.getY();
     float cateto = sqrt(length * length - xVirabrequim * xVirabrequim); //pitagoras  hip^2 = cat^2 + cat^2
+
     float xPistao = 0;
     float yPistao = cateto + yVirabrequim;
 
-    Point pTemp = Point(xPistao, yPistao, ptConnection.getZ());
+    // TODO: rotação no X não esta certa
+    Point pTemp = Point(xPistao, yPistao, pConTemp.getZ());
 
     // move to origin
-    pTemp.translate(-center.getX(), -center.getY(), -center.getZ());
+    // pTemp.translate(-center.getX(), -center.getY(), -center.getZ());
 
     // pTemp.rotateZ(angZ);
     // pTemp.rotateY(angY);
@@ -59,23 +71,19 @@ void Biela::connect(Point ptConnection, float ang) {
     pTemp.project(distance);
 
     // return back to the original center
-    pTemp.translate(center.getX(), center.getY(), center.getZ());
+    // pTemp.translate(center.getX(), center.getY(), center.getZ());
 
     // optional: centralizing in another point on screen
     // sem cateto aqui
-    pTemp.translate(translatePoint.getX(), pVirabrequim.getY() + cateto, translatePoint.getZ());
+    pTemp.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 
     pPistao = pTemp;
 
     // TODO: não pode deformar
     float d1 = sqrt(pow(pPistao.getX() - pVirabrequim.getX(), 2) + pow(pPistao.getY() - pVirabrequim.getY(), 2));
     printf("distance: %.1f\n", d1);
-    // circle(xPistao + translatePoint.getX(), yPistao + translatePoint.getY(), 3, 10);
 }
 
 Point Biela::getConnectionPistao() {
     return pPistao;
-    // projetar o ponto do pistao
-    // ponto do virabrequim ja esta projetado
-    // return Point(pVirabrequim.getX(), pVirabrequim.getY() + length, pVirabrequim.getZ());
 }
