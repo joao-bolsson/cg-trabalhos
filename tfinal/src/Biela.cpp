@@ -6,10 +6,7 @@ Biela::Biela(int length, Point center) : Object(center) {
 
 void Biela::render() {
     color(0, 0, 1);
-    line(pVirabrequim.getX(), pVirabrequim.getY(), pPistao.getX(), pPistao.getY());
-
-    color(0, 1, 1);
-    circle(pPistao.getX(), pPistao.getY(), 3, 10);
+    line(pVirabrequim.getX(), pVirabrequim.getY(), pPistaoTransf.getX(), pPistaoTransf.getY());
 }
 
 void Biela::transform() {
@@ -57,6 +54,7 @@ void Biela::connect(Point ptConnection, float ang) {
     float yPistao = cateto + yVirabrequim;
 
     Point pTemp = Point(xPistao, yPistao, pConTemp.getZ());
+    pPistao = pTemp.copy();
 
     pTemp.translate(0, 0, 150);
 
@@ -64,7 +62,7 @@ void Biela::connect(Point ptConnection, float ang) {
 
     pTemp.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 
-    pPistao = pTemp;
+    pPistaoTransf = pTemp;
 
     // TODO: não pode deformar
     // float d1 = sqrt(pow(pPistao.getX() - pVirabrequim.getX(), 2) + pow(pPistao.getY() - pVirabrequim.getY(), 2));

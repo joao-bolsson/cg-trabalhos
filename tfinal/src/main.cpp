@@ -105,6 +105,12 @@ void keyboardUp(int key) {
         rotateZ = !rotateZ;
         break;
 
+    case 'r': // reseta
+        for (auto o : objects) {
+            o->rotate(0, 0, 0);
+        }
+        break;
+
     case '1':
         showMotorDemo = !showMotorDemo;
         break;

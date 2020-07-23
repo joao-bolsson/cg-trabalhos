@@ -54,5 +54,11 @@ void Pistao::transform() {
 }
 
 void Pistao::connect(Point ptConnection) {
-    pBiela = ptConnection;
+    pBiela = ptConnection.copy();
+
+    pBiela.translate(0, 0, 150);
+
+    pBiela.project(distance);
+
+    pBiela.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 }

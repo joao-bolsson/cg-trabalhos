@@ -5,8 +5,9 @@
 
 class Biela : public Object {
 private:
-    Point pVirabrequim; // ponto conexão virabrequim -> biela
-    Point pPistao;      // ponto conexão pistao -> biela
+    Point pVirabrequim;  // ponto conexão virabrequim -> biela
+    Point pPistao;       // ponto conexão pistao -> biela
+    Point pPistaoTransf; // ponto conexão pistao -> biela (transformado)
     int length;
 
 public:
