@@ -24,11 +24,11 @@ public:
     Object(Point center);
 
     virtual void render() = 0;
-    void translate(Point p);
-    void rotate(float angX, float angY, float angZ);
+    virtual void translate(Point p);
+    virtual void rotate(float angX, float angY, float angZ);
     virtual void transform();
 
-    void setDistance(int d);
+    virtual void setDistance(int d);
     int getDistance();
 
     float getAngY();

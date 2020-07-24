@@ -6,13 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "gl_canvas2d.h"
-#include "Object.h"
-#include "Cube.h"
-#include "Cylinder.h"
-#include "Virabrequim.h"
-#include "Pistao.h"
-#include "Biela.h"
+#include "Motor.h"
 
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
@@ -34,15 +28,13 @@ int mouseX, mouseY;                        //variaveis globais do mouse para pod
 bool rotateZ = false;
 bool showMotorDemo = false;
 
-Virabrequim *vira;
-Pistao *pistao;
-Biela *biela;
+Motor *motor;
 
 vector<Object *> objects;
 
 // CÓDIGO TESTE APENAS PARA TRAB FINAL
 float ang = 0;
-void motor() {
+void motorDemo() {
     color(0, 1, 0);
     float translacao = 100; //posicao onde mostrar na tela.
 
@@ -69,7 +61,7 @@ void motor() {
 
 void render() {
     if (showMotorDemo) {
-        motor();
+        motorDemo();
         return;
     }
 
@@ -77,14 +69,6 @@ void render() {
         if (rotateZ) {
             o->rotate(o->getAngX(), o->getAngY(), o->getAngZ() + ANGLE_FACTOR);
         }
-    }
-
-    // TODO: passar o ponto original e transformar lá na biela
-    // pega esse ponto original, adiciona a altura  e transforma
-    biela->connect(vira->getPtConnection(), 0);
-    pistao->connect(biela->getConnectionPistao());
-
-    for (auto o : objects) {
         o->render();
     }
 }
@@ -195,18 +179,10 @@ int main() {
     // z+ para dentro da tela
     Point center = Point(0, 0, 0);
 
-    vira = new Virabrequim(10, 70, center);
-    vira->translate(Point(300, 300, 0));
+    motor = new Motor(center);
+    motor->translate(Point(300, 300, 0));
 
-    biela = new Biela(80, center);
-    biela->translate(Point(300, 300, 0));
-
-    pistao = new Pistao(center);
-    pistao->translate(Point(300, 300, 0));
-
-    objects.push_back(vira);
-    objects.push_back(biela);
-    // objects.push_back(pistao);
+    objects.push_back(motor);
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
