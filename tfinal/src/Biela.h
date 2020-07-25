@@ -11,7 +11,7 @@ private:
     int length;
 
 public:
-    Biela(int length, Point center);
+    Biela(int radius, int length, Point center);
 
     void render();
     void transform();

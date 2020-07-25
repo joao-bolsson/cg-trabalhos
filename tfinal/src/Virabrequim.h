@@ -11,6 +11,13 @@ private:
     Point ptConTransformed; // ponto para conectar a biela
 
 public:
+    /**
+     * Creates a virabrequim. 
+     *   
+     * @param  radius: Cylinder radius.
+     * @param  length: Virabrequim length.
+     * @param  center: Point where it will be constructed.
+     */
     Virabrequim(int radius, int length, Point center);
 
     void transform();

@@ -1,8 +1,8 @@
 #include "Motor.h"
 
 Motor::Motor(Point center) : Object(center) {
-    virabrequim = new Virabrequim(10, 70, center);
-    biela = new Biela(80, center);
+    virabrequim = new Virabrequim(10, 40, center);
+    biela = new Biela(5, 80, center);
     pistao = new Pistao(center);
 }
 
@@ -16,7 +16,9 @@ void Motor::translate(Point p) {
 
 void Motor::rotate(float angX, float angY, float angZ) {
     virabrequim->rotate(angX, angY, angZ);
-    biela->rotate(angX, angY, angZ);
+
+    // TODO: biela tem que rotacionar no eixo z o valor do angulo entre o pVirabrequim e o pPistao
+    biela->rotate(angX, angY, 0);
     pistao->rotate(angX, angY, angZ);
 
     Object::rotate(angX, angY, angZ);
@@ -32,6 +34,8 @@ void Motor::transform() {
     float ang = calcAngPistao();
     biela->connect(virabrequim->getPtConnection(), ang);
     pistao->connect(biela->getConnectionPistao());
+
+    biela->translate(virabrequim->getPtConnectionTransf());
 
     virabrequim->transform();
     biela->transform();

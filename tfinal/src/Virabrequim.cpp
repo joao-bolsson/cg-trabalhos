@@ -11,14 +11,15 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
     this->radius = radius;
     this->length = length;
     // calcula ponto para conexão com a biela
-    float xPt = length * cos(angX) + center.getY();
-    float yPt = length * sin(angX) + center.getY();
-    float zPt = center.getZ();
+    float ang = 0; // angulo inicial do virabrequim com o eixo x
+    float xPt = length * cos(ang) + center.getX();
+    float yPt = length * sin(ang) + center.getY();
+    float zPt = length * tan(ang) + center.getZ();
 
     ptConnection = Point(xPt, yPt, zPt);
 
     // constroi o cilindro
-    // TODO: faz do center até o ptConnection
+    // faz do center até o ptConnection
 
     float step = 0.35; // 20 graus
 
@@ -29,8 +30,9 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
     for (int h = 0; h <= height; h += 10) {
         vector<Point> line;
         for (float teta = 0; teta <= 2 * PI; teta += step) {
-            float x = radius * sin(teta);
-            float y = yBegin + h;
+            // constroi deitado, se quiser em pe, troca x <-> y
+            float y = radius * sin(teta);
+            float x = yBegin + h;
             float z = radius * cos(teta);
 
             Point p = Point(x, y, z);
@@ -39,12 +41,10 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
         }
         points.push_back(line);
     }
-
-    transform();
 }
 
 void Virabrequim::render() {
-    if (1 > 0) {
+    if (1 > 2) { // desenha 2d
         color(1, 0, 0);
         // TODO: precisar transformar o center?
         float xVirabrequim = ptConTransformed.getX(); // ja esta transformado: rotacionado e transladado
@@ -98,13 +98,6 @@ void Virabrequim::render() {
 }
 
 void Virabrequim::transform() {
-    float ang = 0; // angulo inicial do virabrequim com o eixo x
-    float xPt = length * cos(ang) + center.getX();
-    float yPt = length * sin(ang) + center.getY();
-    float zPt = length * tan(ang) + center.getZ();
-
-    ptConnection = Point(xPt, yPt, zPt);
-
     Point p = ptConnection.copy();
 
     // move to origin
