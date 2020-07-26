@@ -18,8 +18,10 @@ void Motor::rotate(double angX, double angY, double angZ) {
     virabrequim->rotate(angX, angY, angZ);
 
     // apenas o ponto de conexão da biela com o virabrequim tem que rotacionar no eixo z
-    // TODO: biela tem que rotacionar no eixo z o valor do angulo entre o pVirabrequim e o pPistao
+    // TODO: biela tem que rotacionar no eixo z o valor do angulo entre o pVirabrequim e o ptPistao
     biela->rotate(angX, angY, angZ);
+    // biela->rotateObject(angX, angY, calcAngPistao());
+
     pistao->rotate(angX, angY, angZ);
 
     Object::rotate(angX, angY, angZ);
@@ -27,13 +29,13 @@ void Motor::rotate(double angX, double angY, double angZ) {
 
 void Motor::render() {
     virabrequim->render();
-    biela->render();
+    // biela->render();
     pistao->render();
 }
 
 void Motor::transform() {
-    // double ang = calcAngPistao();
-    biela->connect(virabrequim->getPtConnection(), 0);
+    double ang = calcAngPistao();
+    biela->connect(virabrequim->getPtConnection(), ang);
     pistao->connect(biela->getConnectionPistao());
 
     // biela->translate(virabrequim->getPtConnectionTransf());
@@ -54,26 +56,53 @@ void Motor::setDistance(int d) {
 }
 
 double Motor::calcAngPistao() {
-    Point origem = biela->getConnectionPistaoTranf().copy(); //virabrequim->getPtConnection();
-    Point v = virabrequim->getPtConnectionTransf();
-    Point u = translatePoint.copy();
+    Point ptVirabrequim = virabrequim->getPtConnection().copy();
 
-    v.translate(-origem.getX(), -origem.getY(), -origem.getZ());
-    u.translate(-origem.getX(), -origem.getY(), -origem.getZ());
+    ptVirabrequim.translate(-center.getX(), -center.getY(), -center.getZ());
 
-    double x1 = u.getX();
-    double y1 = u.getY();
-    double x2 = v.getX();
-    double y2 = v.getY();
+    ptVirabrequim.rotateZ(angZ);
+    ptVirabrequim.rotateY(angY);
+    ptVirabrequim.rotateX(angX);
 
-    double val = (x1 * x2 + y1 * y2) / (sqrt(pow(x1, 2) + pow(y1, 2)) * sqrt(pow(x2, 2) + pow(y2, 2)));
-    double cosv = cos(val);
-    double ang = acos(cosv);
-    printf("ang: %.2f\n", ang);
+    ptVirabrequim.translate(center.getX(), center.getY(), center.getZ());
+    // acabou o calc do ponto p (virabrequim)
 
-    // if (virabrequim->getPtConnectionTransf().getX() < translatePoint.getX()) {
-    //     return -ang;
-    // }
+    Point centerVira = virabrequim->getCenter();
 
-    return 0;
+    float cateto = sqrt(pow(biela->getLength(), 2) - pow(ptVirabrequim.getX(), 2));
+
+    // onde a biela se conecta com o pistao
+    Point ptPistao = Point(centerVira.getX(), ptVirabrequim.getY() + cateto, centerVira.getZ());
+    // acabou o calc do ponto b (pistao)
+
+    // acha o angulo
+    double tgAlfa = (ptPistao.getY() - ptVirabrequim.getY()) / (ptPistao.getX() - ptVirabrequim.getX());
+    tgAlfa = tan(tgAlfa);
+
+    // faz as transformações pra desenhar na tela (teste)
+    // ptVirabrequim.translate(0, 0, 150);
+
+    // ptVirabrequim.project(distance);
+
+    // // return back to the original center
+    // ptVirabrequim.translate(center.getX(), center.getY(), center.getZ());
+
+    // // optional: centralizing in another point on screen
+    // ptVirabrequim.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
+    // ptPistao.translate(0, 0, 150);
+
+    // ptPistao.project(distance);
+
+    // // return back to the original center
+    // ptPistao.translate(center.getX(), center.getY(), center.getZ());
+
+    // // optional: centralizing in another point on screen
+    // ptPistao.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
+    // line(ptVirabrequim.getX(), ptVirabrequim.getY(), ptPistao.getX(), ptPistao.getY());
+    // color(1, 0, 0);
+    // circle(ptPistao.getX(), ptPistao.getY(), 5, 10);
+
+    return atan(tgAlfa);
 }

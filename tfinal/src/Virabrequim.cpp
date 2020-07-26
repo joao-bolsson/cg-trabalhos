@@ -122,6 +122,10 @@ void Virabrequim::transform() {
     Object::transform();
 }
 
+int Virabrequim::getLength() {
+    return length;
+}
+
 Point Virabrequim::getPtConnection() {
     return ptConnection;
 }

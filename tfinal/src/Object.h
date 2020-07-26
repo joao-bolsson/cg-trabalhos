@@ -31,6 +31,8 @@ public:
     virtual void setDistance(int d);
     int getDistance();
 
+    Point getCenter();
+
     double getAngY();
     double getAngX();
     double getAngZ();

@@ -124,12 +124,52 @@ void Biela::transform() {
     double d1 = sqrt(pow(pPistao.getX() - pViraTest.getX(), 2) + pow(pPistao.getY() - pViraTest.getY(), 2) + pow(pPistao.getZ() - pViraTest.getZ(), 2));
     printf("distance: %.1f\n", d1);
 
-    Object::transform();
+    // Object::transform();
+}
+
+void Biela::rotateObject(double angX, double angY, double angZ) {
+    centerTransformed = center.copy();
+    centerTransformed.translate(0, 0, 150);
+    centerTransformed.project(distance);
+    centerTransformed.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
+    transformed.clear();
+
+    for (auto line : points) {
+        vector<Point> transfLine; // transformed line
+        for (auto point : line) {
+            Point p = point.copy();
+
+            // move to origin
+            p.translate(-center.getX(), -center.getY(), -center.getZ());
+
+            p.rotateZ(angZ);
+            p.rotateY(angY);
+            p.rotateX(angX);
+
+            p.translate(0, 0, 150);
+
+            p.project(distance);
+
+            // return back to the original center
+            p.translate(center.getX(), center.getY(), center.getZ());
+
+            // optional: centralizing in another point on screen
+            p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
+            transfLine.push_back(p);
+        }
+        transformed.push_back(transfLine);
+    }
 }
 
 void Biela::connect(Point ptConnection, double ang) {
     pConectionVira = ptConnection.copy();
     transform();
+}
+
+int Biela::getLength() {
+    return length;
 }
 
 Point Biela::getConnectionPistao() {
