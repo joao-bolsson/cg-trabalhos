@@ -3,19 +3,19 @@
 Biela::Biela(int radius, int length, Point center) : Object(center) {
     this->length = length;
 
-    float step = 0.35; // 20 graus
+    double step = 0.35; // 20 graus
 
-    float height = length;
+    double height = length;
 
-    float yBegin = center.getY();
+    double yBegin = center.getY();
 
     for (int h = 0; h <= height; h += 10) {
         vector<Point> line;
-        for (float teta = 0; teta <= 2 * PI; teta += step) {
+        for (double teta = 0; teta <= 2 * PI; teta += step) {
             // constroi deitado, se quiser em pe, troca x <-> y
-            float x = radius * sin(teta);
-            float y = yBegin + h;
-            float z = radius * cos(teta);
+            double x = radius * sin(teta);
+            double y = yBegin + h;
+            double z = radius * cos(teta);
 
             Point p = Point(x, y, z);
 
@@ -26,7 +26,7 @@ Biela::Biela(int radius, int length, Point center) : Object(center) {
 }
 
 void Biela::render() {
-    if (1 > 2) { // desenha 2d
+    if (1 > 0) { // desenha 2d
         color(0, 0, 1);
         line(pVirabrequim.getX(), pVirabrequim.getY(), pPistaoTransf.getX(), pPistaoTransf.getY());
         return;
@@ -35,7 +35,7 @@ void Biela::render() {
     for (unsigned int l = 0; l < transformed.size(); l++) {
         color(1, 0, 0);
         vector<Point> points = transformed[l];
-        float r = 0.1, g = 0.2, b = 0.3;
+        double r = 0.1, g = 0.2, b = 0.3;
         for (unsigned int c = 0; c < points.size() - 1; c++) {
             Point p1 = points[c];
             Point p2 = points[c + 1];
@@ -73,15 +73,11 @@ void Biela::render() {
 }
 
 void Biela::transform() {
-    Object::transform();
-}
-
-void Biela::connect(Point ptConnection, float ang) {
     //// dois pontos para checar se a biela deforma ou nao
     Point pViraTest, pPistaoTest;
 
-    // recebe o ponto de conexão com o virabrequim e transforma
-    Point p = ptConnection.copy();
+    // transforma o ponto de conexão com o virabrequim
+    Point p = pConectionVira.copy();
 
     // move to origin
     p.translate(-center.getX(), -center.getY(), -center.getZ());
@@ -105,24 +101,15 @@ void Biela::connect(Point ptConnection, float ang) {
 
     pVirabrequim = p;
 
-    // calcula o ponto de conexão com o pistao  /// esta fazendo a mesma coisa q o pViraTest
-    Point pConTemp = ptConnection.copy();
-    pConTemp.translate(-center.getX(), -center.getY(), -center.getZ());
+    // calcula o ponto de conexão com o pistao
+    double xVirabrequim = pViraTest.getX();
+    double yVirabrequim = pViraTest.getY();
+    double cateto = sqrt(length * length - xVirabrequim * xVirabrequim);
 
-    pConTemp.rotateZ(angZ);
-    pConTemp.rotateY(angY);
-    pConTemp.rotateX(angX);
+    double xPistao = center.getX(); // 0
+    double yPistao = cateto + yVirabrequim;
 
-    pConTemp.translate(center.getX(), center.getY(), center.getZ());
-
-    float xVirabrequim = pConTemp.getX();
-    float yVirabrequim = pConTemp.getY();
-    float cateto = sqrt(length * length - xVirabrequim * xVirabrequim);
-
-    float xPistao = center.getX(); // 0
-    float yPistao = cateto + yVirabrequim;
-
-    Point pTemp = Point(xPistao, yPistao, pConTemp.getZ());
+    Point pTemp = Point(xPistao, yPistao, pViraTest.getZ());
     pPistao = pTemp.copy();
 
     pTemp.translate(0, 0, 150);
@@ -133,12 +120,22 @@ void Biela::connect(Point ptConnection, float ang) {
 
     pPistaoTransf = pTemp;
 
-    // pPistaoTransf
-    // TODO: não pode deformar
-    float d1 = sqrt(pow(pPistao.getX() - pViraTest.getX(), 2) + pow(pPistao.getY() - pViraTest.getY(), 2) + pow(pPistao.getZ() - pViraTest.getZ(), 2));
+    // não pode deformar
+    double d1 = sqrt(pow(pPistao.getX() - pViraTest.getX(), 2) + pow(pPistao.getY() - pViraTest.getY(), 2) + pow(pPistao.getZ() - pViraTest.getZ(), 2));
     printf("distance: %.1f\n", d1);
+
+    Object::transform();
+}
+
+void Biela::connect(Point ptConnection, double ang) {
+    pConectionVira = ptConnection.copy();
+    transform();
 }
 
 Point Biela::getConnectionPistao() {
     return pPistao;
+}
+
+Point Biela::getConnectionPistaoTranf() {
+    return pPistaoTransf;
 }

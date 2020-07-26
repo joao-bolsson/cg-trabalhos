@@ -11,29 +11,29 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
     this->radius = radius;
     this->length = length;
     // calcula ponto para conexão com a biela
-    float ang = 0; // angulo inicial do virabrequim com o eixo x
-    float xPt = length * cos(ang) + center.getX();
-    float yPt = length * sin(ang) + center.getY();
-    float zPt = length * tan(ang) + center.getZ();
+    double ang = 0; // angulo inicial do virabrequim com o eixo x
+    double xPt = length * cos(ang) + center.getX();
+    double yPt = length * sin(ang) + center.getY();
+    double zPt = length * tan(ang) + center.getZ();
 
     ptConnection = Point(xPt, yPt, zPt);
 
     // constroi o cilindro
     // faz do center até o ptConnection
 
-    float step = 0.35; // 20 graus
+    double step = 0.35; // 20 graus
 
-    float height = length;
+    double height = length;
 
-    float yBegin = center.getY();
+    double yBegin = center.getY();
 
     for (int h = 0; h <= height; h += 10) {
         vector<Point> line;
-        for (float teta = 0; teta <= 2 * PI; teta += step) {
+        for (double teta = 0; teta <= 2 * PI; teta += step) {
             // constroi deitado, se quiser em pe, troca x <-> y
-            float y = radius * sin(teta);
-            float x = yBegin + h;
-            float z = radius * cos(teta);
+            double y = radius * sin(teta);
+            double x = yBegin + h;
+            double z = radius * cos(teta);
 
             Point p = Point(x, y, z);
 
@@ -44,11 +44,11 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
 }
 
 void Virabrequim::render() {
-    if (1 > 2) { // desenha 2d
+    if (1 > 0) { // desenha 2d
         color(1, 0, 0);
         // TODO: precisar transformar o center?
-        float xVirabrequim = ptConTransformed.getX(); // ja esta transformado: rotacionado e transladado
-        float yVirabrequim = ptConTransformed.getY();
+        double xVirabrequim = ptConTransformed.getX(); // ja esta transformado: rotacionado e transladado
+        double yVirabrequim = ptConTransformed.getY();
         // ponto central FIXO transladado
         circle(centerTransformed.getX(), centerTransformed.getY(), 3, 10);
 
@@ -61,7 +61,7 @@ void Virabrequim::render() {
     for (unsigned int l = 0; l < transformed.size(); l++) {
         color(1, 0, 0);
         vector<Point> points = transformed[l];
-        float r = 0.1, g = 0.2, b = 0.3;
+        double r = 0.1, g = 0.2, b = 0.3;
         for (unsigned int c = 0; c < points.size() - 1; c++) {
             Point p1 = points[c];
             Point p2 = points[c + 1];

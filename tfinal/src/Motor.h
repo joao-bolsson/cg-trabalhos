@@ -18,10 +18,10 @@ public:
     void render();
     void transform();
     void translate(Point p);
-    void rotate(float angX, float angY, float angZ);
+    void rotate(double angX, double angY, double angZ);
     void setDistance(int d);
 
-    float calcAngPistao();
+    double calcAngPistao();
 };
 
 #endif

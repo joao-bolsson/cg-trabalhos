@@ -3,27 +3,27 @@
 
 class Point {
 private:
-    float x, y, z;
+    double x, y, z;
 
 public:
     Point();
-    Point(float x, float y, float z);
+    Point(double x, double y, double z);
 
     Point copy();
 
-    float getX();
-    float getY();
-    float getZ();
+    double getX();
+    double getY();
+    double getZ();
 
-    void setX(float x);
-    void setY(float y);
-    void setZ(float z);
+    void setX(double x);
+    void setY(double y);
+    void setZ(double z);
 
-    void translate(float x, float y, float z);
-    void project(float d);
-    void rotateX(float ang);
-    void rotateY(float ang);
-    void rotateZ(float ang);
+    void translate(double x, double y, double z);
+    void project(double d);
+    void rotateX(double ang);
+    void rotateY(double ang);
+    void rotateZ(double ang);
 };
 
 #endif

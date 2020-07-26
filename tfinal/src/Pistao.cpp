@@ -13,7 +13,7 @@ void Pistao::render() {
     for (unsigned int l = 0; l < transformed.size(); l++) {
         color(1, 0, 0);
         vector<Point> points = transformed[l];
-        float r = 0.1, g = 0.2, b = 0.3;
+        double r = 0.1, g = 0.2, b = 0.3;
         for (unsigned int c = 0; c < points.size() - 1; c++) {
             Point p1 = points[c];
             Point p2 = points[c + 1];

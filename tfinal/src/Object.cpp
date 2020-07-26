@@ -9,7 +9,7 @@ void Object::setDistance(int d) {
     transform();
 }
 
-void Object::rotate(float angX, float angY, float angZ) {
+void Object::rotate(double angX, double angY, double angZ) {
     this->angX = angX;
     this->angY = angY;
     this->angZ = angZ;
@@ -61,14 +61,14 @@ int Object::getDistance() {
     return distance;
 }
 
-float Object::getAngY() {
+double Object::getAngY() {
     return angY;
 }
 
-float Object::getAngX() {
+double Object::getAngX() {
     return angX;
 }
 
-float Object::getAngZ() {
+double Object::getAngZ() {
     return angZ;
 }

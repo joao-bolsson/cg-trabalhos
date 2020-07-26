@@ -5,9 +5,10 @@
 
 class Biela : public Object {
 private:
-    Point pVirabrequim;  // ponto conexão virabrequim -> biela
-    Point pPistao;       // ponto conexão pistao -> biela
-    Point pPistaoTransf; // ponto conexão pistao -> biela (transformado)
+    Point pConectionVira; // ponto conexão virabrequim -> biela (sem transformações)
+    Point pVirabrequim;   // ponto conexão virabrequim -> biela
+    Point pPistao;        // ponto conexão pistao -> biela
+    Point pPistaoTransf;  // ponto conexão pistao -> biela (transformado)
     int length;
 
 public:
@@ -22,12 +23,17 @@ public:
      * @param  ptConnection: Point to connect with the virabrequim.
      * @param  ang: Inclination angle.
      */
-    void connect(Point ptConnection, float ang);
+    void connect(Point ptConnection, double ang);
 
     /**
      * Point to conect the pistao. 
      */
     Point getConnectionPistao();
+
+    /**
+     * Transformed point to conect the pistao. 
+     */
+    Point getConnectionPistaoTranf();
 };
 
 #endif

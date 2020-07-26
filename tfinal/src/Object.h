@@ -11,7 +11,7 @@
 using namespace std;
 class Object {
 protected:
-    float angX = 0, angY = 0, angZ = 0;
+    double angX = 0, angY = 0, angZ = 0;
     Point translatePoint = Point(0, 0, 0);
     int distance = 70;
     Point center;
@@ -25,15 +25,15 @@ public:
 
     virtual void render() = 0;
     virtual void translate(Point p);
-    virtual void rotate(float angX, float angY, float angZ);
+    virtual void rotate(double angX, double angY, double angZ);
     virtual void transform();
 
     virtual void setDistance(int d);
     int getDistance();
 
-    float getAngY();
-    float getAngX();
-    float getAngZ();
+    double getAngY();
+    double getAngX();
+    double getAngZ();
 };
 
 #endif
