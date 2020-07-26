@@ -29,15 +29,16 @@ void Motor::rotate(double angX, double angY, double angZ) {
 
 void Motor::render() {
     virabrequim->render();
-    // biela->render();
+    biela->render();
     pistao->render();
 }
 
 void Motor::transform() {
     double ang = calcAngPistao();
-    biela->connect(virabrequim->getPtConnection(), ang);
+    biela->connect(virabrequim->getPtConnectionTransf(), ang);
     pistao->connect(biela->getConnectionPistao());
 
+    // TODO: não pode mais pq esse ponto nao esta projetado
     // biela->translate(virabrequim->getPtConnectionTransf());
 
     virabrequim->transform();
@@ -56,15 +57,7 @@ void Motor::setDistance(int d) {
 }
 
 double Motor::calcAngPistao() {
-    Point ptVirabrequim = virabrequim->getPtConnection().copy();
-
-    ptVirabrequim.translate(-center.getX(), -center.getY(), -center.getZ());
-
-    ptVirabrequim.rotateZ(angZ);
-    ptVirabrequim.rotateY(angY);
-    ptVirabrequim.rotateX(angX);
-
-    ptVirabrequim.translate(center.getX(), center.getY(), center.getZ());
+    Point ptVirabrequim = virabrequim->getPtConnectionTransf();
     // acabou o calc do ponto p (virabrequim)
 
     Point centerVira = virabrequim->getCenter();

@@ -131,5 +131,15 @@ Point Virabrequim::getPtConnection() {
 }
 
 Point Virabrequim::getPtConnectionTransf() {
-    return ptConTransformed;
+    Point p = ptConnection.copy();
+    p.translate(-center.getX(), -center.getY(), -center.getZ());
+
+    p.rotateZ(angZ);
+    p.rotateY(angY);
+    p.rotateX(angX);
+
+    // return back to the original center
+    p.translate(center.getX(), center.getY(), center.getZ());
+    return p;
+    // return ptConTransformed;
 }

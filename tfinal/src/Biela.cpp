@@ -73,55 +73,24 @@ void Biela::render() {
 }
 
 void Biela::transform() {
-    //// dois pontos para checar se a biela deforma ou nao
-    Point pViraTest, pPistaoTest;
-
-    // transforma o ponto de conexão com o virabrequim
+    // projeta o ponto do virabrequim
     Point p = pConectionVira.copy();
-
-    // move to origin
-    p.translate(-center.getX(), -center.getY(), -center.getZ());
-
-    p.rotateZ(angZ);
-    p.rotateY(angY);
-    p.rotateX(angX);
-
-    pViraTest = p.copy();
-    pViraTest.translate(center.getX(), center.getY(), center.getZ());
-
     p.translate(0, 0, 150);
-
     p.project(distance);
-
-    // return back to the original center
-    p.translate(center.getX(), center.getY(), center.getZ());
-
-    // centralizing in another point on screen
     p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 
     pVirabrequim = p;
 
-    // calcula o ponto de conexão com o pistao
-    double xVirabrequim = pViraTest.getX();
-    double yVirabrequim = pViraTest.getY();
-    double cateto = sqrt(length * length - xVirabrequim * xVirabrequim);
-
-    double xPistao = center.getX(); // 0
-    double yPistao = cateto + yVirabrequim;
-
-    Point pTemp = Point(xPistao, yPistao, pViraTest.getZ());
-    pPistao = pTemp.copy();
-
+    // projeta o ponto do pistão
+    Point pTemp = pPistao.copy();
     pTemp.translate(0, 0, 150);
-
     pTemp.project(distance);
-
     pTemp.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
 
     pPistaoTransf = pTemp;
 
     // não pode deformar
-    double d1 = sqrt(pow(pPistao.getX() - pViraTest.getX(), 2) + pow(pPistao.getY() - pViraTest.getY(), 2) + pow(pPistao.getZ() - pViraTest.getZ(), 2));
+    double d1 = sqrt(pow(pPistao.getX() - pConectionVira.getX(), 2) + pow(pPistao.getY() - pConectionVira.getY(), 2) + pow(pPistao.getZ() - pConectionVira.getZ(), 2));
     printf("distance: %.1f\n", d1);
 
     // Object::transform();
@@ -164,7 +133,18 @@ void Biela::rotateObject(double angX, double angY, double angZ) {
 }
 
 void Biela::connect(Point ptConnection, double ang) {
+    // TODO: angZ = ang
     pConectionVira = ptConnection.copy();
+
+    double xVirabrequim = pConectionVira.getX();
+    double yVirabrequim = pConectionVira.getY();
+    double cateto = sqrt(length * length - xVirabrequim * xVirabrequim);
+
+    double xPistao = center.getX(); // 0
+    double yPistao = cateto + yVirabrequim;
+
+    pPistao = Point(xPistao, yPistao, pConectionVira.getZ());
+
     transform();
 }
 
