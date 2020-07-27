@@ -154,6 +154,7 @@ void keyboardUp(int key) {
         break;
 
     case KEY_INCREASE_D:
+        printf("aaa\n");
         for (auto o : objects) {
             o->setDistance(o->getDistance() + DISTANCE_FACTOR);
         }

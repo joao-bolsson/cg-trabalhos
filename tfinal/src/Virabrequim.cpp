@@ -44,7 +44,7 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Object(center) 
 }
 
 void Virabrequim::render() {
-    if (1 > 0) { // desenha 2d
+    if (1 > 2) { // desenha 2d
         color(1, 0, 0);
         // TODO: precisar transformar o center?
         double xVirabrequim = ptConTransformed.getX(); // ja esta transformado: rotacionado e transladado
@@ -141,5 +141,4 @@ Point Virabrequim::getPtConnectionTransf() {
     // return back to the original center
     p.translate(center.getX(), center.getY(), center.getZ());
     return p;
-    // return ptConTransformed;
 }

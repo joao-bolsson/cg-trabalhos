@@ -8,7 +8,13 @@ Motor::Motor(Point center) : Object(center) {
 
 void Motor::translate(Point p) {
     virabrequim->translate(p);
-    biela->translate(p);
+
+    Point t = virabrequim->getPtConnectionTransf();
+    t.translate(0, 0, 150);
+    t.project(distance);
+    t.translate(p.getX(), p.getY(), p.getZ());
+    biela->translate(t);
+
     pistao->translate(p);
 
     Object::translate(p);
@@ -26,21 +32,22 @@ void Motor::rotate(double angX, double angY, double angZ) {
 }
 
 void Motor::render() {
+    calcAngPistao();
     virabrequim->render();
     biela->render();
-    pistao->render();
+    // pistao->render();
 }
 
 void Motor::transform() {
     double ang = calcAngPistao();
+    Point t = virabrequim->getPtConnectionTransf();
+    t.translate(0, 0, 150);
+    t.project(distance);
+    t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+    biela->translate(t);
+
     biela->connect(virabrequim->getPtConnectionTransf(), ang);
     pistao->connect(biela->getConnectionPistao());
-
-    // Point t = virabrequim->getPtConnectionTransf();
-    // t.translate(0, 0, 150);
-    // t.project(distance);
-    // t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-    // biela->translate(t);
 
     virabrequim->transform();
     biela->transform();
@@ -76,6 +83,22 @@ double Motor::calcAngPistao() {
     ptCenter.translate(-ptVirabrequim.getX(), -ptVirabrequim.getY(), 0);
 
     // o vetor centro aponta para a direção oposta quando estiver à esquerda do virabrequim
+
+    ptPistao.rotateY(angY);
+    ptPistao.rotateX(angX);
+
+    ptCenter.rotateX(angX);
+
+    // printf("----\n");
+    // printf("pistao: ");
+    // ptPistao.print();
+
+    // printf("vira: ");
+    // ptVirabrequim.print();
+
+    // printf("center:");
+    // ptCenter.print();
+
     if (ptCenter.getX() < ptVirabrequim.getX()) {
         ptCenter.setX(-ptCenter.getX());
     }
@@ -86,5 +109,33 @@ double Motor::calcAngPistao() {
     double y2 = ptCenter.getY();
 
     double calc = (x1 * x2 + y1 * y2) / (sqrt(pow(x1, 2) + pow(y1, 2)) * sqrt(pow(x2, 2) + pow(y2, 2)));
+
+    // ptVirabrequim.translate(0, 0, 150);
+    // ptVirabrequim.project(distance);
+
+    // ptPistao.translate(0, 0, 150);
+    // ptPistao.project(distance);
+
+    // ptCenter.translate(0, 0, 150);
+    // ptCenter.project(distance);
+
+    // ptVirabrequim.translate(translatePoint.getX(), translatePoint.getY(), 0);
+    // ptPistao.translate(ptVirabrequim.getX(), ptVirabrequim.getY(), 0);
+    // ptCenter.translate(ptVirabrequim.getX(), ptVirabrequim.getY(), 0);
+
+    // color(1, 0, 0);
+    // line(ptVirabrequim.getX(), ptVirabrequim.getY(), ptCenter.getX(), ptCenter.getY());
+    // color(0, 0, 1);
+    // line(ptVirabrequim.getX(), ptVirabrequim.getY(), ptPistao.getX(), ptPistao.getY());
+
+    // color(1, 0, 0);
+    // circle(ptVirabrequim.getX(), ptVirabrequim.getY(), 3, 10);
+
+    // color(0, 1, 0);
+    // circle(ptPistao.getX(), ptPistao.getY(), 3, 10);
+
+    // color(0, 0, 1);
+    // circle(ptCenter.getX(), ptCenter.getY(), 3, 10);
+
     return acos(calc);
 }

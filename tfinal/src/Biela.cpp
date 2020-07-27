@@ -25,7 +25,7 @@ Biela::Biela(int radius, int length, Point center) : Object(center) {
 }
 
 void Biela::render() {
-    if (1 > 0) { // desenha 2d
+    if (1 > 2) { // desenha 2d
         color(0, 0, 1);
         line(pVirabrequim.getX(), pVirabrequim.getY(), pPistaoTransf.getX(), pPistaoTransf.getY());
         return;
@@ -97,13 +97,20 @@ void Biela::transform() {
 
 void Biela::connect(Point ptConnection, double ang) {
     // TODO: angZ = ang
-    // angZ = ang;
+    angZ = ang - PI / 2;
     pConectionVira = ptConnection.copy();
 
     double xPistao = length * cos(ang) + pConectionVira.getX();
     double yPistao = length * sin(ang) + pConectionVira.getY();
+    double zPistao = length * tan(ang) + pConectionVira.getZ();
 
-    pPistao = Point(xPistao, yPistao, pConectionVira.getZ());
+    // TODO: calcular certo, esta deformando
+    pPistao = Point(xPistao, yPistao, zPistao);
+
+    // if (pPistao.getX() > pConectionVira.getX()) {
+    //     angZ = -angZ;
+    //     printf("inverteu");
+    // }
 
     transform();
 }
