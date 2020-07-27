@@ -65,7 +65,10 @@ void Motor::setDistance(int d) {
 }
 
 double Motor::calcAngPistao() {
-    Point ptVirabrequim = virabrequim->getPtConnectionTransf();
+    Point ptVirabrequim = virabrequim->getPtConnection().copy();
+    ptVirabrequim.translate(-virabrequim->getCenter().getX(), -virabrequim->getCenter().getY(), -virabrequim->getCenter().getZ());
+    ptVirabrequim.rotateZ(angZ);
+    ptVirabrequim.translate(-virabrequim->getCenter().getX(), -virabrequim->getCenter().getY(), -virabrequim->getCenter().getZ());
 
     float length = biela->getLength();
     double xVirabrequim = ptVirabrequim.getX();
@@ -75,40 +78,30 @@ double Motor::calcAngPistao() {
     double xPistao = virabrequim->getCenter().getX();
     double yPistao = cateto + yVirabrequim;
 
-    Point ptPistao = Point(xPistao, yPistao, 0);
-    Point ptCenter = Point(ptPistao.getX(), ptVirabrequim.getY(), 0);
+    Point ptPistao = Point(xPistao, yPistao, virabrequim->getCenter().getZ());
+    Point ptCenter = Point(ptPistao.getX(), ptVirabrequim.getY(), virabrequim->getCenter().getX());
 
     // translado para a origem
     ptPistao.translate(-ptVirabrequim.getX(), -ptVirabrequim.getY(), 0);
     ptCenter.translate(-ptVirabrequim.getX(), -ptVirabrequim.getY(), 0);
 
     // o vetor centro aponta para a direção oposta quando estiver à esquerda do virabrequim
-
-    ptPistao.rotateY(angY);
-    ptPistao.rotateX(angX);
-
-    ptCenter.rotateX(angX);
-
-    // printf("----\n");
-    // printf("pistao: ");
-    // ptPistao.print();
-
-    // printf("vira: ");
-    // ptVirabrequim.print();
-
-    // printf("center:");
-    // ptCenter.print();
-
     if (ptCenter.getX() < ptVirabrequim.getX()) {
         ptCenter.setX(-ptCenter.getX());
     }
-
     double x1 = ptPistao.getX();
     double y1 = ptPistao.getY();
     double x2 = ptCenter.getX();
     double y2 = ptCenter.getY();
 
     double calc = (x1 * x2 + y1 * y2) / (sqrt(pow(x1, 2) + pow(y1, 2)) * sqrt(pow(x2, 2) + pow(y2, 2)));
+
+    // rotaciona aqui apenas para mostrar os vetores na canvas
+    // ptVirabrequim.translate(-virabrequim->getCenter().getX(), -virabrequim->getCenter().getY(), -virabrequim->getCenter().getZ());
+    // ptVirabrequim.rotateY(angY);
+    // ptVirabrequim.rotateX(angX);
+    // ptVirabrequim.translate(-virabrequim->getCenter().getX(), -virabrequim->getCenter().getY(), -virabrequim->getCenter().getZ());
+    // // termina rotacao
 
     // ptVirabrequim.translate(0, 0, 150);
     // ptVirabrequim.project(distance);
