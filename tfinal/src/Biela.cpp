@@ -82,15 +82,23 @@ void Biela::transform() {
     Point p = pConectionVira.copy();
     p.translate(0, 0, 150);
     p.project(distance);
-    p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
+    Point pViraTranslate = Point(translatePoint.getX() - p.getX(), translatePoint.getY() - p.getY(), translatePoint.getZ());
+
+    p.translate(pViraTranslate);
 
     pVirabrequim = p;
 
     // projeta o ponto do pistão
     Point pTemp = pPistao.copy();
+    // translada para a origem
+    pTemp.translate(-pConectionVira.getX(), -pConectionVira.getY(), -pConectionVira.getZ());
+    // projeta
     pTemp.translate(0, 0, 150);
     pTemp.project(distance);
-    pTemp.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+
+    // mostra no ponto da tela desejado
+    pTemp.translate(translatePoint);
 
     pPistaoTransf = pTemp;
 
@@ -105,14 +113,14 @@ void Biela::connect(Point ptConnection, double ang) {
     // TODO: angZ = ang
     pConectionVira = ptConnection.copy();
 
-    double xPistao = length * cos(ang) + pConectionVira.getX();
-    double yPistao = length * sin(ang) + pConectionVira.getY();
-    double zPistao = length * tan(ang) + pConectionVira.getZ();
+    double xPistao = length * cos(ang);
+    double yPistao = length * sin(ang);
 
-    pPistao = Point(xPistao, yPistao, pConectionVira.getZ());
-    pPistao.translate(-pConectionVira.getX(), -pConectionVira.getY(), -pConectionVira.getZ());
+    // na origem
+    pPistao = Point(xPistao, yPistao, 0);
     pPistao.rotateY(angY);
     pPistao.rotateX(angX);
+    // translada para ficar de acordo com o ponto do virabrequim
     pPistao.translate(pConectionVira);
 
     angZ = ang - PI / 2;

@@ -39,11 +39,11 @@ void Motor::render() {
 
 void Motor::transform() {
     double ang = calcAngPistao();
-    // Point t = virabrequim->getPtConnectionTransf();
-    // t.translate(0, 0, 150);
-    // t.project(distance);
-    // t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-    // biela->translate(t);
+    Point t = virabrequim->getPtConnectionTransf();
+    t.translate(0, 0, 150);
+    t.project(distance);
+    t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+    biela->translate(t);
 
     biela->connect(virabrequim->getPtConnectionTransf(), ang);
     pistao->connect(biela->getConnectionPistao());
