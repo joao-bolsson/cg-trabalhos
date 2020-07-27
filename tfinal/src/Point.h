@@ -1,6 +1,9 @@
 #ifndef POINT_H_INCLUDED
 #define POINT_H_INCLUDED
 
+#include <stdio.h>
+#include <stdlib.h>
+
 class Point {
 private:
     double x, y, z;
@@ -24,6 +27,8 @@ public:
     void rotateX(double ang);
     void rotateY(double ang);
     void rotateZ(double ang);
+
+    void print();
 };
 
 #endif

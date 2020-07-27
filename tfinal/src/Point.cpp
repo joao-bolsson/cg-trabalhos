@@ -76,3 +76,7 @@ void Point::project(double d) {
     this->y = this->y * d / this->z;
     this->z = 0;
 }
+
+void Point::print() {
+    printf("p(%.1f, %.1f, %.1f)\n", x, y, z);
+}

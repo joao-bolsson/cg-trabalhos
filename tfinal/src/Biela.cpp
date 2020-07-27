@@ -12,7 +12,6 @@ Biela::Biela(int radius, int length, Point center) : Object(center) {
     for (int h = 0; h <= height; h += 10) {
         vector<Point> line;
         for (double teta = 0; teta <= 2 * PI; teta += step) {
-            // constroi deitado, se quiser em pe, troca x <-> y
             double x = radius * sin(teta);
             double y = yBegin + h;
             double z = radius * cos(teta);
@@ -93,55 +92,16 @@ void Biela::transform() {
     double d1 = sqrt(pow(pPistao.getX() - pConectionVira.getX(), 2) + pow(pPistao.getY() - pConectionVira.getY(), 2) + pow(pPistao.getZ() - pConectionVira.getZ(), 2));
     printf("distance: %.1f\n", d1);
 
-    // Object::transform();
-}
-
-void Biela::rotateObject(double angX, double angY, double angZ) {
-    centerTransformed = center.copy();
-    centerTransformed.translate(0, 0, 150);
-    centerTransformed.project(distance);
-    centerTransformed.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-
-    transformed.clear();
-
-    for (auto line : points) {
-        vector<Point> transfLine; // transformed line
-        for (auto point : line) {
-            Point p = point.copy();
-
-            // move to origin
-            p.translate(-center.getX(), -center.getY(), -center.getZ());
-
-            p.rotateZ(angZ);
-            p.rotateY(angY);
-            p.rotateX(angX);
-
-            p.translate(0, 0, 150);
-
-            p.project(distance);
-
-            // return back to the original center
-            p.translate(center.getX(), center.getY(), center.getZ());
-
-            // optional: centralizing in another point on screen
-            p.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-
-            transfLine.push_back(p);
-        }
-        transformed.push_back(transfLine);
-    }
+    Object::transform();
 }
 
 void Biela::connect(Point ptConnection, double ang) {
     // TODO: angZ = ang
+    // angZ = ang;
     pConectionVira = ptConnection.copy();
 
-    double xVirabrequim = pConectionVira.getX();
-    double yVirabrequim = pConectionVira.getY();
-    double cateto = sqrt(length * length - xVirabrequim * xVirabrequim);
-
-    double xPistao = center.getX(); // 0
-    double yPistao = cateto + yVirabrequim;
+    double xPistao = length * cos(ang) + pConectionVira.getX();
+    double yPistao = length * sin(ang) + pConectionVira.getY();
 
     pPistao = Point(xPistao, yPistao, pConectionVira.getZ());
 

@@ -18,7 +18,6 @@ public:
 
     void render();
     void transform();
-    void rotateObject(double angX, double angY, double angZ);
 
     /**
      * Connect this object with the given point and inclinates it in x axis.
