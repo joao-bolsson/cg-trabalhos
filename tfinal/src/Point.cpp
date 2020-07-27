@@ -47,6 +47,10 @@ void Point::translate(double x, double y, double z) {
     this->z += z;
 }
 
+void Point::translate(Point p) {
+    translate(p.getX(), p.getY(), p.getZ());
+}
+
 void Point::rotateX(double ang) {
     double yTemp = cos(ang) * this->y - sin(ang) * this->z;
     double zTemp = sin(ang) * this->y + cos(ang) * this->z;

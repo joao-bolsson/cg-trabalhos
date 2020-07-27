@@ -23,6 +23,7 @@ public:
     void setZ(double z);
 
     void translate(double x, double y, double z);
+    void translate(Point p);
     void project(double d);
     void rotateX(double ang);
     void rotateY(double ang);

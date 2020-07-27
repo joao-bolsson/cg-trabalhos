@@ -25,9 +25,15 @@ Biela::Biela(int radius, int length, Point center) : Object(center) {
 }
 
 void Biela::render() {
-    if (1 > 2) { // desenha 2d
+    if (1 > 0) { // desenha 2d
         color(0, 0, 1);
         line(pVirabrequim.getX(), pVirabrequim.getY(), pPistaoTransf.getX(), pPistaoTransf.getY());
+
+        color(1, 0, 0);
+        circle(pVirabrequim.getX(), pVirabrequim.getY(), 3, 10);
+
+        color(0, 1, 0);
+        circle(pPistaoTransf.getX(), pPistaoTransf.getY(), 3, 10);
         return;
     }
     ///////////// mesmo codigo de cylinder::render
@@ -97,21 +103,19 @@ void Biela::transform() {
 
 void Biela::connect(Point ptConnection, double ang) {
     // TODO: angZ = ang
-    angZ = ang - PI / 2;
     pConectionVira = ptConnection.copy();
 
     double xPistao = length * cos(ang) + pConectionVira.getX();
     double yPistao = length * sin(ang) + pConectionVira.getY();
     double zPistao = length * tan(ang) + pConectionVira.getZ();
 
-    // TODO: calcular certo, esta deformando
-    pPistao = Point(xPistao, yPistao, zPistao);
+    pPistao = Point(xPistao, yPistao, pConectionVira.getZ());
+    pPistao.translate(-pConectionVira.getX(), -pConectionVira.getY(), -pConectionVira.getZ());
+    pPistao.rotateY(angY);
+    pPistao.rotateX(angX);
+    pPistao.translate(pConectionVira);
 
-    // if (pPistao.getX() > pConectionVira.getX()) {
-    //     angZ = -angZ;
-    //     printf("inverteu");
-    // }
-
+    angZ = ang - PI / 2;
     transform();
 }
 

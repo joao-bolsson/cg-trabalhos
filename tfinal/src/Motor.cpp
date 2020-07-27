@@ -13,7 +13,7 @@ void Motor::translate(Point p) {
     t.translate(0, 0, 150);
     t.project(distance);
     t.translate(p.getX(), p.getY(), p.getZ());
-    biela->translate(t);
+    biela->translate(p);
 
     pistao->translate(p);
 
@@ -32,7 +32,6 @@ void Motor::rotate(double angX, double angY, double angZ) {
 }
 
 void Motor::render() {
-    calcAngPistao();
     virabrequim->render();
     biela->render();
     // pistao->render();
@@ -40,11 +39,11 @@ void Motor::render() {
 
 void Motor::transform() {
     double ang = calcAngPistao();
-    Point t = virabrequim->getPtConnectionTransf();
-    t.translate(0, 0, 150);
-    t.project(distance);
-    t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-    biela->translate(t);
+    // Point t = virabrequim->getPtConnectionTransf();
+    // t.translate(0, 0, 150);
+    // t.project(distance);
+    // t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+    // biela->translate(t);
 
     biela->connect(virabrequim->getPtConnectionTransf(), ang);
     pistao->connect(biela->getConnectionPistao());
@@ -129,6 +128,10 @@ double Motor::calcAngPistao() {
 
     // color(0, 0, 1);
     // circle(ptCenter.getX(), ptCenter.getY(), 3, 10);
+
+    // if (1 > 0) {
+    //     return PI / 2;
+    // }
 
     return acos(calc);
 }
