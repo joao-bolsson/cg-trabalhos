@@ -21,7 +21,14 @@ public:
     void transform();
     void render();
 
+    /**
+     * Returns the point to connect the biela. Not transformed (it's on origin)
+     */
     Point getPtConnection();
+
+    /**
+     * Returns the connection point to connect the biela. Transformed point with rotation.
+     */
     Point getPtConnectionTransf();
 };
 

@@ -45,6 +45,10 @@ void Motor::render() {
 
 void Motor::transform() {
     double ang = calcAngPistao();
+    /**
+     * A biela deve ser sempre transladada para ficar conectada com o virabrequim.
+     * Pega o ponto de conexão virabrequim->biela (rotacionado em relação a origem) e projeta esse ponto.
+     */
     Point translBiela = virabrequim->getPtConnectionTransf();
     translBiela.translate(0, 0, 150);
     translBiela.project(distance);
@@ -53,9 +57,11 @@ void Motor::transform() {
 
     biela->connect(virabrequim->getPtConnectionTransf(), ang);
 
-    // calcula o ponto onde o pistao vai estar na tela
+    /**
+     * Mesmo racionício da biela com o virabrequim, agora o pistão deve ser mostrado sempre em relação onde a biela está.
+     */
     Point pConectionVira = virabrequim->getPtConnectionTransf();
-    Point translPistao = biela->getConnectionPistaoTranf();
+    Point translPistao = biela->getConnectionPistaoTranf(); // já está rotacionado e transladado com pConectionVira
     translPistao.translate(-pConectionVira.getX(), -pConectionVira.getY(), -pConectionVira.getZ());
     translPistao.translate(0, 0, 150);
     translPistao.project(distance);
