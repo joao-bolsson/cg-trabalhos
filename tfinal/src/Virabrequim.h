@@ -1,12 +1,10 @@
 #ifndef VIRABREQUIM_H_INCLUDED
 #define VIRABREQUIM_H_INCLUDED
 
-#include "Object.h"
+#include "Cylinder.h"
 
-class Virabrequim : public Object {
+class Virabrequim : public Cylinder {
 private:
-    int radius;             // radius inside of cylinder
-    int length;             // cylinder length
     Point ptConnection;     // ponto para conectar a biela
     Point ptConTransformed; // ponto para conectar a biela
 

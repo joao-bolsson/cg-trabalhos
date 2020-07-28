@@ -5,8 +5,12 @@
 
 class Cylinder : public Object {
 
+protected:
+    int radius; // radius inside of cylinder
+    int length; // cylinder length
+
 public:
-    Cylinder(int r, int height, Point center);
+    Cylinder(int r, int length, Point center, bool vertical = true);
 
     void render();
 };

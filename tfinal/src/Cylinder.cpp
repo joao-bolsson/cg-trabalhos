@@ -1,16 +1,22 @@
 #include "Cylinder.h"
 
-Cylinder::Cylinder(int r, int height, Point center) : Object(center) {
-    float step = 0.35; // 20 graus
+Cylinder::Cylinder(int r, int length, Point center, bool vertical) : Object(center) {
+    this->radius = r;
+    this->length = length;
+    double step = 0.35; // 20 graus
 
-    float yBegin = center.getY() - height / 2;
+    double yBegin = center.getY();
 
-    for (int h = 0; h <= height; h += 10) {
+    for (int h = 0; h <= length; h += 10) {
         vector<Point> line;
-        for (float teta = 0; teta <= 2 * PI; teta += step) {
-            float x = r * sin(teta);
-            float y = yBegin + h;
-            float z = r * cos(teta);
+        for (double teta = 0; teta <= 2 * PI; teta += step) {
+            double x = r * sin(teta);
+            double y = yBegin + h;
+            if (!vertical) { // deitado
+                x = yBegin + h;
+                y = r * sin(teta);
+            }
+            double z = r * cos(teta);
 
             Point p = Point(x, y, z);
 
@@ -18,15 +24,13 @@ Cylinder::Cylinder(int r, int height, Point center) : Object(center) {
         }
         points.push_back(line);
     }
-
-    transform();
 }
 
 void Cylinder::render() {
     for (unsigned int l = 0; l < transformed.size(); l++) {
         color(1, 0, 0);
         vector<Point> points = transformed[l];
-        float r = 0.1, g = 0.2, b = 0.3;
+        double r = 0.1, g = 0.2, b = 0.3;
         for (unsigned int c = 0; c < points.size() - 1; c++) {
             Point p1 = points[c];
             Point p2 = points[c + 1];
