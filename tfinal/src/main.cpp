@@ -11,7 +11,7 @@
 
 #define BTN_HEIGHT 40
 #define ANGLE_FACTOR 0.05
-#define DISTANCE_FACTOR 1
+#define DISTANCE_FACTOR 2
 #define MOVE_FACTOR 5
 
 #define KEY_ROTATE_X_UP 'i'
@@ -169,7 +169,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
     mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
     mouseY = y;
 
-    // printf("button: %d, st: %d, wh: %d, dir: %d\n", button, state, wheel, direction);
+    printf("button: %d, st: %d, wh: %d, dir: %d\n", button, state, wheel, direction);
 
     if (button == 0 && state == 0) { // click
         for (auto btn : buttons) {
@@ -178,6 +178,10 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
                 return;
             }
         }
+    } else if (button == 3) {
+        motor->setDistance(motor->getDistance() - DISTANCE_FACTOR);
+    } else if (button == 4) {
+        motor->setDistance(motor->getDistance() + DISTANCE_FACTOR);
     }
 }
 
