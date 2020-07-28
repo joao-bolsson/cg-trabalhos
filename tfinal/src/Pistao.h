@@ -1,13 +1,12 @@
 #ifndef PISTAO_H_INCLUDED
 #define PISTAO_H_INCLUDED
 
-#include "Object.h"
+#include "Cylinder.h"
 
-class Pistao : public Object {
+class Pistao : public Cylinder {
 private:
     Point pBiela;          // ponto conexão pistao -> biela
     Point pConectionBiela; // ponto conexão pistao -> biela (sem transformações)
-    int length;
 
 public:
     Pistao(int radius, int length, Point center);

@@ -45,8 +45,8 @@ void Biela::transform() {
     pPistaoTransf = pTemp;
 
     // não pode deformar
-    double d1 = sqrt(pow(pPistao.getX() - pConectionVira.getX(), 2) + pow(pPistao.getY() - pConectionVira.getY(), 2) + pow(pPistao.getZ() - pConectionVira.getZ(), 2));
-    printf("distance: %.1f\n", d1);
+    // double d1 = sqrt(pow(pPistao.getX() - pConectionVira.getX(), 2) + pow(pPistao.getY() - pConectionVira.getY(), 2) + pow(pPistao.getZ() - pConectionVira.getZ(), 2));
+    // printf("distance: %.1f\n", d1);
 
     Object::transform();
 }
