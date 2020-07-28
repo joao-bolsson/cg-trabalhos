@@ -3,7 +3,7 @@
 Motor::Motor(Point center) : Object(center) {
     virabrequim = new Virabrequim(10, 40, center);
     biela = new Biela(5, 80, center);
-    pistao = new Pistao(center);
+    pistao = new Pistao(10, 20, center);
 }
 
 void Motor::translate(Point p) {
@@ -26,7 +26,7 @@ void Motor::rotate(double angX, double angY, double angZ) {
     // apenas o ponto de conexão da biela com o virabrequim tem que rotacionar no eixo z
     // TODO: biela tem que rotacionar no eixo z o valor do angulo entre o pVirabrequim e o ptPistao
     biela->rotate(angX, angY, 0);
-    pistao->rotate(angX, angY, angZ);
+    pistao->rotate(angX, angY, 0);
 
     Object::rotate(angX, angY, angZ);
 }
@@ -34,19 +34,28 @@ void Motor::rotate(double angX, double angY, double angZ) {
 void Motor::render() {
     virabrequim->render();
     biela->render();
-    // pistao->render();
+    pistao->render();
 }
 
 void Motor::transform() {
     double ang = calcAngPistao();
-    Point t = virabrequim->getPtConnectionTransf();
-    t.translate(0, 0, 150);
-    t.project(distance);
-    t.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-    biela->translate(t);
+    Point translBiela = virabrequim->getPtConnectionTransf();
+    translBiela.translate(0, 0, 150);
+    translBiela.project(distance);
+    translBiela.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
+    biela->translate(translBiela);
 
     biela->connect(virabrequim->getPtConnectionTransf(), ang);
-    pistao->connect(biela->getConnectionPistao());
+
+    Point pConectionVira = virabrequim->getPtConnectionTransf();
+    Point translPistao = biela->getConnectionPistaoTranf();
+    translPistao.translate(-pConectionVira.getX(), -pConectionVira.getY(), -pConectionVira.getZ());
+    translPistao.translate(0, 0, 150);
+    translPistao.project(distance);
+    translPistao.translate(translBiela.getX(), translBiela.getY(), translBiela.getZ());
+    pistao->translate(translPistao);
+
+    pistao->connect(biela->getConnectionPistaoTranf());
 
     virabrequim->transform();
     biela->transform();

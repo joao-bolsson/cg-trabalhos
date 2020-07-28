@@ -25,7 +25,7 @@ Biela::Biela(int radius, int length, Point center) : Object(center) {
 }
 
 void Biela::render() {
-    if (1 > 0) { // desenha 2d
+    if (1 > 2) { // desenha 2d
         color(0, 0, 1);
         line(pVirabrequim.getX(), pVirabrequim.getY(), pPistaoTransf.getX(), pPistaoTransf.getY());
 
@@ -110,7 +110,6 @@ void Biela::transform() {
 }
 
 void Biela::connect(Point ptConnection, double ang) {
-    // TODO: angZ = ang
     pConectionVira = ptConnection.copy();
 
     double xPistao = length * cos(ang);
@@ -136,5 +135,5 @@ Point Biela::getConnectionPistao() {
 }
 
 Point Biela::getConnectionPistaoTranf() {
-    return pPistaoTransf;
+    return pPistao.copy();
 }

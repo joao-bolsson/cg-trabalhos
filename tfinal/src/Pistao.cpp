@@ -1,11 +1,32 @@
 #include "Pistao.h"
 
-Pistao::Pistao(Point center) : Object(center) {
+Pistao::Pistao(int radius, int length, Point center) : Object(center) {
+    this->length = length;
+
+    double step = 0.35; // 20 graus
+
+    double height = length;
+
+    double yBegin = center.getY();
+
+    for (int h = 0; h <= height; h += 10) {
+        vector<Point> line;
+        for (double teta = 0; teta <= 2 * PI; teta += step) {
+            double x = radius * sin(teta);
+            double y = yBegin + h;
+            double z = radius * cos(teta);
+
+            Point p = Point(x, y, z);
+
+            line.push_back(p);
+        }
+        points.push_back(line);
+    }
 }
 
 void Pistao::render() {
     color(0, 1, 1);
-    if (1 > 0) {
+    if (1 > 2) {
         circle(pBiela.getX(), pBiela.getY(), 3, 10);
         return;
     }
@@ -50,13 +71,21 @@ void Pistao::render() {
 }
 
 void Pistao::transform() {
+    // projeta o ponto de conexão com a biela
+    Point p = pConectionBiela.copy();
+    p.translate(0, 0, 150);
+    p.project(distance);
+
+    Point pViraTranslate = Point(translatePoint.getX() - p.getX(), translatePoint.getY() - p.getY(), translatePoint.getZ());
+
+    p.translate(pViraTranslate);
+
+    pBiela = p;
+
     Object::transform();
 }
 
 void Pistao::connect(Point ptConnection) {
-    pBiela = ptConnection.copy();
-    pBiela.translate(0, 0, 150);
-    pBiela.project(distance);
-    pBiela.translate(translatePoint.getX(), translatePoint.getY(), translatePoint.getZ());
-    // transform();
+    pConectionBiela = ptConnection.copy();
+    transform();
 }

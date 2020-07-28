@@ -5,10 +5,12 @@
 
 class Pistao : public Object {
 private:
-    Point pBiela; // ponto conexão pistao -> biela
+    Point pBiela;          // ponto conexão pistao -> biela
+    Point pConectionBiela; // ponto conexão pistao -> biela (sem transformações)
+    int length;
 
 public:
-    Pistao(Point center);
+    Pistao(int radius, int length, Point center);
 
     void render();
     void transform();
