@@ -1,15 +1,14 @@
 #ifndef BIELA_H_INCLUDED
 #define BIELA_H_INCLUDED
 
-#include "Object.h"
+#include "Cylinder.h"
 
-class Biela : public Object {
+class Biela : public Cylinder {
 private:
     Point pConectionVira; // ponto conexão virabrequim -> biela (sem transformações)
     Point pVirabrequim;   // ponto conexão virabrequim -> biela
     Point pPistao;        // ponto conexão pistao -> biela
     Point pPistaoTransf;  // ponto conexão pistao -> biela (transformado)
-    int length;
 
 public:
     Biela(int radius, int length, Point center);
