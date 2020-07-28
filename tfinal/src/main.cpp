@@ -10,7 +10,7 @@
 #include "Button.h"
 #include "Checkbox.h"
 
-#define BTN_HEIGHT 40
+#define BTN_HEIGHT 30
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 2
 #define MOVE_FACTOR 5
@@ -66,9 +66,31 @@ void btnReset() {
     motor->rotate(0, 0, 0);
 }
 
-void keyboardUp(int key) {
-    float angX = 0, angY = 0, angZ = 0;
+void btnRotateXUp() {
+    motor->rotate(motor->getAngX() + ANGLE_FACTOR, motor->getAngY(), motor->getAngZ());
+}
 
+void btnRotateXDown() {
+    motor->rotate(motor->getAngX() - ANGLE_FACTOR, motor->getAngY(), motor->getAngZ());
+}
+
+void btnRotateYUp() {
+    motor->rotate(motor->getAngX(), motor->getAngY() + ANGLE_FACTOR, motor->getAngZ());
+}
+
+void btnRotateYDown() {
+    motor->rotate(motor->getAngX(), motor->getAngY() - ANGLE_FACTOR, motor->getAngZ());
+}
+
+void btnRotateZUp() {
+    motor->rotate(motor->getAngX(), motor->getAngY(), motor->getAngZ() + ANGLE_FACTOR);
+}
+
+void btnRotateZDown() {
+    motor->rotate(motor->getAngX(), motor->getAngY(), motor->getAngZ() - ANGLE_FACTOR);
+}
+
+void keyboardUp(int key) {
     switch (key) {
     case ' ':
         rotateZ = !rotateZ;
@@ -79,48 +101,27 @@ void keyboardUp(int key) {
         break;
 
     case KEY_ROTATE_X_UP:
-        angX = motor->getAngX() + ANGLE_FACTOR;
-        angY = motor->getAngY();
-        angZ = motor->getAngZ();
-        motor->rotate(angX, angY, angZ);
-
+        btnRotateXUp();
         break;
 
     case KEY_ROTATE_X_DOWN:
-        angX = motor->getAngX() - ANGLE_FACTOR;
-        angY = motor->getAngY();
-        angZ = motor->getAngZ();
-        motor->rotate(angX, angY, angZ);
-
+        btnRotateXDown();
         break;
 
     case KEY_ROTATE_Y_UP:
-        angX = motor->getAngX();
-        angY = motor->getAngY() + ANGLE_FACTOR;
-        angZ = motor->getAngZ();
-        motor->rotate(angX, angY, angZ);
-
+        btnRotateYUp();
         break;
 
     case KEY_ROTATE_Y_DOWN:
-        angX = motor->getAngX();
-        angY = motor->getAngY() - ANGLE_FACTOR;
-        angZ = motor->getAngZ();
-        motor->rotate(angX, angY, angZ);
+        btnRotateYDown();
         break;
 
     case KEY_ROTATE_Z_UP:
-        angX = motor->getAngX();
-        angY = motor->getAngY();
-        angZ = motor->getAngZ() + ANGLE_FACTOR;
-        motor->rotate(angX, angY, angZ);
+        btnRotateZUp();
         break;
 
     case KEY_ROTATE_Z_DOWN:
-        angX = motor->getAngX();
-        angY = motor->getAngY();
-        angZ = motor->getAngZ() - ANGLE_FACTOR;
-        motor->rotate(angX, angY, angZ);
+        btnRotateZDown();
         break;
 
     case KEY_INCREASE_D:
@@ -139,8 +140,6 @@ void keyboardUp(int key) {
 void mouse(int button, int state, int wheel, int direction, int x, int y) {
     mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
     mouseY = y;
-
-    printf("button: %d, st: %d, wh: %d, dir: %d\n", button, state, wheel, direction);
 
     if (button == 0 && state == 0) { // click
         for (auto btn : buttons) {
@@ -234,9 +233,15 @@ int main() {
     Button *buttonStop = new Button("stop", screenWidth - 60, btnY - BTN_HEIGHT * 3, 60, BTN_HEIGHT);
     Button *buttonPlay = new Button("play", screenWidth - 60, btnY - BTN_HEIGHT * 4, 60, BTN_HEIGHT);
 
-    int yCheckbox = 0;
-
     short gap = 10;
+    Button *buttonRotateXDown = new Button("-x", screenWidth - 30, 0, 30, BTN_HEIGHT);
+    Button *buttonRotateXUp = new Button("+x", screenWidth - 30, BTN_HEIGHT + gap, 30, BTN_HEIGHT);
+    Button *buttonRotateYDown = new Button("-y", screenWidth - 30, (BTN_HEIGHT + gap) * 2, 30, BTN_HEIGHT);
+    Button *buttonRotateYUp = new Button("+y", screenWidth - 30, (BTN_HEIGHT + gap) * 3, 30, BTN_HEIGHT);
+    Button *buttonRotateZDown = new Button("-z", screenWidth - 30, (BTN_HEIGHT + gap) * 4, 30, BTN_HEIGHT);
+    Button *buttonRotateZUp = new Button("+z", screenWidth - 30, (BTN_HEIGHT + gap) * 5, 30, BTN_HEIGHT);
+
+    int yCheckbox = 0;
 
     Checkbox *checkShowVirabrequim = new Checkbox("Virabrequim", 0, yCheckbox, true);
     Checkbox *checkShowBiela = new Checkbox("Biela", 0, yCheckbox + CHECKBOX_SIZE + gap, true);
@@ -253,6 +258,13 @@ int main() {
     buttonStop->setAction(btnStop);
     buttonPlay->setAction(btnPlay);
 
+    buttonRotateXDown->setAction(btnRotateXDown);
+    buttonRotateXUp->setAction(btnRotateXUp);
+    buttonRotateYDown->setAction(btnRotateYDown);
+    buttonRotateYUp->setAction(btnRotateYUp);
+    buttonRotateZDown->setAction(btnRotateZDown);
+    buttonRotateZUp->setAction(btnRotateZUp);
+
     checkShowVirabrequim->setAction(actShowVirabrequim);
     checkShowBiela->setAction(actShowBiela);
     checkShowPistao->setAction(actShowPistao);
@@ -267,6 +279,12 @@ int main() {
     buttons.push_back(buttonReset);
     buttons.push_back(buttonStop);
     buttons.push_back(buttonPlay);
+    buttons.push_back(buttonRotateXUp);
+    buttons.push_back(buttonRotateXDown);
+    buttons.push_back(buttonRotateYUp);
+    buttons.push_back(buttonRotateYDown);
+    buttons.push_back(buttonRotateZUp);
+    buttons.push_back(buttonRotateZDown);
 
     buttons.push_back(checkShowVirabrequim);
     buttons.push_back(checkShowBiela);
