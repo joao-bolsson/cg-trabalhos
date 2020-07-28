@@ -21,6 +21,9 @@
 					<Add option="-lGL" />
 					<Add option="-lGLU" />
 					<Add option="-lglut" />
+					<Add library="lib/freeglut.lib" />
+					<Add library="lib/libglu32.a" />
+					<Add library="lib/libopengl32.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -35,6 +38,8 @@
 		<Unit filename="src/Biela.h" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
+		<Unit filename="src/Checkbox.cpp" />
+		<Unit filename="src/Checkbox.h" />
 		<Unit filename="src/Cube.cpp" />
 		<Unit filename="src/Cube.h" />
 		<Unit filename="src/Cylinder.cpp" />
