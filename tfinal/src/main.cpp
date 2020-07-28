@@ -14,6 +14,7 @@
 #define DISTANCE_FACTOR 2
 #define MOVE_FACTOR 5
 
+#define KEY_RESET 'r'
 #define KEY_ROTATE_X_UP 'i'
 #define KEY_ROTATE_X_DOWN 'o'
 #define KEY_ROTATE_Y_UP 'k'
@@ -29,51 +30,20 @@ int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . 
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
 bool rotateZ = false;
-bool showMotorDemo = false;
 
 Motor *motor;
 
 vector<AbstractButton *> buttons;
 
-// CÓDIGO TESTE APENAS PARA TRAB FINAL
-float ang = 0;
-void motorDemo() {
-    color(0, 1, 0);
-    float translacao = 100; //posicao onde mostrar na tela.
-
-    //virabrequim - coordenadas polares
-    float raioVirabrequim = 50;
-    float xVirabrequim = raioVirabrequim * cos(ang);
-    float yVirabrequim = raioVirabrequim * sin(ang);
-    circle(translacao, translacao, 3, 10);
-    line(xVirabrequim + translacao, yVirabrequim + translacao, translacao, translacao);
-    circle(xVirabrequim + translacao, yVirabrequim + translacao, 3, 10);
-
-    //pistao - pitagoras
-    float hipotenusa = 80;                                                      //hipotenusa representa o comprimento da biela
-    float cateto = sqrt(hipotenusa * hipotenusa - xVirabrequim * xVirabrequim); //pitagoras  hip^2 = cat^2 + cat^2
-    float xPistao = 0;
-    float yPistao = cateto + yVirabrequim;
-    circle(xPistao + translacao, yPistao + translacao, 3, 10);
-
-    //biela
-    line(xVirabrequim + translacao, yVirabrequim + translacao, xPistao + translacao, yPistao + translacao);
-
-    ang += ANGLE_FACTOR;
-}
+double rpmFactor = 0.05;
 
 void render() {
     for (auto button : buttons) {
         button->render();
     }
 
-    if (showMotorDemo) {
-        motorDemo();
-        return;
-    }
-
     if (rotateZ) {
-        motor->rotate(motor->getAngX(), motor->getAngY(), motor->getAngZ() + ANGLE_FACTOR);
+        motor->rotate(motor->getAngX(), motor->getAngY(), motor->getAngZ() + rpmFactor);
     }
     motor->render();
 }
@@ -86,25 +56,20 @@ void keyboard(int key) {
     }
 }
 
+void btnReset() {
+    motor->rotate(0, 0, 0);
+}
+
 void keyboardUp(int key) {
     float angX = 0, angY = 0, angZ = 0;
 
     switch (key) {
-    case '0':
-        motor->rotate(0, 0, PI / 2);
-
-        break;
     case ' ':
         rotateZ = !rotateZ;
         break;
 
-    case 'r': // reseta
-        motor->rotate(0, 0, 0);
-
-        break;
-
-    case '1':
-        showMotorDemo = !showMotorDemo;
+    case KEY_RESET: // reseta
+        btnReset();
         break;
 
     case KEY_ROTATE_X_UP:
@@ -213,22 +178,55 @@ void btnMoveDown() {
     motor->translate(p);
 }
 
+void btnRPMUp() {
+    printf("[info] Button +RPM pressed\n");
+    rpmFactor += ANGLE_FACTOR;
+}
+
+void btnRPMDown() {
+    printf("[info] Button -RPM pressed\n");
+    rpmFactor -= ANGLE_FACTOR;
+}
+
+void btnStop() {
+    rotateZ = false;
+}
+
+void btnPlay() {
+    rotateZ = true;
+}
+
 int main() {
     int btnY = screenHeight - BTN_HEIGHT;
     Button *buttonMoveLeft = new Button("<-", (screenWidth / 2) - 15, btnY, 30, BTN_HEIGHT);
     Button *buttonMoveRight = new Button("->", (screenWidth / 2) + 15, btnY, 30, BTN_HEIGHT);
     Button *buttonMoveUp = new Button("up", (screenWidth / 2) + 60, btnY, 30, BTN_HEIGHT);
     Button *buttonMoveDown = new Button("down", (screenWidth / 2) + 90, btnY, 50, BTN_HEIGHT);
+    Button *buttonRPMUp = new Button("+RPM", 0, btnY, 60, BTN_HEIGHT);
+    Button *buttonRPMDown = new Button("-RPM", 70, btnY, 60, BTN_HEIGHT);
+    Button *buttonReset = new Button("reset", screenWidth - 60, btnY, 60, BTN_HEIGHT);
+    Button *buttonStop = new Button("stop", screenWidth - 60, btnY - BTN_HEIGHT * 3, 60, BTN_HEIGHT);
+    Button *buttonPlay = new Button("play", screenWidth - 60, btnY - BTN_HEIGHT * 4, 60, BTN_HEIGHT);
 
     buttonMoveLeft->setAction(btnMoveLeft);
     buttonMoveRight->setAction(btnMoveRight);
     buttonMoveUp->setAction(btnMoveUp);
     buttonMoveDown->setAction(btnMoveDown);
+    buttonRPMUp->setAction(btnRPMUp);
+    buttonRPMDown->setAction(btnRPMDown);
+    buttonReset->setAction(btnReset);
+    buttonStop->setAction(btnStop);
+    buttonPlay->setAction(btnPlay);
 
     buttons.push_back(buttonMoveLeft);
     buttons.push_back(buttonMoveRight);
     buttons.push_back(buttonMoveUp);
     buttons.push_back(buttonMoveDown);
+    buttons.push_back(buttonRPMUp);
+    buttons.push_back(buttonRPMDown);
+    buttons.push_back(buttonReset);
+    buttons.push_back(buttonStop);
+    buttons.push_back(buttonPlay);
 
     // z+ para dentro da tela
     Point center = Point(0, 0, 0);
