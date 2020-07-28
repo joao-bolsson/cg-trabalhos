@@ -29,8 +29,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/GL/glut.h" />
+		<Unit filename="src/AbstractButton.cpp" />
+		<Unit filename="src/AbstractButton.h" />
 		<Unit filename="src/Biela.cpp" />
 		<Unit filename="src/Biela.h" />
+		<Unit filename="src/Button.cpp" />
+		<Unit filename="src/Button.h" />
 		<Unit filename="src/Cube.cpp" />
 		<Unit filename="src/Cube.h" />
 		<Unit filename="src/Cylinder.cpp" />
