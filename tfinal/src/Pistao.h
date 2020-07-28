@@ -21,6 +21,7 @@ public:
     Pistao(int radius, int length, int viraLength, Point center);
 
     void render();
+    void renderCamisa();
     void transform();
 
     void rotate(double angX, double angY, double angZ);

@@ -29,9 +29,18 @@ void Motor::rotate(double angX, double angY, double angZ) {
 }
 
 void Motor::render() {
-    virabrequim->render();
-    biela->render();
-    pistao->render();
+    if (showVira) {
+        virabrequim->render();
+    }
+    if (showBiela) {
+        biela->render();
+    }
+    if (showPistao) {
+        pistao->render();
+    }
+    if (showCamisa) {
+        pistao->renderCamisa();
+    }
 }
 
 void Motor::transform() {
@@ -77,6 +86,22 @@ void Motor::transform() {
     pistao->transform();
 
     Object::transform();
+}
+
+void Motor::setShowVira(bool flag) {
+    showVira = flag;
+}
+
+void Motor::setShowBiela(bool flag) {
+    showBiela = flag;
+}
+
+void Motor::setShowPistao(bool flag) {
+    showPistao = flag;
+}
+
+void Motor::setShowCamisa(bool flag) {
+    showCamisa = flag;
 }
 
 void Motor::setDistance(int d) {

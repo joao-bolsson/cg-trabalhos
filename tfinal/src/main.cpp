@@ -8,6 +8,7 @@
 
 #include "Motor.h"
 #include "Button.h"
+#include "Checkbox.h"
 
 #define BTN_HEIGHT 40
 #define ANGLE_FACTOR 0.05
@@ -30,6 +31,11 @@ int screenWidth = 800, screenHeight = 500; //largura e altura inicial da tela . 
 int mouseX, mouseY;                        //variaveis globais do mouse para poder exibir dentro da render().
 
 bool rotateZ = false;
+
+bool showVira = true;
+bool showBiela = true;
+bool showPistao = true;
+bool showCamisa = true;
 
 Motor *motor;
 
@@ -196,6 +202,26 @@ void btnPlay() {
     rotateZ = true;
 }
 
+void actShowVirabrequim() {
+    showVira = !showVira;
+    motor->setShowVira(showVira);
+}
+
+void actShowBiela() {
+    showBiela = !showBiela;
+    motor->setShowBiela(showBiela);
+}
+
+void actShowPistao() {
+    showPistao = !showPistao;
+    motor->setShowPistao(showPistao);
+}
+
+void actShowCamisa() {
+    showCamisa = !showCamisa;
+    motor->setShowCamisa(showCamisa);
+}
+
 int main() {
     int btnY = screenHeight - BTN_HEIGHT;
     Button *buttonMoveLeft = new Button("<-", (screenWidth / 2) - 15, btnY, 30, BTN_HEIGHT);
@@ -208,6 +234,15 @@ int main() {
     Button *buttonStop = new Button("stop", screenWidth - 60, btnY - BTN_HEIGHT * 3, 60, BTN_HEIGHT);
     Button *buttonPlay = new Button("play", screenWidth - 60, btnY - BTN_HEIGHT * 4, 60, BTN_HEIGHT);
 
+    int yCheckbox = 0;
+
+    short gap = 10;
+
+    Checkbox *checkShowVirabrequim = new Checkbox("Virabrequim", 0, yCheckbox, true);
+    Checkbox *checkShowBiela = new Checkbox("Biela", 0, yCheckbox + CHECKBOX_SIZE + gap, true);
+    Checkbox *checkShowPistao = new Checkbox("Pistao", 0, yCheckbox + (CHECKBOX_SIZE + gap) * 2, true);
+    Checkbox *checkShowCamisa = new Checkbox("Camisa", 0, yCheckbox + (CHECKBOX_SIZE + gap) * 3, true);
+
     buttonMoveLeft->setAction(btnMoveLeft);
     buttonMoveRight->setAction(btnMoveRight);
     buttonMoveUp->setAction(btnMoveUp);
@@ -218,6 +253,11 @@ int main() {
     buttonStop->setAction(btnStop);
     buttonPlay->setAction(btnPlay);
 
+    checkShowVirabrequim->setAction(actShowVirabrequim);
+    checkShowBiela->setAction(actShowBiela);
+    checkShowPistao->setAction(actShowPistao);
+    checkShowCamisa->setAction(actShowCamisa);
+
     buttons.push_back(buttonMoveLeft);
     buttons.push_back(buttonMoveRight);
     buttons.push_back(buttonMoveUp);
@@ -227,6 +267,11 @@ int main() {
     buttons.push_back(buttonReset);
     buttons.push_back(buttonStop);
     buttons.push_back(buttonPlay);
+
+    buttons.push_back(checkShowVirabrequim);
+    buttons.push_back(checkShowBiela);
+    buttons.push_back(checkShowPistao);
+    buttons.push_back(checkShowCamisa);
 
     // z+ para dentro da tela
     Point center = Point(0, 0, 0);

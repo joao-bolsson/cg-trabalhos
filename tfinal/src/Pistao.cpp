@@ -11,6 +11,9 @@ void Pistao::render() {
         return;
     }
     Cylinder::render();
+}
+
+void Pistao::renderCamisa() {
     camisa->render();
 }
 

@@ -12,6 +12,11 @@ private:
     Biela *biela;
     Pistao *pistao;
 
+    bool showVira = true;
+    bool showBiela = true;
+    bool showPistao = true;
+    bool showCamisa = true;
+
 public:
     Motor(Point center, int viraLength, int pistaoLength, int pistaoRadius);
 
@@ -22,6 +27,11 @@ public:
     void setDistance(int d);
 
     double calcAngPistao();
+
+    void setShowVira(bool flag);
+    void setShowBiela(bool flag);
+    void setShowPistao(bool flag);
+    void setShowCamisa(bool flag);
 };
 
 #endif
