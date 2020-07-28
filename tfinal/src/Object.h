@@ -34,6 +34,8 @@ public:
     Point getCenter();
     Point getCenterTransformed();
 
+    Point getTranslatePoint();
+
     double getAngY();
     double getAngX();
     double getAngZ();

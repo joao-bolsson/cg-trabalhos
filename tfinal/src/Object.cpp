@@ -16,6 +16,10 @@ void Object::rotate(double angX, double angY, double angZ) {
     transform();
 }
 
+Point Object::getTranslatePoint() {
+    return translatePoint.copy();
+}
+
 Point Object::getCenter() {
     return center.copy();
 }

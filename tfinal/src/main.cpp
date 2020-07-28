@@ -7,9 +7,12 @@
 #include <ctype.h>
 
 #include "Motor.h"
+#include "Button.h"
 
+#define BTN_HEIGHT 40
 #define ANGLE_FACTOR 0.05
 #define DISTANCE_FACTOR 1
+#define MOVE_FACTOR 5
 
 #define KEY_ROTATE_X_UP 'i'
 #define KEY_ROTATE_X_DOWN 'o'
@@ -30,7 +33,7 @@ bool showMotorDemo = false;
 
 Motor *motor;
 
-vector<Object *> objects;
+vector<AbstractButton *> buttons;
 
 // CÓDIGO TESTE APENAS PARA TRAB FINAL
 float ang = 0;
@@ -60,17 +63,19 @@ void motorDemo() {
 }
 
 void render() {
+    for (auto button : buttons) {
+        button->render();
+    }
+
     if (showMotorDemo) {
         motorDemo();
         return;
     }
 
-    for (auto o : objects) {
-        if (rotateZ) {
-            o->rotate(o->getAngX(), o->getAngY(), o->getAngZ() + ANGLE_FACTOR);
-        }
-        o->render();
+    if (rotateZ) {
+        motor->rotate(motor->getAngX(), motor->getAngY(), motor->getAngZ() + ANGLE_FACTOR);
     }
+    motor->render();
 }
 
 void keyboard(int key) {
@@ -86,18 +91,16 @@ void keyboardUp(int key) {
 
     switch (key) {
     case '0':
-        for (auto o : objects) {
-            o->rotate(0, 0, PI / 2);
-        }
+        motor->rotate(0, 0, PI / 2);
+
         break;
     case ' ':
         rotateZ = !rotateZ;
         break;
 
     case 'r': // reseta
-        for (auto o : objects) {
-            o->rotate(0, 0, 0);
-        }
+        motor->rotate(0, 0, 0);
+
         break;
 
     case '1':
@@ -105,69 +108,56 @@ void keyboardUp(int key) {
         break;
 
     case KEY_ROTATE_X_UP:
-        for (auto o : objects) {
-            angX = o->getAngX() + ANGLE_FACTOR;
-            angY = o->getAngY();
-            angZ = o->getAngZ();
-            o->rotate(angX, angY, angZ);
-        }
+        angX = motor->getAngX() + ANGLE_FACTOR;
+        angY = motor->getAngY();
+        angZ = motor->getAngZ();
+        motor->rotate(angX, angY, angZ);
+
         break;
 
     case KEY_ROTATE_X_DOWN:
-        for (auto o : objects) {
-            angX = o->getAngX() - ANGLE_FACTOR;
-            angY = o->getAngY();
-            angZ = o->getAngZ();
-            o->rotate(angX, angY, angZ);
-        }
+        angX = motor->getAngX() - ANGLE_FACTOR;
+        angY = motor->getAngY();
+        angZ = motor->getAngZ();
+        motor->rotate(angX, angY, angZ);
+
         break;
 
     case KEY_ROTATE_Y_UP:
-        for (auto o : objects) {
-            angX = o->getAngX();
-            angY = o->getAngY() + ANGLE_FACTOR;
-            angZ = o->getAngZ();
-            o->rotate(angX, angY, angZ);
-        }
+        angX = motor->getAngX();
+        angY = motor->getAngY() + ANGLE_FACTOR;
+        angZ = motor->getAngZ();
+        motor->rotate(angX, angY, angZ);
+
         break;
 
     case KEY_ROTATE_Y_DOWN:
-        for (auto o : objects) {
-            angX = o->getAngX();
-            angY = o->getAngY() - ANGLE_FACTOR;
-            angZ = o->getAngZ();
-            o->rotate(angX, angY, angZ);
-        }
+        angX = motor->getAngX();
+        angY = motor->getAngY() - ANGLE_FACTOR;
+        angZ = motor->getAngZ();
+        motor->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_Z_UP:
-        for (auto o : objects) {
-            angX = o->getAngX();
-            angY = o->getAngY();
-            angZ = o->getAngZ() + ANGLE_FACTOR;
-            o->rotate(angX, angY, angZ);
-        }
+        angX = motor->getAngX();
+        angY = motor->getAngY();
+        angZ = motor->getAngZ() + ANGLE_FACTOR;
+        motor->rotate(angX, angY, angZ);
         break;
 
     case KEY_ROTATE_Z_DOWN:
-        for (auto o : objects) {
-            angX = o->getAngX();
-            angY = o->getAngY();
-            angZ = o->getAngZ() - ANGLE_FACTOR;
-            o->rotate(angX, angY, angZ);
-        }
+        angX = motor->getAngX();
+        angY = motor->getAngY();
+        angZ = motor->getAngZ() - ANGLE_FACTOR;
+        motor->rotate(angX, angY, angZ);
         break;
 
     case KEY_INCREASE_D:
-        for (auto o : objects) {
-            o->setDistance(o->getDistance() + DISTANCE_FACTOR);
-        }
+        motor->setDistance(motor->getDistance() + DISTANCE_FACTOR);
         break;
 
     case KEY_DECREASE_D:
-        for (auto o : objects) {
-            o->setDistance(o->getDistance() - DISTANCE_FACTOR);
-        }
+        motor->setDistance(motor->getDistance() - DISTANCE_FACTOR);
         break;
 
     default:
@@ -178,9 +168,64 @@ void keyboardUp(int key) {
 void mouse(int button, int state, int wheel, int direction, int x, int y) {
     mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
     mouseY = y;
+
+    // printf("button: %d, st: %d, wh: %d, dir: %d\n", button, state, wheel, direction);
+
+    if (button == 0 && state == 0) { // click
+        for (auto btn : buttons) {
+            if (btn->isPointOver(x, y)) {
+                btn->doClick();
+                return;
+            }
+        }
+    }
+}
+
+void btnMoveLeft() {
+    printf("[info] Button to move left pressed\n");
+    Point p = motor->getTranslatePoint();
+    p.setX(p.getX() - MOVE_FACTOR);
+    motor->translate(p);
+}
+
+void btnMoveRight() {
+    printf("[info] Button to move right pressed\n");
+    Point p = motor->getTranslatePoint();
+    p.setX(p.getX() + MOVE_FACTOR);
+    motor->translate(p);
+}
+
+void btnMoveUp() {
+    printf("[info] Button to move up pressed\n");
+    Point p = motor->getTranslatePoint();
+    p.setY(p.getY() + MOVE_FACTOR);
+    motor->translate(p);
+}
+
+void btnMoveDown() {
+    printf("[info] Button to move down pressed\n");
+    Point p = motor->getTranslatePoint();
+    p.setY(p.getY() - MOVE_FACTOR);
+    motor->translate(p);
 }
 
 int main() {
+    int btnY = screenHeight - BTN_HEIGHT;
+    Button *buttonMoveLeft = new Button("<-", (screenWidth / 2) - 15, btnY, 30, BTN_HEIGHT);
+    Button *buttonMoveRight = new Button("->", (screenWidth / 2) + 15, btnY, 30, BTN_HEIGHT);
+    Button *buttonMoveUp = new Button("up", (screenWidth / 2) + 60, btnY, 30, BTN_HEIGHT);
+    Button *buttonMoveDown = new Button("down", (screenWidth / 2) + 90, btnY, 50, BTN_HEIGHT);
+
+    buttonMoveLeft->setAction(btnMoveLeft);
+    buttonMoveRight->setAction(btnMoveRight);
+    buttonMoveUp->setAction(btnMoveUp);
+    buttonMoveDown->setAction(btnMoveDown);
+
+    buttons.push_back(buttonMoveLeft);
+    buttons.push_back(buttonMoveRight);
+    buttons.push_back(buttonMoveUp);
+    buttons.push_back(buttonMoveDown);
+
     // z+ para dentro da tela
     Point center = Point(0, 0, 0);
 
@@ -190,8 +235,6 @@ int main() {
 
     motor = new Motor(center, viraLength, pistaoLength, pistaoRadius);
     motor->translate(Point(300, 300, 0));
-
-    objects.push_back(motor);
 
     initCanvas(&screenWidth, &screenHeight, "Trabalho Final");
     runCanvas();
