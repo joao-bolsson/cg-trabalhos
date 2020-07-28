@@ -20,6 +20,8 @@ protected:
     vector<vector<Point>> points;
     vector<vector<Point>> transformed;
 
+    bool show2d = false;
+
 public:
     Object(Point center);
 
@@ -39,6 +41,14 @@ public:
     double getAngY();
     double getAngX();
     double getAngZ();
+
+    /**
+     * Sets a flag to show or not the object in 2D.  
+     * @param  flag: Flag to set.
+     */
+    virtual void setShow2d(bool flag);
+
+    bool isShow2d();
 };
 
 #endif

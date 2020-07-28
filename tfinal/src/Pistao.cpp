@@ -5,7 +5,7 @@ Pistao::Pistao(int radius, int length, int viraLength, Point center) : Cylinder(
 }
 
 void Pistao::render() {
-    if (1 > 2) {
+    if (show2d) {
         color(0, 1, 1);
         circle(pBiela.getX(), pBiela.getY(), 3, 10);
         return;
@@ -14,7 +14,9 @@ void Pistao::render() {
 }
 
 void Pistao::renderCamisa() {
-    camisa->render();
+    if (!show2d) {
+        camisa->render();
+    }
 }
 
 void Pistao::transform() {

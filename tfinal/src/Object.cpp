@@ -28,6 +28,14 @@ Point Object::getCenterTransformed() {
     return centerTransformed.copy();
 }
 
+void Object::setShow2d(bool flag) {
+    show2d = flag;
+}
+
+bool Object::isShow2d() {
+    return show2d;
+}
+
 void Object::transform() {
     centerTransformed = center.copy();
     centerTransformed.translate(0, 0, 150);

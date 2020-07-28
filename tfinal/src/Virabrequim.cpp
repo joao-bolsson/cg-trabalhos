@@ -17,7 +17,7 @@ Virabrequim::Virabrequim(int radius, int length, Point center) : Cylinder(radius
 }
 
 void Virabrequim::render() {
-    if (1 > 2) { // desenha 2d
+    if (show2d) { // desenha 2d
         color(1, 0, 0);
         // TODO: precisar transformar o center?
         double xVirabrequim = ptConTransformed.getX(); // ja esta transformado: rotacionado e transladado

@@ -25,6 +25,7 @@ public:
     void translate(Point p);
     void rotate(double angX, double angY, double angZ);
     void setDistance(int d);
+    void setShow2d(bool flag);
 
     double calcAngPistao();
 

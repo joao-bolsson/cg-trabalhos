@@ -46,6 +46,8 @@
 ### Checkbox
 ---
 
+**mostra 2d**: Mostra/esconde a representação em 2d do motor   
+
 **Camisa**: Mostra/esconde a camisa do pistão  
 **Pistao**: Mostra/esconde o pistão
 **Biela**: Mostra/esconde a biela  

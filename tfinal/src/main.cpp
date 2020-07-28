@@ -221,6 +221,10 @@ void actShowCamisa() {
     motor->setShowCamisa(showCamisa);
 }
 
+void actShow2d() {
+    motor->setShow2d(!motor->isShow2d());
+}
+
 int main() {
     int btnY = screenHeight - BTN_HEIGHT;
     Button *buttonMoveLeft = new Button("<-", (screenWidth / 2) - 15, btnY, 30, BTN_HEIGHT);
@@ -248,6 +252,8 @@ int main() {
     Checkbox *checkShowPistao = new Checkbox("Pistao", 0, yCheckbox + (CHECKBOX_SIZE + gap) * 2, true);
     Checkbox *checkShowCamisa = new Checkbox("Camisa", 0, yCheckbox + (CHECKBOX_SIZE + gap) * 3, true);
 
+    Checkbox *checkShow2d = new Checkbox("mostra 2d", 0, yCheckbox + (CHECKBOX_SIZE + gap) * 5);
+
     buttonMoveLeft->setAction(btnMoveLeft);
     buttonMoveRight->setAction(btnMoveRight);
     buttonMoveUp->setAction(btnMoveUp);
@@ -269,6 +275,7 @@ int main() {
     checkShowBiela->setAction(actShowBiela);
     checkShowPistao->setAction(actShowPistao);
     checkShowCamisa->setAction(actShowCamisa);
+    checkShow2d->setAction(actShow2d);
 
     buttons.push_back(buttonMoveLeft);
     buttons.push_back(buttonMoveRight);
@@ -290,6 +297,7 @@ int main() {
     buttons.push_back(checkShowBiela);
     buttons.push_back(checkShowPistao);
     buttons.push_back(checkShowCamisa);
+    buttons.push_back(checkShow2d);
 
     // z+ para dentro da tela
     Point center = Point(0, 0, 0);

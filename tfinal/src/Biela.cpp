@@ -5,7 +5,7 @@ Biela::Biela(int radius, int length, Point center) : Cylinder(radius, length, ce
 }
 
 void Biela::render() {
-    if (1 > 2) { // desenha 2d
+    if (show2d) {
         color(0, 0, 1);
         line(pVirabrequim.getX(), pVirabrequim.getY(), pPistaoTransf.getX(), pPistaoTransf.getY());
 

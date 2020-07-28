@@ -9,15 +9,17 @@ Motor::Motor(Point center, int viraLength, int pistaoLength, int pistaoRadius) :
 void Motor::translate(Point p) {
     virabrequim->translate(p);
 
-    Point t = virabrequim->getPtConnectionTransf();
-    t.translate(0, 0, 150);
-    t.project(distance);
-    t.translate(p.getX(), p.getY(), p.getZ());
-    biela->translate(p);
-
     pistao->translate(p);
 
     Object::translate(p);
+}
+
+void Motor::setShow2d(bool flag) {
+    Object::setShow2d(flag);
+
+    virabrequim->setShow2d(flag);
+    biela->setShow2d(flag);
+    pistao->setShow2d(flag);
 }
 
 void Motor::rotate(double angX, double angY, double angZ) {
