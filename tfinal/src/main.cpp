@@ -85,6 +85,11 @@ void keyboardUp(int key) {
     float angX = 0, angY = 0, angZ = 0;
 
     switch (key) {
+    case '0':
+        for (auto o : objects) {
+            o->rotate(0, 0, PI / 2);
+        }
+        break;
     case ' ':
         rotateZ = !rotateZ;
         break;
@@ -179,7 +184,11 @@ int main() {
     // z+ para dentro da tela
     Point center = Point(0, 0, 0);
 
-    motor = new Motor(center);
+    int viraLength = 40;
+    int pistaoLength = 20;
+    int pistaoRadius = 10;
+
+    motor = new Motor(center, viraLength, pistaoLength, pistaoRadius);
     motor->translate(Point(300, 300, 0));
 
     objects.push_back(motor);

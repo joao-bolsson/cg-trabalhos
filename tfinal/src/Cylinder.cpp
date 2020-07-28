@@ -64,3 +64,7 @@ void Cylinder::render() {
         }
     }
 }
+
+int Cylinder::getLength() {
+    return length;
+}

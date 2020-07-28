@@ -1,7 +1,6 @@
 #include "Virabrequim.h"
 
 /** 
- * TODO: construir todos os objetos na origem e depois transladar?
  * 
  * @param  radius: Radius.
  * @param  length: Length.
@@ -57,10 +56,6 @@ void Virabrequim::transform() {
     ptConTransformed = p;
 
     Object::transform();
-}
-
-int Virabrequim::getLength() {
-    return length;
 }
 
 Point Virabrequim::getPtConnection() {

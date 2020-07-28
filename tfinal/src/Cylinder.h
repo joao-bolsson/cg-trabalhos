@@ -11,6 +11,7 @@ protected:
 
 public:
     Cylinder(int r, int length, Point center, bool vertical = true);
+    int getLength();
 
     void render();
 };

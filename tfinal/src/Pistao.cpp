@@ -1,7 +1,7 @@
 #include "Pistao.h"
 
-Pistao::Pistao(int radius, int length, Point center) : Cylinder(radius, length, center) {
-    // empty
+Pistao::Pistao(int radius, int length, int viraLength, Point center) : Cylinder(radius, length, center) {
+    camisa = new Cylinder(radius, length + viraLength * 2, center);
 }
 
 void Pistao::render() {
@@ -11,6 +11,7 @@ void Pistao::render() {
         return;
     }
     Cylinder::render();
+    camisa->render();
 }
 
 void Pistao::transform() {
@@ -28,7 +29,21 @@ void Pistao::transform() {
     Object::transform();
 }
 
+void Pistao::rotate(double angX, double angY, double angZ) {
+    camisa->rotate(angX, angY, angZ);
+    Object::rotate(angX, angY, angZ);
+}
+
+void Pistao::setDistance(int d) {
+    camisa->setDistance(d);
+    Object::setDistance(d);
+}
+
 void Pistao::connect(Point ptConnection) {
     pConectionBiela = ptConnection.copy();
     transform();
+}
+
+void Pistao::connectCamisa(Point p) {
+    camisa->translate(p);
 }

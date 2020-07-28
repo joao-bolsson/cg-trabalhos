@@ -18,8 +18,6 @@ public:
      */
     Virabrequim(int radius, int length, Point center);
 
-    int getLength();
-
     void transform();
     void render();
 

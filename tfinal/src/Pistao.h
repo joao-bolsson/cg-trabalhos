@@ -7,19 +7,38 @@ class Pistao : public Cylinder {
 private:
     Point pBiela;          // ponto conexão pistao -> biela
     Point pConectionBiela; // ponto conexão pistao -> biela (sem transformações)
+    Cylinder *camisa;
 
 public:
-    Pistao(int radius, int length, Point center);
+    /**
+     * Creates a virabrequim.
+     * 
+     * @param  radius: Cylinder radius.
+     * @param  length: Cylinder length.
+     * @param  viraLength: Virabrequim length.
+     * @param  center: Origin.
+     */
+    Pistao(int radius, int length, int viraLength, Point center);
 
     void render();
     void transform();
 
+    void rotate(double angX, double angY, double angZ);
+    void setDistance(int d);
+
     /**
      * Connect this object with the given point.
-     *    
-     * @param  ptConnection: Point to connect with.
+
+     * * @param  ptConnection: Point to connect with.
      */
     void connect(Point ptConnection);
+
+    /**
+     * Translates the 'camisa' to the given point.
+     *  
+     * @param  p: Point to translate.
+     */
+    void connectCamisa(Point p);
 };
 
 #endif

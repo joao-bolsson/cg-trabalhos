@@ -32,6 +32,7 @@ public:
     int getDistance();
 
     Point getCenter();
+    Point getCenterTransformed();
 
     double getAngY();
     double getAngX();

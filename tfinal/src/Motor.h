@@ -13,7 +13,7 @@ private:
     Pistao *pistao;
 
 public:
-    Motor(Point center);
+    Motor(Point center, int viraLength, int pistaoLength, int pistaoRadius);
 
     void render();
     void transform();

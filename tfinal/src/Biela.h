@@ -13,8 +13,6 @@ private:
 public:
     Biela(int radius, int length, Point center);
 
-    int getLength();
-
     void render();
     void transform();
 

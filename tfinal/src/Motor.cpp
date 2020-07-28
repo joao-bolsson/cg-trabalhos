@@ -1,9 +1,9 @@
 #include "Motor.h"
 
-Motor::Motor(Point center) : Object(center) {
-    virabrequim = new Virabrequim(10, 40, center);
-    biela = new Biela(5, 80, center);
-    pistao = new Pistao(10, 20, center);
+Motor::Motor(Point center, int viraLength, int pistaoLength, int pistaoRadius) : Object(center) {
+    virabrequim = new Virabrequim(10, viraLength, center);
+    biela = new Biela(pistaoRadius / 2, viraLength * 2, center);
+    pistao = new Pistao(pistaoRadius, pistaoLength, viraLength, center);
 }
 
 void Motor::translate(Point p) {
@@ -22,9 +22,6 @@ void Motor::translate(Point p) {
 
 void Motor::rotate(double angX, double angY, double angZ) {
     virabrequim->rotate(angX, angY, angZ);
-
-    // apenas o ponto de conexão da biela com o virabrequim tem que rotacionar no eixo z
-    // TODO: biela tem que rotacionar no eixo z o valor do angulo entre o pVirabrequim e o ptPistao
     biela->rotate(angX, angY, 0);
     pistao->rotate(angX, angY, 0);
 
@@ -47,6 +44,7 @@ void Motor::transform() {
 
     biela->connect(virabrequim->getPtConnectionTransf(), ang);
 
+    // calcula o ponto onde o pistao vai estar na tela
     Point pConectionVira = virabrequim->getPtConnectionTransf();
     Point translPistao = biela->getConnectionPistaoTranf();
     translPistao.translate(-pConectionVira.getX(), -pConectionVira.getY(), -pConectionVira.getZ());
@@ -56,6 +54,23 @@ void Motor::transform() {
     pistao->translate(translPistao);
 
     pistao->connect(biela->getConnectionPistaoTranf());
+
+    // calcula o ponto onde a camisa vai ficar na tela
+    Point viraCenter = virabrequim->getCenter();
+
+    double yCamisa = viraCenter.getY() + (biela->getLength() - virabrequim->getLength());
+    Point pTranslCamisa = Point(viraCenter.getX(), yCamisa, viraCenter.getZ());
+    pTranslCamisa.rotateY(angY);
+    pTranslCamisa.rotateX(angX);
+    pTranslCamisa.translate(0, 0, 150);
+    pTranslCamisa.project(distance);
+
+    Point aux = virabrequim->getCenterTransformed();
+    aux.setX(translPistao.getX());
+
+    pTranslCamisa.translate(aux);
+
+    pistao->connectCamisa(pTranslCamisa);
 
     virabrequim->transform();
     biela->transform();

@@ -20,6 +20,10 @@ Point Object::getCenter() {
     return center.copy();
 }
 
+Point Object::getCenterTransformed() {
+    return centerTransformed.copy();
+}
+
 void Object::transform() {
     centerTransformed = center.copy();
     centerTransformed.translate(0, 0, 150);

@@ -68,10 +68,6 @@ void Biela::connect(Point ptConnection, double ang) {
     transform();
 }
 
-int Biela::getLength() {
-    return length;
-}
-
 Point Biela::getConnectionPistao() {
     return pPistao;
 }
